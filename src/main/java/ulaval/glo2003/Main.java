@@ -15,5 +15,6 @@ public class Main {
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();
+        System.out.println("salut");
     }
 }
