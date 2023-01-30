@@ -11,8 +11,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         ResourceConfig resourceConfig = new ResourceConfig();
-        URI uri = URI.create("http://localhost:8080/");
+        CreationProduit produit = new CreationProduit() ;
+        MissingParameterException missingParameterException = new MissingParameterException() ;
+        IllegalParameterException illegalParameterException = new IllegalParameterException();
 
+        URI uri = URI.create("http://localhost:8080/");
+        resourceConfig.register(produit) .register(missingParameterException);
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();
         System.out.println("salut");

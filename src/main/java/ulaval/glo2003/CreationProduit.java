@@ -12,13 +12,13 @@ public class CreationProduit {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response pong(ProductRequest request){
 
-        if (!request.isEmpty()){
+//        if (!request.isEmpty()){
         ProductResponse response = new ProductResponse(request.title) ;
         Produit produit = new Produit(request.title,request.description,request.suggestedPrice,request.category) ;
         return Response.ok(produit).build();
 //        throw new RuntimeException("wow non") ;
-        }
-        return Response.ok("rien").build();
+//        }
+//        return Response.ok("rien").build();
     }
 
     
