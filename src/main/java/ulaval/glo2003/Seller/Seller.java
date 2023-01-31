@@ -5,22 +5,16 @@ import java.time.LocalDate;
 
 public class Seller {
 
-    private final String id;
     private final String name;
     private final String bio;
-    private final LocalDate birthDate;
-    private final Instant createdAt;
-    public Seller(String name, String bio, LocalDate birthDate, String id, Instant createdAt) {
-        this.id = id;
+    private final String birthDate;
+
+    public Seller(String name, String bio, String birthDate) {
         this.name = name;
         this.bio = bio;
         this.birthDate = birthDate;
-        this.createdAt = createdAt;
     }
 
-    public String getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -30,11 +24,5 @@ public class Seller {
         return bio;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
 }
