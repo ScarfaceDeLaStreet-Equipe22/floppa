@@ -4,4 +4,8 @@ public class SellerRequest {
     public String name;
     public String bio;
     public String birthDate;
+
+    public SellerRequest(){
+
+    }
 }

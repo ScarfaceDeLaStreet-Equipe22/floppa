@@ -1,15 +1,14 @@
 package ulaval.glo2003.Seller;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 public class Seller {
 
     private final String name;
     private final String bio;
-    private final String birthDate;
+    private final LocalDate birthDate;
 
-    public Seller(String name, String bio, String birthDate) {
+    public Seller(String name, String bio, LocalDate birthDate) {
         this.name = name;
         this.bio = bio;
         this.birthDate = birthDate;
@@ -22,6 +21,10 @@ public class Seller {
 
     public String getBio() {
         return bio;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
 

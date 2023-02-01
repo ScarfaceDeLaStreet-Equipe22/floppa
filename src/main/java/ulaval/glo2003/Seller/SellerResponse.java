@@ -1,14 +1,24 @@
 package ulaval.glo2003.Seller;
 
-public class SellerResponse {
-    public final String name;
-    public final String bio;
-    public final String birthDate;
+import java.time.Instant;
+import java.util.List;
 
-    public SellerResponse(String name, String bio, String birthDate) {
+public class SellerResponse {
+    public String id;
+    public String name;
+    public Instant createdAt;
+    public String bio;
+
+    public SellerResponse(
+            String id,
+            String name,
+            Instant createdAt,
+            String bio
+    ) {
+        this.id = id;
         this.name = name;
+        this.createdAt = createdAt;
         this.bio = bio;
-        this.birthDate = birthDate;
     }
 
 }
