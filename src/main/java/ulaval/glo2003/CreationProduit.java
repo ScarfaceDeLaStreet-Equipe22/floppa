@@ -1,25 +1,32 @@
 package ulaval.glo2003;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.Path;
+
+import java.awt.geom.Arc2D;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 @Path("/products")
 public class CreationProduit {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response pong(ProductRequest request){
+    public Response pong(ProductRequest request, @HeaderParam("X-Seller-Id") String SellerId) throws IllegalParameterException, MissingParameterException{
 
-//        if (!request.isEmpty()){
-        ProductResponse response = new ProductResponse(request.title) ;
-        Produit produit = new Produit(request.title,request.description,request.suggestedPrice,request.category) ;
-        return Response.ok(produit).build();
-//        throw new RuntimeException("wow non") ;
-//        }
-//        return Response.ok("rien").build();
+        Product product ;
+
+        if (request.title.isEmpty() || request.category.isEmpty()  || request.description.isEmpty() ){
+            throw new MissingParameterException() ;
+        } else {
+            product = new Product(request.title, request.description, request.category, request.suggestedPrice);
+            return Response.status(201).entity("url").build();
+        }
+
+
     }
 
-    
+
+
 }

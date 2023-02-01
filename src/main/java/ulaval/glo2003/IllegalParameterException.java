@@ -14,6 +14,6 @@ public class IllegalParameterException extends Throwable implements ExceptionMap
 
     @Override
     public Response toResponse(IllegalArgumentException e) {
-        return Response.status(400).entity("argument Illegal").build();
+        return Response.status(404).entity("argument Illegal").build();
     }
 }

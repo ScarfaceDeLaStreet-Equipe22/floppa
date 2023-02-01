@@ -9,7 +9,7 @@ public class MissingParameterException extends Throwable implements ExceptionMap
     @Override
     public Response toResponse(RuntimeException exception) {
         exception.printStackTrace();
-        return Response.status(400).entity("tu as fait une erreur").build();
+        return Response.status(400).entity("il manque un argument").build();
     }
 
 }

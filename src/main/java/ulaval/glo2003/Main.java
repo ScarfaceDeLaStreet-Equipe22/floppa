@@ -16,7 +16,10 @@ public class Main {
         IllegalParameterException illegalParameterException = new IllegalParameterException();
 
         URI uri = URI.create("http://localhost:8080/");
-        resourceConfig.register(produit) .register(missingParameterException);
+        resourceConfig.register(produit)
+                .register(missingParameterException)
+                .register(illegalParameterException);
+
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();
         System.out.println("salut");
