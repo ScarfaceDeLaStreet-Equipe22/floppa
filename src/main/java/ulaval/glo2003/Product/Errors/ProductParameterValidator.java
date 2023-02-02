@@ -34,6 +34,12 @@ public class ProductParameterValidator {
     }
 
     private void assertParamNotEmpty(String title, String description, String category, String suggestedPrice) {
+        try {
+            Double l = Double.parseDouble(suggestedPrice);
+        } catch (Exception e){
+            throw new InvalidSuggestedPriceException() ;
+        }
+
         if (title.isEmpty()) {
             throw new InvalidTitleException();
         }

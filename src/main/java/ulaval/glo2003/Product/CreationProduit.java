@@ -14,14 +14,17 @@ public class CreationProduit {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response pong(ProductRequest request, @HeaderParam("X-Seller-Id") String SellerId) throws IllegalParameterException, MissingParameterException {
+    @Path("/{id}")
+    public Response pong(ProductRequest request, @HeaderParam("X-Seller-Id") String SellerId, @PathParam("id") String id) throws IllegalParameterException, MissingParameterException {
 
         Product product ;
 
         ProductParameterValidator V = new ProductParameterValidator(request.title, request.description, request.category, request.suggestedPrice);
 
         product = new Product(V.title, V.description, V.category, V.suggestedPrice);
+        String url = "lol/" + SellerId ;
         return Response.status(201).entity(product).build();
+
 
 
 
