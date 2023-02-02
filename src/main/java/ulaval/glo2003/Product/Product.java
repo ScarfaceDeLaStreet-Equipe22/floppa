@@ -1,4 +1,9 @@
-package ulaval.glo2003;
+package ulaval.glo2003.Product;
+
+import ulaval.glo2003.Product.Errors.MissingTitleException;
+import ulaval.glo2003.Seller.MissingBioException;
+import ulaval.glo2003.Seller.MissingBirthDateException;
+import ulaval.glo2003.Utils.MissingNameException;
 
 public class Product {
     public String title ;
@@ -22,5 +27,7 @@ public class Product {
         this.title = title ;
 
     }
+
+
 //    public ProductCategory category ;
 }

@@ -1,4 +1,7 @@
 package ulaval.glo2003;
+import ulaval.glo2003.Product.*;
+import ulaval.glo2003.Utils.*;
+
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -12,13 +15,18 @@ public class Main {
     public static void main(String[] args) throws IOException {
         ResourceConfig resourceConfig = new ResourceConfig();
         CreationProduit produit = new CreationProduit() ;
-        MissingParameterException missingParameterException = new MissingParameterException() ;
         IllegalParameterException illegalParameterException = new IllegalParameterException();
-
+//
+//=======
+//        SellerFactory sellerFactory = new SellerFactory();
+//
+//        ResourceConfig resourceConfig = new ResourceConfig()
+//                .register(new SellerRessource(sellerFactory))
+//                .register(new MissingParamExceptionMapper());
+//>>>>>>> blabla
         URI uri = URI.create("http://localhost:8080/");
         resourceConfig.register(produit)
-                .register(missingParameterException)
-                .register(illegalParameterException);
+                .register(new MissingParamExceptionMapper());
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();
