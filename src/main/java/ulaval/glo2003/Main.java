@@ -26,7 +26,8 @@ public class Main {
 //>>>>>>> blabla
         URI uri = URI.create("http://localhost:8080/");
         resourceConfig.register(produit)
-                .register(new MissingParamExceptionMapper());
+                .register(new MissingParamExceptionMapper())
+                .register(new InvalidParamExceptionMapper());
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();

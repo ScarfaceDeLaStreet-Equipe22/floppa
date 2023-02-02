@@ -11,6 +11,7 @@ public class ProductParameterValidator {
 
     public ProductParameterValidator(String title, String description, String category, String suggestedPrice) {
         assertParamNotNull(title, description,category,suggestedPrice);
+        assertParamNotEmpty(title,description,category,suggestedPrice);
         this.category = category;
         this.suggestedPrice = Double.parseDouble(suggestedPrice) ;
         this.description = description ;
@@ -29,6 +30,21 @@ public class ProductParameterValidator {
         }
         if (suggestedPrice == null) {
             throw new MissingSuggestedPriceException();
+        }
+    }
+
+    private void assertParamNotEmpty(String title, String description, String category, String suggestedPrice) {
+        if (title.isEmpty()) {
+            throw new InvalidTitleException();
+        }
+        if ( description.isEmpty()) {
+            throw new InvalidDescriptionException();
+        }
+        if (category.isEmpty()) {
+            throw new InvalidCategoryException();
+        }
+        if (suggestedPrice.isEmpty()) {
+            throw new InvalidSuggestedPriceException();
         }
     }
 }
