@@ -12,6 +12,7 @@ import java.awt.geom.Arc2D;
 @Path("/products")
 public class CreationProduit {
 
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
@@ -19,9 +20,11 @@ public class CreationProduit {
 
         Product product ;
 
-        ProductParameterValidator V = new ProductParameterValidator(request.title, request.description, request.category, request.suggestedPrice);
+        ProductCategory productCategory = new ProductCategory(request.category);
 
-        product = new Product(V.title, V.description, V.category, V.suggestedPrice);
+        ProductParameterValidator V = new ProductParameterValidator(request.title, request.description, productCategory, request.suggestedPrice);
+
+        product = new Product(V.getTitle(), V.getDescription(), V.getCategory(), V.getSuggestedPrice());
         String url = "lol/" + SellerId ;
         return Response.status(201).entity(product).build();
 

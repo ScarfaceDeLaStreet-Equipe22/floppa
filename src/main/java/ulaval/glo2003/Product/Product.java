@@ -10,17 +10,16 @@ public class Product {
 
     public String description;
     public double suggestedPrice;
-    public String category ;
+    public ProductCategory category ;
 
-    public Product(String title, String description, String category, double suggestedPrice) {
+    public Product(String title, String description, ProductCategory category, double suggestedPrice) {
         this.category = category ;
         this.suggestedPrice = suggestedPrice ;
         this.description = description;
         this.title = title ;
-
     }
 
-    public Product(String title, String description, String category) {
+    public Product(String title, String description, ProductCategory category) {
         this.category = category ;
         this.suggestedPrice = 1.00 ;
         this.description = description;

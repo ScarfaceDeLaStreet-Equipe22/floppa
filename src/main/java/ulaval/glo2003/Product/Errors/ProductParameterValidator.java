@@ -1,15 +1,16 @@
 package ulaval.glo2003.Product.Errors;
 
+import ulaval.glo2003.Product.ProductCategory;
 import ulaval.glo2003.Seller.MissingBioException;
 import ulaval.glo2003.Seller.MissingBirthDateException;
 
 public class ProductParameterValidator {
     public String title;
     public String description;
-    public String category;
+    public ProductCategory category;
     public double suggestedPrice;
 
-    public ProductParameterValidator(String title, String description, String category, String suggestedPrice) {
+    public ProductParameterValidator(String title, String description, ProductCategory category, String suggestedPrice) {
         assertParamNotNull(title, description,category,suggestedPrice);
         assertParamNotEmpty(title,description,category,suggestedPrice);
         this.category = category;
@@ -18,7 +19,23 @@ public class ProductParameterValidator {
         this.title = title;
     }
 
-    private void assertParamNotNull(String title, String description, String category, String suggestedPrice) {
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ProductCategory getCategory() {
+        return category;
+    }
+
+    public double getSuggestedPrice() {
+        return suggestedPrice;
+    }
+
+    private void assertParamNotNull(String title, String description, ProductCategory category, String suggestedPrice) {
         if (title == null) {
             throw new MissingTitleException();
         }
@@ -33,20 +50,19 @@ public class ProductParameterValidator {
         }
     }
 
-    private void assertParamNotEmpty(String title, String description, String category, String suggestedPrice) {
+    private void assertParamNotEmpty(String title, String description, ProductCategory category, String suggestedPrice) {
         try {
             Double l = Double.parseDouble(suggestedPrice);
         } catch (Exception e){
             throw new InvalidSuggestedPriceException() ;
         }
-
         if (title.isEmpty()) {
             throw new InvalidTitleException();
         }
         if ( description.isEmpty()) {
             throw new InvalidDescriptionException();
         }
-        if (category.isEmpty()) {
+        if (category.getCategory().isEmpty()) {
             throw new InvalidCategoryException();
         }
         if (suggestedPrice.isEmpty()) {
