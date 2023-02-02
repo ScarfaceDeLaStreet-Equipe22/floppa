@@ -1,21 +1,38 @@
 package ulaval.glo2003.Seller;
 
+import ulaval.glo2003.Seller.Exceptions.InvalidBioException;
+import ulaval.glo2003.Seller.Exceptions.InvalidBirthdateException;
+import ulaval.glo2003.Seller.Exceptions.MissingBioException;
+import ulaval.glo2003.Seller.Exceptions.MissingBirthDateException;
+import ulaval.glo2003.Utils.InvalidNameException;
 import ulaval.glo2003.Utils.MissingNameException;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 public class SellerParams {
-    private String name;
-    private String bio;
-    private LocalDate birthDate;
+    public String name;
+    public String bio;
+    public LocalDate birthDate;
 
     public SellerParams(String name, String bio, String birthDate) {
         assertParamNotNull(name, bio, birthDate);
-
+        assertParamNotEmpty(name, bio, birthDate);
         this.name = name;
         this.bio = bio;
         this.birthDate = LocalDate.parse(birthDate);
+    }
+
+    private void assertParamNotEmpty(String name, String bio, String birthDate) {
+        if (name.isEmpty()) {
+            throw new InvalidNameException();
+        }
+        if (bio.isEmpty()) {
+            throw new InvalidBioException();
+        }
+        if (birthDate.isEmpty()) {
+            throw new InvalidBirthdateException();
+        }
+
     }
 
     private void assertParamNotNull(String name, String bio, String birthDate) {
@@ -29,6 +46,7 @@ public class SellerParams {
             throw new MissingBirthDateException();
         }
     }
+
 
     public String getName() {
         return name;

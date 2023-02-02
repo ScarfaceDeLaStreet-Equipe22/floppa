@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 public class Seller {
 
-    private final String name;
-    private final String bio;
-    private final LocalDate birthDate;
+    public String name;
+    public String bio;
+    public LocalDate birthDate;
 
     public Seller(String name, String bio, LocalDate birthDate) {
         this.name = name;

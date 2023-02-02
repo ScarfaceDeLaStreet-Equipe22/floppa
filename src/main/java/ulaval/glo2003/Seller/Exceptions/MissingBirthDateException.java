@@ -1,4 +1,4 @@
-package ulaval.glo2003.Seller;
+package ulaval.glo2003.Seller.Exceptions;
 
 import ulaval.glo2003.Utils.MissingParamException;
 

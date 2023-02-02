@@ -9,23 +9,23 @@ import ulaval.glo2003.Utils.MissingParamException;
 
 @Path("/sellers")
 public class SellerRessource {
-    SellerFactory sellerFactory;
 
-    public SellerRessource(SellerFactory sellerFactory){
-        this.sellerFactory = sellerFactory;
+    public SellerRessource(){
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response seller(SellerRequest sellerRequest){
+
+        Seller seller;
         String name = sellerRequest.name;
         String bio = sellerRequest.bio;
         String birthDate = sellerRequest.birthDate;
 
-        //validateSellerRequest(sellerRequest);
         SellerParams sellerParams = new SellerParams(name, bio, birthDate);
-        Seller seller = sellerFactory.makeSeller(sellerParams);
+        seller = new Seller(sellerParams.name, sellerParams.bio, sellerParams.birthDate);
 
-        return Response.ok(seller).build();
+
+        return Response.status(201).entity(seller).build();
     }
 
 
