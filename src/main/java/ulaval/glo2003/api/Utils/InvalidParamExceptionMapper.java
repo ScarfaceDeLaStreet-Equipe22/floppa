@@ -1,4 +1,4 @@
-package ulaval.glo2003.Utils;
+package ulaval.glo2003.api.Utils;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
@@ -10,6 +10,7 @@ public class InvalidParamExceptionMapper implements ExceptionMapper<InvalidParam
                 ExceptionCode.INVALID_PARAMETER,
                 e.getMessage()
         );
-        return Response.status(400).entity(response).build() ;
+        return Response.status(400).entity(response).build();
     }
 }
+

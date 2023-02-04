@@ -1,4 +1,4 @@
-package ulaval.glo2003.Utils;
+package ulaval.glo2003.api.Utils;
 
 public class ErrorResponse {
     public ExceptionCode code;

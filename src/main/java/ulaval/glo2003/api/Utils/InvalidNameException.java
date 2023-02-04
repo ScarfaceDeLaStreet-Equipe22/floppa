@@ -1,6 +1,4 @@
-package ulaval.glo2003.Utils;
-
-import ulaval.glo2003.Utils.InvalidParamException;
+package ulaval.glo2003.api.Utils;
 
 public class InvalidNameException extends InvalidParamException {
     public InvalidNameException() {

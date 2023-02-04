@@ -1,7 +1,7 @@
-package ulaval.glo2003.Seller.Exceptions;
+package ulaval.glo2003.api.SellerExceptions;
 
 
-import ulaval.glo2003.Utils.InvalidParamException;
+import ulaval.glo2003.api.Utils.InvalidParamException;
 
 public class InvalidBirthdateException extends InvalidParamException {
     public InvalidBirthdateException() {

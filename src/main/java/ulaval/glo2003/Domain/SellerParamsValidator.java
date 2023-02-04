@@ -1,20 +1,20 @@
-package ulaval.glo2003.Seller;
+package ulaval.glo2003.Domain;
 
-import ulaval.glo2003.Seller.Exceptions.InvalidBioException;
-import ulaval.glo2003.Seller.Exceptions.InvalidBirthdateException;
-import ulaval.glo2003.Seller.Exceptions.MissingBioException;
-import ulaval.glo2003.Seller.Exceptions.MissingBirthDateException;
-import ulaval.glo2003.Utils.InvalidNameException;
-import ulaval.glo2003.Utils.MissingNameException;
+import ulaval.glo2003.api.SellerExceptions.InvalidBioException;
+import ulaval.glo2003.api.SellerExceptions.InvalidBirthdateException;
+import ulaval.glo2003.api.SellerExceptions.MissingBioException;
+import ulaval.glo2003.api.SellerExceptions.MissingBirthDateException;
+import ulaval.glo2003.api.Utils.InvalidNameException;
+import ulaval.glo2003.api.Utils.MissingNameException;
 
 import java.time.LocalDate;
 
-public class SellerParams {
+public class SellerParamsValidator {
     public String name;
     public String bio;
     public LocalDate birthdate;
 
-    public SellerParams(String name, String bio, String birthdate) {
+    public SellerParamsValidator(String name, String bio, String birthdate) {
         assertParamNotNull(name, bio, birthdate);
         assertParamNotEmpty(name, bio, birthdate);
         this.name = name;

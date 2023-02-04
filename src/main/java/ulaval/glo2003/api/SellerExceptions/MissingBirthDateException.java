@@ -1,6 +1,6 @@
-package ulaval.glo2003.Seller.Exceptions;
+package ulaval.glo2003.api.SellerExceptions;
 
-import ulaval.glo2003.Utils.MissingParamException;
+import ulaval.glo2003.api.Utils.MissingParamException;
 
 public class MissingBirthDateException extends MissingParamException {
     public MissingBirthDateException() {

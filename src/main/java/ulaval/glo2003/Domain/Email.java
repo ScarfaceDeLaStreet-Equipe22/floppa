@@ -1,4 +1,4 @@
-package ulaval.glo2003.Seller;
+package ulaval.glo2003.Domain;
 
 public class Email {
     public String email;

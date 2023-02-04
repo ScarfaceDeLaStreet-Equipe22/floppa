@@ -1,15 +1,15 @@
-package ulaval.glo2003.Seller;
+package ulaval.glo2003;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import ulaval.glo2003.Utils.MissingParamException;
+import ulaval.glo2003.Domain.Seller;
+import ulaval.glo2003.Domain.SellerParamsValidator;
+import ulaval.glo2003.api.Seller.SellerRequest;
+import ulaval.glo2003.api.Seller.SellerResponse;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Path("/sellers")
@@ -17,8 +17,8 @@ public class SellerRessource {
 
     private final ArrayList<Seller> sellers;
 
-    public SellerRessource(){
-        this.sellers = new ArrayList<>();
+    public SellerRessource( ArrayList<Seller> sellers){
+        this.sellers = sellers ;
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -29,8 +29,10 @@ public class SellerRessource {
         String bio = sellerRequest.bio;
         String birthDate = sellerRequest.birthdate;
 
-        SellerParams sellerParams = new SellerParams(name, bio, birthDate);
-        seller = new Seller(sellerParams.name, sellerParams.bio, sellerParams.birthdate);
+        SellerParamsValidator sellerParams = new SellerParamsValidator(name, bio, birthDate);
+        seller = new Seller(sellerParams.name, sellerParams.bio, sellerRequest.birthdate,
+                sellerRequest.email,
+                sellerRequest.phoneNumber);
 
         sellers.add(seller);
 
@@ -39,9 +41,9 @@ public class SellerRessource {
 
     @GET
     public Response getAllSellers(){
-        List<SellerResponse > sellerResponses = this.sellers
+        List<SellerResponse> sellerResponses = this.sellers
                 .stream()
-                .map(seller -> new SellerResponse(seller.getId(), seller.getName(), seller.getBio()))
+                .map(seller -> new SellerResponse(seller.getName(), seller.getBio(), seller.getBirthDate(), seller.getEmail(),seller.getPhoneNumber(),seller.getProducts()))
                 .collect(Collectors.toList());
         return Response.ok(sellerResponses).build();
     }
@@ -55,7 +57,11 @@ public class SellerRessource {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Seller not found."));
 
-        SellerResponse response = new SellerResponse(foundSeller.getId(), foundSeller.getName(), foundSeller.getBio());
+        SellerResponse response = new SellerResponse(foundSeller.getName(),
+                foundSeller.getBio(),
+                foundSeller.getBirthDate(),
+                foundSeller.getEmail(),
+                foundSeller.getPhoneNumber(),foundSeller.getProducts());
         return Response.ok(response).build();
     }
 
