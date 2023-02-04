@@ -15,7 +15,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
         ResourceConfig resourceConfig = new ResourceConfig();
         CreationProduit produit = new CreationProduit() ;
-        IllegalParameterException illegalParameterException = new IllegalParameterException();
 //
 //=======
 //        SellerFactory sellerFactory = new SellerFactory();
