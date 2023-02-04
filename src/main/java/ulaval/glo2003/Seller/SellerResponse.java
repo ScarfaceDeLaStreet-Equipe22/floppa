@@ -12,12 +12,10 @@ public class SellerResponse {
     public SellerResponse(
             String id,
             String name,
-            Instant createdAt,
             String bio
     ) {
         this.id = id;
         this.name = name;
-        this.createdAt = createdAt;
         this.bio = bio;
     }
 

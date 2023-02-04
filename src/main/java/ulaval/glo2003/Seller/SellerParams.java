@@ -12,37 +12,37 @@ import java.time.LocalDate;
 public class SellerParams {
     public String name;
     public String bio;
-    public LocalDate birthDate;
+    public LocalDate birthdate;
 
-    public SellerParams(String name, String bio, String birthDate) {
-        assertParamNotNull(name, bio, birthDate);
-        assertParamNotEmpty(name, bio, birthDate);
+    public SellerParams(String name, String bio, String birthdate) {
+        assertParamNotNull(name, bio, birthdate);
+        assertParamNotEmpty(name, bio, birthdate);
         this.name = name;
         this.bio = bio;
-        this.birthDate = LocalDate.parse(birthDate);
+        this.birthdate = LocalDate.parse(birthdate);
     }
 
-    private void assertParamNotEmpty(String name, String bio, String birthDate) {
+    private void assertParamNotEmpty(String name, String bio, String birthdate) {
         if (name.isEmpty()) {
             throw new InvalidNameException();
         }
         if (bio.isEmpty()) {
             throw new InvalidBioException();
         }
-        if (birthDate.isEmpty()) {
+        if (birthdate.isEmpty()) {
             throw new InvalidBirthdateException();
         }
 
     }
 
-    private void assertParamNotNull(String name, String bio, String birthDate) {
+    private void assertParamNotNull(String name, String bio, String birthdate) {
         if (name == null) {
             throw new MissingNameException();
         }
         if (bio == null) {
             throw new MissingBioException();
         }
-        if (birthDate == null) {
+        if (birthdate == null) {
             throw new MissingBirthDateException();
         }
     }
@@ -65,10 +65,10 @@ public class SellerParams {
     }
 
     public LocalDate getBirthDate() {
-        return birthDate;
+        return birthdate;
     }
 
     public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+        this.birthdate = birthdate;
     }
 }

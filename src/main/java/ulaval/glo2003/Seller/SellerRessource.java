@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Path("/sellers")
 public class SellerRessource {
 
-    private final ArrayList<Object> sellers;
+    private final ArrayList<Seller> sellers;
 
     public SellerRessource(){
         this.sellers = new ArrayList<>();
@@ -27,10 +27,10 @@ public class SellerRessource {
         Seller seller;
         String name = sellerRequest.name;
         String bio = sellerRequest.bio;
-        String birthDate = sellerRequest.birthDate;
+        String birthDate = sellerRequest.birthdate;
 
         SellerParams sellerParams = new SellerParams(name, bio, birthDate);
-        seller = new Seller(sellerParams.name, sellerParams.bio, sellerParams.birthDate);
+        seller = new Seller(sellerParams.name, sellerParams.bio, sellerParams.birthdate);
 
         sellers.add(seller);
 
@@ -41,7 +41,7 @@ public class SellerRessource {
     public Response getAllSellers(){
         List<SellerResponse > sellerResponses = this.sellers
                 .stream()
-                .map(seller -> new SellerResponse(seller.getId(), seller.getName(), seller.getCreatedAt(), seller.getBio()))
+                .map(seller -> new SellerResponse(seller.getId(), seller.getName(), seller.getBio()))
                 .collect(Collectors.toList());
         return Response.ok(sellerResponses).build();
     }
@@ -49,13 +49,13 @@ public class SellerRessource {
     @GET
     @Path("{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId){
-        Optional<Seller> foundSeller = this.sellers
+        Seller foundSeller = this.sellers
                 .stream()
                 .filter(seller -> seller.getId().equals(sellerId))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Seller not found."));
 
-        SellerResponse response = new SellerResponse(foundSeller.getId(), foundSeller.getName(), foundSeller.getCreatedAt(), foundSeller.getBio());
+        SellerResponse response = new SellerResponse(foundSeller.getId(), foundSeller.getName(), foundSeller.getBio());
         return Response.ok(response).build();
     }
 
