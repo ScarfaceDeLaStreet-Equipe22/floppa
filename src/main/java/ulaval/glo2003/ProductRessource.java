@@ -3,11 +3,8 @@ package ulaval.glo2003;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import ulaval.glo2003.Domain.Product;
-import ulaval.glo2003.Domain.ProductCategory;
+import ulaval.glo2003.Domain.*;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
-import ulaval.glo2003.api.ProductExceptions.ProductParameterValidator;
-import ulaval.glo2003.Domain.Seller;
 import ulaval.glo2003.api.Product.ProductRequest;
 
 import java.net.URI;
@@ -29,9 +26,10 @@ public class ProductRessource {
 
         Product product ;
 
-        ProductCategory productCategory = new ProductCategory(request.category);
+        ProductCategory productCategory = new ProductCategory(request.getCategory());
+        Amount suggestedPrice = new Amount(request.getSuggestedPrice()) ;
 
-        ProductParameterValidator V = new ProductParameterValidator(request.title, request.description, productCategory, request.suggestedPrice);
+        ProductParameterValidator V = new ProductParameterValidator(request.getTitle(), request.getDescription(), productCategory, suggestedPrice);
 
         product = new Product(V.getTitle(), V.getDescription(), V.getCategory(), V.getSuggestedPrice());
 
