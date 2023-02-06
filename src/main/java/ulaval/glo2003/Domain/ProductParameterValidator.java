@@ -1,18 +1,19 @@
-package ulaval.glo2003.api.ProductExceptions;
+package ulaval.glo2003.Domain;
 
 import ulaval.glo2003.Domain.ProductCategory;
+import ulaval.glo2003.api.ProductExceptions.*;
 
 public class ProductParameterValidator {
     public String title;
     public String description;
     public ProductCategory category;
-    public double suggestedPrice;
+    public Amount suggestedPrice;
 
-    public ProductParameterValidator(String title, String description, ProductCategory category, String suggestedPrice) {
+    public ProductParameterValidator(String title, String description, ProductCategory category, Amount suggestedPrice) {
         assertParamNotNull(title, description,category,suggestedPrice);
         assertParamNotEmpty(title,description,category,suggestedPrice);
         this.category = category;
-        this.suggestedPrice = Double.parseDouble(suggestedPrice) ;
+        this.suggestedPrice = suggestedPrice ;
         this.description = description ;
         this.title = title;
     }
@@ -29,11 +30,11 @@ public class ProductParameterValidator {
         return category;
     }
 
-    public double getSuggestedPrice() {
+    public Amount getSuggestedPrice() {
         return suggestedPrice;
     }
 
-    private void assertParamNotNull(String title, String description, ProductCategory category, String suggestedPrice) {
+    private void assertParamNotNull(String title, String description, ProductCategory category, Amount suggestedPrice) {
         if (title == null) {
             throw new MissingTitleException();
         }
@@ -44,16 +45,12 @@ public class ProductParameterValidator {
             throw new MissingCategoryException();
         }
         if (suggestedPrice == null) {
-            throw new MissingSuggestedPriceException();
+            this.suggestedPrice = new Amount("1.00");
         }
     }
 
-    private void assertParamNotEmpty(String title, String description, ProductCategory category, String suggestedPrice) {
-        try {
-            Double l = Double.parseDouble(suggestedPrice);
-        } catch (Exception e){
-            throw new InvalidSuggestedPriceException() ;
-        }
+    private void assertParamNotEmpty(String title, String description, ProductCategory category, Amount suggestedPrice) {
+
         if (title.isEmpty()) {
             throw new InvalidTitleException();
         }
@@ -63,8 +60,8 @@ public class ProductParameterValidator {
         if (category.getCategory().isEmpty()) {
             throw new InvalidCategoryException();
         }
-        if (suggestedPrice.isEmpty()) {
-            throw new InvalidSuggestedPriceException();
-        }
+//        if (suggestedPrice.getAmount().isEmpty()) {
+//            throw new InvalidSuggestedPriceException();
+//        }
     }
 }

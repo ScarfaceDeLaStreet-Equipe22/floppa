@@ -5,11 +5,11 @@ import java.util.UUID;
 public class Product {
     public String title ;
     public String description;
-    public double suggestedPrice;
+    public Amount suggestedPrice;
     public ProductCategory category ;
     public String id;
 
-    public Product(String title, String description, ProductCategory category, double suggestedPrice) {
+    public Product(String title, String description, ProductCategory category, Amount suggestedPrice) {
         this.category = category ;
         this.suggestedPrice = suggestedPrice ;
         this.description = description;
@@ -18,15 +18,4 @@ public class Product {
         this.id = UUID.randomUUID().toString();
     }
 
-    public Product(String title, String description, ProductCategory category, String id) {
-        this.category = category ;
-        this.id = id;
-        this.suggestedPrice = 1.00 ;
-        this.description = description;
-        this.title = title ;
-
-    }
-
-
-//    public ProductCategory category ;
 }
