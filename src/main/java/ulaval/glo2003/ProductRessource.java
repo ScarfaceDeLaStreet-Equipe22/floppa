@@ -24,7 +24,6 @@ public class ProductRessource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
     public Response pong(ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId, @PathParam("id") String id) {
 
         Product product ;

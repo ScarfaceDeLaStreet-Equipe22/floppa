@@ -10,7 +10,7 @@ public class Seller {
     public String name;
     public String bio;
     public String birthDate;
-    public String email;
+    public Email email;
     public String phoneNumber ;
     public ArrayList<Product> products ;
     private final String id;
@@ -18,7 +18,7 @@ public class Seller {
     public Seller(String name, String birthDate, String email, String phoneNumber, String bio) {
         this.name = name;
         this.birthDate = birthDate;
-        this.email = email ;
+        this.email = new Email(email) ;
         this.phoneNumber = phoneNumber ;
         this.bio = bio;
 
@@ -43,7 +43,7 @@ public class Seller {
     }
 
     public String getEmail() {
-        return email;
+        return email.getEmail();
     }
 
     public String getPhoneNumber() {
