@@ -1,9 +1,6 @@
 package ulaval.glo2003.Domain;
 
-import ulaval.glo2003.api.SellerExceptions.InvalidBioException;
-import ulaval.glo2003.api.SellerExceptions.InvalidBirthdateException;
-import ulaval.glo2003.api.SellerExceptions.MissingBioException;
-import ulaval.glo2003.api.SellerExceptions.MissingBirthDateException;
+import ulaval.glo2003.api.SellerExceptions.*;
 import ulaval.glo2003.api.Utils.InvalidNameException;
 import ulaval.glo2003.api.Utils.MissingNameException;
 
@@ -14,15 +11,15 @@ public class SellerParamsValidator {
     public String bio;
     public LocalDate birthdate;
 
-    public SellerParamsValidator(String name, String bio, String birthdate) {
-        assertParamNotNull(name, bio, birthdate);
-        assertParamNotEmpty(name, bio, birthdate);
+    public SellerParamsValidator(String name, String bio, String birthdate, String email, String phoneNumber) {
+        assertParamNotNull(name, bio, birthdate, email, phoneNumber);
+        assertParamNotEmpty(name, bio, birthdate, email, phoneNumber);
         this.name = name;
         this.bio = bio;
         this.birthdate = LocalDate.parse(birthdate);
     }
 
-    private void assertParamNotEmpty(String name, String bio, String birthdate) {
+    private void assertParamNotEmpty(String name, String bio, String birthdate, String email, String phoneNumber) {
         if (name.isEmpty()) {
             throw new InvalidNameException();
         }
@@ -32,10 +29,15 @@ public class SellerParamsValidator {
         if (birthdate.isEmpty()) {
             throw new InvalidBirthdateException();
         }
-
+        if (email.isEmpty()) {
+            throw new InvalidEmailException();
+        }
+        if (phoneNumber.isEmpty()) {
+            throw new InvalidPhoneNumberException();
+        }
     }
 
-    private void assertParamNotNull(String name, String bio, String birthdate) {
+    private void assertParamNotNull(String name, String bio, String birthdate, String email, String phoneNumber) {
         if (name == null) {
             throw new MissingNameException();
         }
@@ -44,6 +46,12 @@ public class SellerParamsValidator {
         }
         if (birthdate == null) {
             throw new MissingBirthDateException();
+        }
+        if (email == null) {
+            throw new MissingEmailException();
+        }
+        if (phoneNumber == null) {
+            throw new MissingPhoneNumberException();
         }
     }
 
