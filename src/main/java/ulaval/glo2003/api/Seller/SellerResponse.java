@@ -11,12 +11,14 @@ public class SellerResponse {
     public String birthDate;
     public String email;
     public String phoneNumber ;
+
     public Instant createdAt;
     public ArrayList<Product> products ;
     public String id ;
 
 
     public SellerResponse(
+            String id,
             String name,
             String bio,
             String birthDate,
@@ -24,12 +26,12 @@ public class SellerResponse {
             String phoneNumber,
             ArrayList<Product> products
     ) {
-        this.id = id;
-        this.name = name;
-        this.bio = bio;
+        this.id = id ;
+        this.name = name ;
         this.birthDate = birthDate ;
         this.email = email ;
         this.phoneNumber = phoneNumber ;
+        this.bio = bio ;
         this.products = products ;
     }
 

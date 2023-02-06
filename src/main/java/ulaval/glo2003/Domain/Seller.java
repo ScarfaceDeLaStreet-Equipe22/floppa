@@ -15,15 +15,15 @@ public class Seller {
     public ArrayList<Product> products ;
     private final String id;
 
-    public Seller(String name, String bio, String birthDate, String email, String phoneNumber) {
+    public Seller(String name, String birthDate, String email, String phoneNumber, String bio) {
         this.name = name;
-        this.bio = bio;
         this.birthDate = birthDate;
         this.email = email ;
         this.phoneNumber = phoneNumber ;
-        products = new ArrayList<>() ;
+        this.bio = bio;
 
         this.id = UUID.randomUUID().toString();
+        products = new ArrayList<>() ;
     }
 
 

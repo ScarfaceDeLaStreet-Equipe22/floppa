@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import ulaval.glo2003.Domain.Seller;
 import ulaval.glo2003.Domain.SellerParamsValidator;
+import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
 import ulaval.glo2003.api.Seller.SellerRequest;
 import ulaval.glo2003.api.Seller.SellerResponse;
 
@@ -30,9 +31,12 @@ public class SellerRessource {
         String birthDate = sellerRequest.birthdate;
 
         SellerParamsValidator sellerParams = new SellerParamsValidator(name, bio, birthDate);
-        seller = new Seller(sellerParams.name, sellerParams.bio, sellerRequest.birthdate,
+        seller = new Seller(
+                sellerParams.name,
+                sellerRequest.birthdate,
                 sellerRequest.email,
-                sellerRequest.phoneNumber);
+                sellerRequest.phoneNumber,
+                sellerParams.bio);
 
         sellers.add(seller);
 
@@ -43,7 +47,14 @@ public class SellerRessource {
     public Response getAllSellers(){
         List<SellerResponse> sellerResponses = this.sellers
                 .stream()
-                .map(seller -> new SellerResponse(seller.getName(), seller.getBio(), seller.getBirthDate(), seller.getEmail(),seller.getPhoneNumber(),seller.getProducts()))
+                .map(seller -> new SellerResponse(
+                        seller.getId(),
+                        seller.getName(),
+                        seller.getBio(),
+                        seller.getBirthDate(),
+                        seller.getEmail(),
+                        seller.getPhoneNumber(),
+                        seller.getProducts()))
                 .collect(Collectors.toList());
         return Response.ok(sellerResponses).build();
     }
@@ -55,13 +66,16 @@ public class SellerRessource {
                 .stream()
                 .filter(seller -> seller.getId().equals(sellerId))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Seller not found."));
+                .orElseThrow(() -> new ItemNotFoundException());
 
-        SellerResponse response = new SellerResponse(foundSeller.getName(),
+        SellerResponse response = new SellerResponse(
+                foundSeller.getId(),
+                foundSeller.getName(),
                 foundSeller.getBio(),
                 foundSeller.getBirthDate(),
                 foundSeller.getEmail(),
-                foundSeller.getPhoneNumber(),foundSeller.getProducts());
+                foundSeller.getPhoneNumber(),
+                foundSeller.getProducts());
         return Response.ok(response).build();
     }
 
