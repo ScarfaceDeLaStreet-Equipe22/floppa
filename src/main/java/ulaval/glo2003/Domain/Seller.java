@@ -11,7 +11,7 @@ public class Seller {
     public String bio;
     public String birthDate;
     public Email email;
-    public String phoneNumber ;
+    public PhoneNumber phoneNumber ;
     public ArrayList<Product> products ;
     private final String id;
 
@@ -19,7 +19,7 @@ public class Seller {
         this.name = name;
         this.birthDate = birthDate;
         this.email = new Email(email) ;
-        this.phoneNumber = phoneNumber ;
+        this.phoneNumber = new PhoneNumber(phoneNumber) ;
         this.bio = bio;
 
         this.id = UUID.randomUUID().toString();
@@ -45,7 +45,7 @@ public class Seller {
     public String getEmail() { return email.getEmail();}
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return phoneNumber.getNumero();
     }
 
     public ArrayList<Product> getProducts() {
