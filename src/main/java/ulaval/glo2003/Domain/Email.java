@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class Email {
 
-    public String email;
+    private String email;
     private static final String EMAIL_REGEX = "^([a-zA-Z0-9_.+-]+)*@([a-zA-Z0-9_.+-]+)*(\\.[a-z]+)$";
     private static Pattern pattern;
     private Matcher matcher;
@@ -24,12 +24,15 @@ public class Email {
             if (matcher.group(1)!=null && matcher.group(2)!=null && matcher.group(3).length()!=0){
                 this.email = email;
             }else {
-                throw new InvalidParamException("invalid email");
+                throw new InvalidParamException("Invalid parameter 'Email'.");
             }
         } else {
-            throw new InvalidParamException("invalid email");
+            throw new InvalidParamException("Invalid parameter 'Email'.");
         }
     }
 
+    public String getEmail() {
+        return email;
+    }
 
 }

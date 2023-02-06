@@ -3,6 +3,7 @@ package ulaval.glo2003;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import ulaval.glo2003.Domain.PhoneNumber;
 import ulaval.glo2003.Domain.Seller;
 import ulaval.glo2003.Domain.SellerParamsValidator;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
@@ -19,18 +20,20 @@ public class SellerRessource {
     private final ArrayList<Seller> sellers;
 
     public SellerRessource( ArrayList<Seller> sellers){
-        this.sellers = sellers ;
-    }
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response seller(SellerRequest sellerRequest){
+            this.sellers = sellers ;
+        }
+        @POST
+        @Consumes(MediaType.APPLICATION_JSON)
+        public Response seller(SellerRequest sellerRequest){
 
-        Seller seller;
-        String name = sellerRequest.name;
-        String bio = sellerRequest.bio;
-        String birthDate = sellerRequest.birthdate;
+            Seller seller;
+            String name = sellerRequest.name;
+            String bio = sellerRequest.bio;
+            String birthDate = sellerRequest.birthdate;
+            String email = sellerRequest.email;
+            String phoneNumber = sellerRequest.phoneNumber;
 
-        SellerParamsValidator sellerParams = new SellerParamsValidator(name, bio, birthDate);
+            SellerParamsValidator sellerParams = new SellerParamsValidator(name, bio, birthDate, email, phoneNumber);
         seller = new Seller(
                 sellerParams.name,
                 sellerRequest.birthdate,

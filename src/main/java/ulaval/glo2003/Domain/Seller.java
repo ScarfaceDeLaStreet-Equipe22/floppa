@@ -42,9 +42,7 @@ public class Seller {
         return id;
     }
 
-    public Email getEmail() {
-        return email;
-    }
+    public String getEmail() { return email.getEmail();}
 
     public String getPhoneNumber() {
         return phoneNumber;
