@@ -42,8 +42,8 @@ public class Seller {
         return id;
     }
 
-    public String getEmail() {
-        return email.getEmail();
+    public Email getEmail() {
+        return email;
     }
 
     public String getPhoneNumber() {

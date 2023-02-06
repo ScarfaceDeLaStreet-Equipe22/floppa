@@ -1,12 +1,14 @@
 package ulaval.glo2003.Domain;
 
+import ulaval.glo2003.api.Utils.InvalidParamException;
+
 public class PhoneNumber {
     private final String numero ;
     public PhoneNumber(String numero) {
         if (phoneNumberValidator(numero)){
             this.numero = numero;
         } else {
-            throw new RuntimeException("erreur");
+            throw new InvalidParamException("invalid phone number");
         }
     }
 

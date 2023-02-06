@@ -1,5 +1,6 @@
 package ulaval.glo2003.api.Seller;
 
+import ulaval.glo2003.Domain.Email;
 import ulaval.glo2003.Domain.Product;
 
 import java.time.Instant;
@@ -9,7 +10,7 @@ public class SellerResponse {
     public String name;
     public String bio;
     public String birthDate;
-    public String email;
+    public Email email;
     public String phoneNumber ;
 
     public Instant createdAt;
@@ -22,7 +23,7 @@ public class SellerResponse {
             String name,
             String bio,
             String birthDate,
-            String email,
+            Email email,
             String phoneNumber,
             ArrayList<Product> products
     ) {
