@@ -14,8 +14,7 @@ public class Main {
 
         HealthResource healthResource = new HealthResource();
 
-        resourceConfig
-                .register(healthResource);
+        resourceConfig.register(healthResource);
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();
     }
