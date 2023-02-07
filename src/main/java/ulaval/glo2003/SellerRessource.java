@@ -3,16 +3,14 @@ package ulaval.glo2003;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import ulaval.glo2003.domain.Seller;
-import ulaval.glo2003.domain.SellerClasses.SellerParamsValidator;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
 import ulaval.glo2003.api.Seller.SellerRequest;
 import ulaval.glo2003.api.Seller.SellerResponse;
+import ulaval.glo2003.domain.Seller;
+import ulaval.glo2003.domain.SellerClasses.SellerParamsValidator;
 
 @Path("/sellers")
 public class SellerRessource {
@@ -85,7 +83,8 @@ public class SellerRessource {
                         foundSeller.getBirthDate(),
                         foundSeller.getEmail(),
                         foundSeller.getPhoneNumber(),
-                        foundSeller.getProducts(), foundSeller.getCreatedAt());
+                        foundSeller.getProducts(),
+                        foundSeller.getCreatedAt());
         return Response.ok(response).build();
     }
 }

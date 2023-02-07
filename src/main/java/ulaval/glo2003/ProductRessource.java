@@ -5,13 +5,13 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
-import ulaval.glo2003.domain.*;
-import ulaval.glo2003.domain.ProductClasses.Amount;
-import ulaval.glo2003.domain.Product;
-import ulaval.glo2003.domain.ProductClasses.ProductCategory;
-import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
+import ulaval.glo2003.domain.*;
+import ulaval.glo2003.domain.Product;
+import ulaval.glo2003.domain.ProductClasses.Amount;
+import ulaval.glo2003.domain.ProductClasses.ProductCategory;
+import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
 
 @Path("/products")
 public class ProductRessource {
@@ -24,10 +24,7 @@ public class ProductRessource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response pong(
-            ProductRequest request,
-            @HeaderParam("X-Seller-Id") String sellerId) {
-
+    public Response pong(ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
 
         Product product;
 
@@ -45,19 +42,13 @@ public class ProductRessource {
                 new Product(
                         V.getTitle(), V.getDescription(), V.getCategory(), V.getSuggestedPrice());
 
-
-
         Seller seller = getSeller(sellerId);
-
 
         seller.addProduct(product);
 
         String url = "http://localhost:8080/Products/" + sellerId;
 
-
-        return Response.created(URI.create(url)).build() ;
-
-
+        return Response.created(URI.create(url)).build();
     }
 
     public Seller getSeller(String id) {

@@ -2,9 +2,7 @@ package ulaval.glo2003.domain.SellerClasses;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import ulaval.glo2003.api.SellerExceptions.InvalidBirthdateException;
-import ulaval.glo2003.api.Utils.InvalidParamException;
 
 public class Date {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

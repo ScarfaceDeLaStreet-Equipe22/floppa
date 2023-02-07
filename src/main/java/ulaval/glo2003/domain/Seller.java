@@ -1,13 +1,11 @@
 package ulaval.glo2003.domain;
 
+import java.util.ArrayList;
+import java.util.UUID;
 import ulaval.glo2003.domain.SellerClasses.Date;
 import ulaval.glo2003.domain.SellerClasses.DateTime;
 import ulaval.glo2003.domain.SellerClasses.Email;
 import ulaval.glo2003.domain.SellerClasses.PhoneNumber;
-
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.UUID;
 
 public class Seller {
 
@@ -16,7 +14,7 @@ public class Seller {
     public Date birthDate;
 
     public Email email;
-    public PhoneNumber phoneNumber ;
+    public PhoneNumber phoneNumber;
     public ArrayList<Product> products;
     public DateTime createdAt;
     private final String id;
