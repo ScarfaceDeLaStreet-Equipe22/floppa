@@ -11,7 +11,7 @@ une issue peut être : Ready, In Progress, In review, Done.
 De plus, il y a quatre différentes vues du tableau : une pour chaque itération.
 
 ### Présence de l'ensemble des issues dans les bonnes colonnes
-Dans le screenshot ci-dessous, on observe l'avancement des tâches selon leur status.
+Dans la capture d'écran ci-dessous, on observe l'avancement des tâches selon leur statut.
 
 ### Screenshots
 <p align="center">
@@ -20,8 +20,8 @@ Dans le screenshot ci-dessous, on observe l'avancement des tâches selon leur st
 
 
 ## Milestone
-L'équipe a créée 4 milestones pour mener le projet à bien : un pour chaque Tp.
-Chaque issue doit être associée à un milestone, ainsi, dans la section milestone, l'équipe peut facilement suivre l'avancement des tâches.
+L'équipe a créé 4 milestones pour mener le projet à bien : un pour chaque Tp.
+Chaque issue doit être associé à un milestone, ainsi, dans la section milestone, l'équipe peut facilement suivre l'avancement des tâches.
 ### Screenshots
 <p align="center">
   <img src="./img/milestone.jpg">
@@ -29,9 +29,9 @@ Chaque issue doit être associée à un milestone, ainsi, dans la section milest
 
 
 ## Issues
-Chaque tâche est représentée par une issue. Chaque issue a été déterminé en équipe.
+Chaque tâche est représentée par une issue. Chaque issue a été déterminée en équipe.
 De plus, pour une meilleure séparation du travail à faire, chaque fonctionnalité est représentée en issue et est liée à un label nommé feature.
-Chaque issue de type feature est redécoupé en d'autres issues qui sont associées à des labels story.
+Chaque issue de type feature est redécoupée en d'autres issues qui sont associées à des labels story.
 Grâce à cette séparation issue, il devient facile de suivre notre stratégie de branching. Il suffit de merge toutes les branches story dans celle de la feature.
 Toutes les issues se retrouvent dans le gitProject.
 ### Screenshots
@@ -71,11 +71,11 @@ Voici l'historique de notre branche develop.
 
 ## Fichiers ignorés
 Notre fichier .gitignore ignore tous les fichiers de configurations personnelles, ceux qui contiennent des paths personnelles et
-les fichiers auto-générés (par java et intelliJ). Le fichier est principalement fait à partir d'un dépôt git collaboratif qui discute des fichiers gitignore. https://gist.github.com/dedunumax/54e82214715e35439227
+les fichiers autogénérés (par java et intelliJ). Le fichier est principalement fait à partir d'un dépôt git collaboratif qui discute des fichiers gitignore. https://gist.github.com/dedunumax/54e82214715e35439227
 
 ## Stratégie de commit
 1. Voici la nomenclature  des commits que l'équipe à choisi : `type : message`. Voici un exemple : s:"ajout de la classe Product". Les types de commits sont : story (s), clean code (c) et documentation (d).
-2. On commit lorsque le travail éffectuer pour la branche est terminé, puis on fait un dernier commit de clean code.
+2. On commit lorsque le travail effectué pour la branche est terminé, puis on fait un dernier commit de clean code.
 
 ## Stratégie de branchage
 1. Les branches de base sont main et develop. Main est la branche principale, elle contient le code officiel pour chaque remise. Il y a aussi la branche develop qui contient nos branches features. La branche sert principalement à tester le code regroupé avant de tout mettre dans la branche main.
