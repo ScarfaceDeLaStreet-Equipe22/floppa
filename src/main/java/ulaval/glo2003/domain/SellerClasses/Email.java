@@ -1,4 +1,4 @@
-package ulaval.glo2003.Domain.SellerClasses;
+package ulaval.glo2003.domain.SellerClasses;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

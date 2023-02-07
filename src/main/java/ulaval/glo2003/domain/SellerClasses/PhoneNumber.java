@@ -1,4 +1,4 @@
-package ulaval.glo2003.Domain.SellerClasses;
+package ulaval.glo2003.domain.SellerClasses;
 
 import ulaval.glo2003.api.SellerExceptions.InvalidPhoneNumberException;
 import ulaval.glo2003.api.Utils.InvalidParamException;

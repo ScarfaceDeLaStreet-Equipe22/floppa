@@ -1,8 +1,8 @@
-package ulaval.glo2003.Domain.SellerClasses;
+package ulaval.glo2003.domain.SellerClasses;
 
 import java.time.LocalDate;
 
-import ulaval.glo2003.Domain.SellerClasses.Date;
+import ulaval.glo2003.domain.SellerClasses.Date;
 import ulaval.glo2003.api.SellerExceptions.*;
 import ulaval.glo2003.api.Utils.InvalidNameException;
 import ulaval.glo2003.api.Utils.MissingNameException;

@@ -1,7 +1,7 @@
 package ulaval.glo2003.domain.ProductClasses;
 
-import ulaval.glo2003.Domain.ProductClasses.Amount;
-import ulaval.glo2003.Domain.ProductClasses.ProductCategory;
+import ulaval.glo2003.domain.ProductClasses.Amount;
+import ulaval.glo2003.domain.ProductClasses.ProductCategory;
 import ulaval.glo2003.api.ProductExceptions.*;
 
 public class ProductParameterValidator {

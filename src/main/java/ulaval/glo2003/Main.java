@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import ulaval.glo2003.Domain.Seller;
+import ulaval.glo2003.domain.Seller;
 import ulaval.glo2003.api.Utils.InvalidParamExceptionMapper;
 import ulaval.glo2003.api.Utils.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.api.Utils.MissingParamExceptionMapper;
-import ulaval.glo2003.health.HealthResource;
+import ulaval.glo2003.HealthResource;
 
 public class Main {
 
@@ -35,6 +35,5 @@ public class Main {
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
 
         server.start();
-        System.out.println("salut");
     }
 }

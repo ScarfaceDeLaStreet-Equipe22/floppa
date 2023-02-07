@@ -5,11 +5,11 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
-import ulaval.glo2003.Domain.*;
-import ulaval.glo2003.Domain.ProductClasses.Amount;
-import ulaval.glo2003.Domain.Product;
-import ulaval.glo2003.Domain.ProductClasses.ProductCategory;
-import ulaval.glo2003.Domain.ProductClasses.ProductParameterValidator;
+import ulaval.glo2003.domain.*;
+import ulaval.glo2003.domain.ProductClasses.Amount;
+import ulaval.glo2003.domain.Product;
+import ulaval.glo2003.domain.ProductClasses.ProductCategory;
+import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
 

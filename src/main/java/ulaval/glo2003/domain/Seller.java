@@ -1,9 +1,9 @@
-package ulaval.glo2003.Domain;
+package ulaval.glo2003.domain;
 
-import ulaval.glo2003.Domain.SellerClasses.Date;
-import ulaval.glo2003.Domain.SellerClasses.DateTime;
-import ulaval.glo2003.Domain.SellerClasses.Email;
-import ulaval.glo2003.Domain.SellerClasses.PhoneNumber;
+import ulaval.glo2003.domain.SellerClasses.Date;
+import ulaval.glo2003.domain.SellerClasses.DateTime;
+import ulaval.glo2003.domain.SellerClasses.Email;
+import ulaval.glo2003.domain.SellerClasses.PhoneNumber;
 
 import java.time.Instant;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package ulaval.glo2003.Domain.SellerClasses;
+package ulaval.glo2003.domain.SellerClasses;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

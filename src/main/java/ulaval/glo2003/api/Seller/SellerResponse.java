@@ -1,7 +1,7 @@
 package ulaval.glo2003.api.Seller;
 
-import ulaval.glo2003.Domain.Product;
-import ulaval.glo2003.Domain.SellerClasses.DateTime;
+import ulaval.glo2003.domain.Product;
+import ulaval.glo2003.domain.SellerClasses.DateTime;
 import ulaval.glo2003.api.Product.ProductResponse;
 
 import java.time.Instant;
