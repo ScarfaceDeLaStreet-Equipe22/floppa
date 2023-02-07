@@ -1,6 +1,6 @@
 package ulaval.glo2003.api.Product;
 
-import ulaval.glo2003.Domain.SellerClasses.DateTime;
+import ulaval.glo2003.domain.SellerClasses.DateTime;
 
 public class ProductResponse {
 

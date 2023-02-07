@@ -1,4 +1,4 @@
-package ulaval.glo2003.Domain.ProductClasses;
+package ulaval.glo2003.domain.ProductClasses;
 
 import java.util.ArrayList;
 import ulaval.glo2003.api.ProductExceptions.InvalidCategoryException;

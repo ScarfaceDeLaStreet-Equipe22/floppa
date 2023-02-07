@@ -1,8 +1,8 @@
-package ulaval.glo2003.Domain;
+package ulaval.glo2003.domain;
 
-import ulaval.glo2003.Domain.ProductClasses.Amount;
-import ulaval.glo2003.Domain.ProductClasses.ProductCategory;
-import ulaval.glo2003.Domain.SellerClasses.DateTime;
+import ulaval.glo2003.domain.ProductClasses.Amount;
+import ulaval.glo2003.domain.ProductClasses.ProductCategory;
+import ulaval.glo2003.domain.SellerClasses.DateTime;
 
 import java.util.UUID;
 
