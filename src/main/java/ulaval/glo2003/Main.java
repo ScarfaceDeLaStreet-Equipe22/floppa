@@ -12,8 +12,11 @@ public class Main {
         ResourceConfig resourceConfig = new ResourceConfig();
         URI uri = URI.create("http://localhost:8080/");
 
+        HealthResource healthResource = new HealthResource();
+
+        resourceConfig
+                .register(healthResource);
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
         server.start();
-        System.out.println("salut");
     }
 }
