@@ -12,15 +12,17 @@ public class Product {
     public ProductCategory category;
     public String id;
     public DateTime createdAt;
+    public Seller seller ;
 
     public Product(
-            String title, String description, ProductCategory category, Amount suggestedPrice) {
+            String title, String description, ProductCategory category, Amount suggestedPrice, Seller seller) {
         this.category = category;
         this.suggestedPrice = suggestedPrice;
         this.description = description;
         this.title = title;
         this.createdAt = new DateTime();
         this.id = UUID.randomUUID().toString();
+        this.seller = seller ;
     }
 
     public String getTitle() {
@@ -45,5 +47,9 @@ public class Product {
 
     public DateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public Seller getSeller() {
+        return seller;
     }
 }
