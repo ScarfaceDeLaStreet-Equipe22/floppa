@@ -21,7 +21,8 @@ public class Main {
 
         // seller and product config
         SellerRessource seller = new SellerRessource(sellers);
-        ProductRessource produit = new ProductRessource(sellers);
+        ProductRessource produit = new ProductRessource(sellers, allProducts);
+        OfferRessource offerRessource = new OfferRessource(allProducts) ;
 
 
         ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource());
@@ -30,6 +31,7 @@ public class Main {
         resourceConfig
                 .register(seller)
                 .register(produit)
+                .register(offerRessource)
                 .register(new MissingParamExceptionMapper())
                 .register(new InvalidParamExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper());

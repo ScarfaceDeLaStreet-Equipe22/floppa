@@ -13,6 +13,7 @@ public class ProductResponse {
     public String createdAt;
 
     public SellerInProductResponse seller ;
+    public OffersInProductsResponse offers ;
 
     public ProductResponse(
             String title,
@@ -20,7 +21,7 @@ public class ProductResponse {
             String category,
             String suggestedPrice,
             String id,
-            DateTime createdAt, Seller seller) {
+            DateTime createdAt, Seller seller,int numberOfOffers, Double average) {
         this.title = title;
         this.description = description;
         this.category = category;
@@ -28,5 +29,6 @@ public class ProductResponse {
         this.id = id;
         this.createdAt = createdAt.getDateTime();
         this.seller = new SellerInProductResponse(seller.getId(),seller.getName()) ;
+        this.offers = new OffersInProductsResponse(numberOfOffers, average);
     }
 }

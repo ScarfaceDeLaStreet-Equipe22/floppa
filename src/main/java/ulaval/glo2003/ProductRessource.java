@@ -20,9 +20,11 @@ import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
 public class ProductRessource {
 
     private final ArrayList<Seller> sellers;
+    private ArrayList<Product> allProducts ;
 
-    public ProductRessource(ArrayList<Seller> sellers) {
+    public ProductRessource(ArrayList<Seller> sellers, ArrayList<Product> allProducts) {
         this.sellers = sellers;
+        this.allProducts = allProducts ;
     }
 
     @POST
@@ -49,6 +51,7 @@ public class ProductRessource {
 
 
         seller.addProduct(product);
+        allProducts.add(product);
 
         String url = "http://localhost:8080/Products/" + sellerId;
 
@@ -61,27 +64,16 @@ public class ProductRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getProducts(@PathParam("Productid") String productId){
 
-        ArrayList<Product> allProducts = new ArrayList<>() ;
-        Product productNeeded = null;
-        for(Seller seller: sellers){
-            allProducts.addAll(seller.getProducts()) ;
-        }
 
-        for (Product product : allProducts){
-            if (product.getId().equals(productId)){
-                productNeeded = product ;
-            }
-            else {
-                throw new ItemNotFoundException() ;
-            }
-        }
+        Product productNeeded = getProduct(productId);
+
         ProductResponse productResponse = new ProductResponse(productNeeded.getTitle(),
                 productNeeded.getDescription(),
                 productNeeded.getCategory(),
                 productNeeded.getSuggestedPrice(),
                 productNeeded.getId(),
                 productNeeded.getCreatedAt(),
-                productNeeded.getSeller());
+                productNeeded.getSeller(), productNeeded.getNumberOfOffers(), productNeeded.getAverageAmountOfOffers());
         return Response.ok(productResponse).build();
     }
 
@@ -96,5 +88,19 @@ public class ProductRessource {
             throw new ItemNotFoundException();
         }
         return sellerNeeded;
+    }
+
+
+    public Product getProduct(String id){
+        Product productNeeded = null;
+        for (Product product : allProducts){
+            if (product.getId().equals(id)){
+                productNeeded = product ;
+            }
+            else {
+                throw new ItemNotFoundException() ;
+            }
+        }
+        return productNeeded ;
     }
 }
