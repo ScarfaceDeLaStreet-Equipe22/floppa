@@ -34,7 +34,7 @@ public class ProductRessource {
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-        Offer offer = new Offer(request.amount, request.message, buyerUsername);
+        Offer offer = new Offer(request.getAmount(), request.getMessage(), buyerUsername);
 
         Product productNeeded = getProduct(productId);
 
