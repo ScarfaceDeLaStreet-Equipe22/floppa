@@ -5,7 +5,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import ulaval.glo2003.api.Product.ProductRequest;
+import ulaval.glo2003.api.Product.ProductResponse;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
 import ulaval.glo2003.domain.*;
 import ulaval.glo2003.domain.Product;
@@ -38,17 +41,48 @@ public class ProductRessource {
                         productCategory,
                         suggestedPrice);
 
+        Seller seller = getSeller(sellerId);
         product =
                 new Product(
-                        V.getTitle(), V.getDescription(), V.getCategory(), V.getSuggestedPrice());
+                        V.getTitle(), V.getDescription(), V.getCategory(), V.getSuggestedPrice(), seller);
 
-        Seller seller = getSeller(sellerId);
+
 
         seller.addProduct(product);
 
         String url = "http://localhost:8080/Products/" + sellerId;
 
         return Response.created(URI.create(url)).build();
+    }
+
+
+    @GET
+    @Path("{Productid}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getProducts(@PathParam("Productid") String productId){
+
+        ArrayList<Product> allProducts = new ArrayList<>() ;
+        Product productNeeded = null;
+        for(Seller seller: sellers){
+            allProducts.addAll(seller.getProducts()) ;
+        }
+
+        for (Product product : allProducts){
+            if (product.getId().equals(productId)){
+                productNeeded = product ;
+            }
+            else {
+                throw new ItemNotFoundException() ;
+            }
+        }
+        ProductResponse productResponse = new ProductResponse(productNeeded.getTitle(),
+                productNeeded.getDescription(),
+                productNeeded.getCategory(),
+                productNeeded.getSuggestedPrice(),
+                productNeeded.getId(),
+                productNeeded.getCreatedAt(),
+                productNeeded.getSeller());
+        return Response.ok(productResponse).build();
     }
 
     public Seller getSeller(String id) {

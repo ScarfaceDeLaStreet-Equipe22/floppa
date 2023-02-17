@@ -46,7 +46,7 @@ public class SellerResponse {
                             product.getCategory(),
                             product.getSuggestedPrice(),
                             product.getId(),
-                            product.getCreatedAt());
+                            product.getCreatedAt(),product.getSeller());
             productResponses.add(productResponse);
         }
 

@@ -9,6 +9,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.Utils.InvalidParamExceptionMapper;
 import ulaval.glo2003.api.Utils.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.api.Utils.MissingParamExceptionMapper;
+import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.Seller;
 
 public class Main {
@@ -16,10 +17,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         ArrayList<Seller> sellers = new ArrayList<>();
+        ArrayList<Product> allProducts = new ArrayList<>() ;
 
         // seller and product config
         SellerRessource seller = new SellerRessource(sellers);
         ProductRessource produit = new ProductRessource(sellers);
+
 
         ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource());
 
