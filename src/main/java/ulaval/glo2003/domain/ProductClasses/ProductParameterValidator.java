@@ -62,8 +62,5 @@ public class ProductParameterValidator {
         if (category.getCategory().isEmpty()) {
             throw new InvalidCategoryException();
         }
-        //        if (suggestedPrice.getAmount().isEmpty()) {
-        //            throw new InvalidSuggestedPriceException();
-        //        }
     }
 }

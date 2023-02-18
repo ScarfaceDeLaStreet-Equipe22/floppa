@@ -1,5 +1,6 @@
 package ulaval.glo2003.domain;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import ulaval.glo2003.domain.ProductClasses.Amount;
 import ulaval.glo2003.domain.ProductClasses.ProductCategory;
@@ -12,17 +13,24 @@ public class Product {
     public ProductCategory category;
     public String id;
     public DateTime createdAt;
-    public Seller seller ;
+    public Seller seller;
+
+    public ArrayList<Offer> offers;
 
     public Product(
-            String title, String description, ProductCategory category, Amount suggestedPrice, Seller seller) {
+            String title,
+            String description,
+            ProductCategory category,
+            Amount suggestedPrice,
+            Seller seller) {
         this.category = category;
         this.suggestedPrice = suggestedPrice;
         this.description = description;
         this.title = title;
         this.createdAt = new DateTime();
         this.id = UUID.randomUUID().toString();
-        this.seller = seller ;
+        this.seller = seller;
+        this.offers = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -51,5 +59,25 @@ public class Product {
 
     public Seller getSeller() {
         return seller;
+    }
+
+    public void addOffer(Offer offer) {
+        this.offers.add(offer);
+    }
+
+    public int getNumberOfOffers() {
+        return offers.size();
+    }
+
+    public double getAverageAmountOfOffers() {
+        if (offers.size() != 0) {
+            double total = 0;
+            for (Offer offer : offers) {
+                total += offer.getAmount();
+            }
+            return total / offers.size();
+        } else {
+            return 0;
+        }
     }
 }
