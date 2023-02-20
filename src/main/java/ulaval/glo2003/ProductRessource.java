@@ -5,6 +5,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import ulaval.glo2003.api.Offer.OfferRequest;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
@@ -95,6 +98,36 @@ public class ProductRessource {
                         productNeeded.getNumberOfOffers(),
                         productNeeded.getAverageAmountOfOffers());
         return Response.ok(productResponse).build();
+    }
+
+    @GET
+    public Response getFilteredProducts(@QueryParam("sellerId") String sellerId,
+                                        @QueryParam("title") String title,
+                                        @QueryParam("category") String categoryName,
+                                        @QueryParam("minPrice") float minPrice,
+                                        @QueryParam("maxPrice") float maxPrice)
+    {
+        System.out.println("SellerId = " + sellerId);
+        System.out.println("Title = " + title);
+        System.out.println("Category = " + categoryName);
+        System.out.println("MinPrice = " + minPrice);
+        System.out.println("MaxPrice = " + maxPrice);
+
+        List<ProductResponse> filteredProducts = allProducts.stream()
+                .filter(product -> true)
+                .map(product ->  new ProductResponse(
+                        product.getTitle(),
+                        product.getDescription(),
+                        product.getCategory(),
+                        product.getSuggestedPrice(),
+                        product.getId(),
+                        product.getCreatedAt(),
+                        product.getSeller(),
+                        product.getNumberOfOffers(),
+                        product.getAverageAmountOfOffers()))
+                .collect(Collectors.toList());
+
+        return Response.ok(filteredProducts).build();
     }
 
     public Seller getSeller(String id) {
