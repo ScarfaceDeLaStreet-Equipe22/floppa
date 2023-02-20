@@ -19,11 +19,11 @@ import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
 public class ProductRessource {
 
     private final ArrayList<Seller> sellers;
-    private ArrayList<Product> allProducts;
+    private final ArrayList<Product> products;
 
-    public ProductRessource(ArrayList<Seller> sellers, ArrayList<Product> allProducts) {
+    public ProductRessource(ArrayList<Seller> sellers, ArrayList<Product> products) {
         this.sellers = sellers;
-        this.allProducts = allProducts;
+        this.products = products;
     }
 
     @POST
@@ -45,7 +45,8 @@ public class ProductRessource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response pong(ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
+    public Response createProduct(
+            ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
 
         Product product;
 
@@ -69,7 +70,7 @@ public class ProductRessource {
                         seller);
 
         seller.addProduct(product);
-        allProducts.add(product);
+        products.add(product);
 
         String url = "http://localhost:8080/Products/" + sellerId;
 
@@ -112,7 +113,7 @@ public class ProductRessource {
 
     public Product getProduct(String id) {
         Product productNeeded = null;
-        for (Product product : allProducts) {
+        for (Product product : products) {
             if (product.getId().equals(id)) {
                 productNeeded = product;
             } else {
