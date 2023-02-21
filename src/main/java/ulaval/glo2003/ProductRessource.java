@@ -19,11 +19,11 @@ import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
 public class ProductRessource {
 
     private final ArrayList<Seller> sellers;
-    private ArrayList<Product> allProducts;
+    private final ArrayList<Product> products;
 
-    public ProductRessource(ArrayList<Seller> sellers, ArrayList<Product> allProducts) {
+    public ProductRessource(ArrayList<Seller> sellers, ArrayList<Product> products) {
         this.sellers = sellers;
-        this.allProducts = allProducts;
+        this.products = products;
     }
 
     @POST
@@ -45,14 +45,15 @@ public class ProductRessource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response pong(ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
+    public Response createProduct(
+            ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
 
-        Product product;
+        Product newProduct;
 
         ProductCategory productCategory = new ProductCategory(request.getCategory());
         Amount suggestedPrice = new Amount(request.getSuggestedPrice());
 
-        ProductParameterValidator V =
+        ProductParameterValidator productParameterValidator =
                 new ProductParameterValidator(
                         request.getTitle(),
                         request.getDescription(),
@@ -60,16 +61,16 @@ public class ProductRessource {
                         suggestedPrice);
 
         Seller seller = getSeller(sellerId);
-        product =
+        newProduct =
                 new Product(
-                        V.getTitle(),
-                        V.getDescription(),
-                        V.getCategory(),
-                        V.getSuggestedPrice(),
+                        productParameterValidator.getTitle(),
+                        productParameterValidator.getDescription(),
+                        productParameterValidator.getCategory(),
+                        productParameterValidator.getSuggestedPrice(),
                         seller);
 
-        seller.addProduct(product);
-        allProducts.add(product);
+        seller.addProduct(newProduct);
+        products.add(newProduct);
 
         String url = "http://localhost:8080/Products/" + sellerId;
 
@@ -112,7 +113,7 @@ public class ProductRessource {
 
     public Product getProduct(String id) {
         Product productNeeded = null;
-        for (Product product : allProducts) {
+        for (Product product : products) {
             if (product.getId().equals(id)) {
                 productNeeded = product;
             } else {
