@@ -48,12 +48,12 @@ public class ProductRessource {
     public Response createProduct(
             ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
 
-        Product product;
+        Product newProduct;
 
         ProductCategory productCategory = new ProductCategory(request.getCategory());
         Amount suggestedPrice = new Amount(request.getSuggestedPrice());
 
-        ProductParameterValidator V =
+        ProductParameterValidator productParameterValidator =
                 new ProductParameterValidator(
                         request.getTitle(),
                         request.getDescription(),
@@ -61,16 +61,16 @@ public class ProductRessource {
                         suggestedPrice);
 
         Seller seller = getSeller(sellerId);
-        product =
+        newProduct =
                 new Product(
-                        V.getTitle(),
-                        V.getDescription(),
-                        V.getCategory(),
-                        V.getSuggestedPrice(),
+                        productParameterValidator.getTitle(),
+                        productParameterValidator.getDescription(),
+                        productParameterValidator.getCategory(),
+                        productParameterValidator.getSuggestedPrice(),
                         seller);
 
-        seller.addProduct(product);
-        products.add(product);
+        seller.addProduct(newProduct);
+        products.add(newProduct);
 
         String url = "http://localhost:8080/Products/" + sellerId;
 
