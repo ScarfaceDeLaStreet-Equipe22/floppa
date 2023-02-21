@@ -8,10 +8,12 @@ public class OfferRequest {
     public OfferRequest() {}
 
     public String getAmount() {
+
         return amount;
     }
 
     public String getMessage() {
+
         return message;
     }
 }

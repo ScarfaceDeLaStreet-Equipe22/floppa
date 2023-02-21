@@ -6,7 +6,6 @@ public class Offer {
 
     public Amount amount;
     public String message;
-
     public String buyerUsername;
 
     public Offer(String amount, String message, String buyerUsername) {
@@ -16,14 +15,17 @@ public class Offer {
     }
 
     public Double getAmount() {
+
         return amount.getAmount();
     }
 
     public String getMessage() {
+
         return message;
     }
 
     public String buyerUsername() {
+
         return buyerUsername;
     }
 }
