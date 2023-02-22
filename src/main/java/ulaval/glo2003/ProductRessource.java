@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import ulaval.glo2003.api.Offer.OfferRequest;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
+import ulaval.glo2003.api.ProductExceptions.ItemNotFoundProductIdException;
+import ulaval.glo2003.api.ProductExceptions.ItemNotFoundSellerIdException;
+import ulaval.glo2003.api.ProductExceptions.MissingSellerIdException;
 import ulaval.glo2003.domain.*;
 import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.ProductClasses.Amount;
@@ -29,17 +31,13 @@ public class ProductRessource {
     @POST
     @Path("{Productid}/offers")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response offre(
-            OfferRequest request,
+    public Response offre(OfferRequest request,
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
         Offer offer = new Offer(request.getAmount(), request.getMessage(), buyerUsername);
-
         Product productNeeded = getProduct(productId);
-
         productNeeded.addOffer(offer);
-
         return Response.status(201).build();
     }
 
@@ -48,18 +46,18 @@ public class ProductRessource {
     public Response pong(ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
 
         Product product;
-
+        if (sellerId.isEmpty()){
+            throw new MissingSellerIdException() ;
+        }
+        Seller seller = getSeller(sellerId);
         ProductCategory productCategory = new ProductCategory(request.getCategory());
         Amount suggestedPrice = new Amount(request.getSuggestedPrice());
-
         ProductParameterValidator V =
                 new ProductParameterValidator(
                         request.getTitle(),
                         request.getDescription(),
                         productCategory,
                         suggestedPrice);
-
-        Seller seller = getSeller(sellerId);
         product =
                 new Product(
                         V.getTitle(),
@@ -70,9 +68,7 @@ public class ProductRessource {
 
         seller.addProduct(product);
         allProducts.add(product);
-
         String url = "http://localhost:8080/Products/" + sellerId;
-
         return Response.created(URI.create(url)).build();
     }
 
@@ -82,7 +78,6 @@ public class ProductRessource {
     public Response getProducts(@PathParam("Productid") String productId) {
 
         Product productNeeded = getProduct(productId);
-
         ProductResponse productResponse =
                 new ProductResponse(
                         productNeeded.getTitle(),
@@ -105,7 +100,7 @@ public class ProductRessource {
             }
         }
         if (sellerNeeded == null) {
-            throw new ItemNotFoundException();
+            throw new ItemNotFoundSellerIdException();
         }
         return sellerNeeded;
     }
@@ -116,7 +111,7 @@ public class ProductRessource {
             if (product.getId().equals(id)) {
                 productNeeded = product;
             } else {
-                throw new ItemNotFoundException();
+                throw new ItemNotFoundProductIdException();
             }
         }
         return productNeeded;
