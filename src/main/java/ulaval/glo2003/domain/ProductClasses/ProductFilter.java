@@ -27,6 +27,12 @@ public class ProductFilter
         if(!checkProductSeller(product))
             return false;
 
+        if(!checkProductTitle(product))
+            return false;
+
+        if(!checkProductCategory(product))
+            return false;
+
         return true;
     }
 
@@ -38,4 +44,19 @@ public class ProductFilter
         return product.getSeller().getId().equals(sellerId);
     }
 
+    private boolean checkProductTitle(Product product)
+    {
+        if(title == null)
+            return true;
+
+        return product.getTitle().toLowerCase().contains(title.toLowerCase());
+    }
+
+    private boolean checkProductCategory(Product product)
+    {
+        if(categoryName == null)
+            return true;
+
+        return product.getCategory().equals(categoryName);
+    }
 }
