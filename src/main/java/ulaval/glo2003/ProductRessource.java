@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import ulaval.glo2003.api.Offer.OfferRequest;
+import ulaval.glo2003.api.Product.ProductListResponse;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
@@ -128,7 +129,7 @@ public class ProductRessource {
                         .collect(Collectors.toList());
         ;
 
-        return Response.ok(filteredProducts).build();
+        return Response.ok(new ProductListResponse(filteredProducts)).build();
     }
 
     public Seller getSeller(String id) {
