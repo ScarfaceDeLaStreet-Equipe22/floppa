@@ -6,10 +6,7 @@ import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import ulaval.glo2003.api.Offer.OfferRequest;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
@@ -20,8 +17,6 @@ import ulaval.glo2003.domain.ProductClasses.Amount;
 import ulaval.glo2003.domain.ProductClasses.ProductCategory;
 import ulaval.glo2003.domain.ProductClasses.ProductFilter;
 import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
-
-import javax.swing.text.html.Option;
 
 @Path("/products")
 public class ProductRessource {
@@ -106,27 +101,32 @@ public class ProductRessource {
     }
 
     @GET
-    public Response getFilteredProducts(@QueryParam("sellerId") String sellerId,
-                                        @QueryParam("title") String title,
-                                        @QueryParam("category") String categoryName,
-                                        @QueryParam("minPrice") String minPrice,
-                                        @QueryParam("maxPrice") String maxPrice)
-    {
-        ProductFilter productFilter = new ProductFilter(sellerId, title, categoryName, minPrice, maxPrice);
+    public Response getFilteredProducts(
+            @QueryParam("sellerId") String sellerId,
+            @QueryParam("title") String title,
+            @QueryParam("category") String categoryName,
+            @QueryParam("minPrice") String minPrice,
+            @QueryParam("maxPrice") String maxPrice) {
+        ProductFilter productFilter =
+                new ProductFilter(sellerId, title, categoryName, minPrice, maxPrice);
 
-        List<ProductResponse> filteredProducts = allProducts.stream()
-                .filter(productFilter::checkProduct)
-                .map(product ->  new ProductResponse(
-                        product.getTitle(),
-                        product.getDescription(),
-                        product.getCategory(),
-                        product.getSuggestedPrice(),
-                        product.getId(),
-                        product.getCreatedAt(),
-                        product.getSeller(),
-                        product.getNumberOfOffers(),
-                        product.getAverageAmountOfOffers()))
-                .collect(Collectors.toList());;
+        List<ProductResponse> filteredProducts =
+                allProducts.stream()
+                        .filter(productFilter::checkProduct)
+                        .map(
+                                product ->
+                                        new ProductResponse(
+                                                product.getTitle(),
+                                                product.getDescription(),
+                                                product.getCategory(),
+                                                product.getSuggestedPrice(),
+                                                product.getId(),
+                                                product.getCreatedAt(),
+                                                product.getSeller(),
+                                                product.getNumberOfOffers(),
+                                                product.getAverageAmountOfOffers()))
+                        .collect(Collectors.toList());
+        ;
 
         return Response.ok(filteredProducts).build();
     }
@@ -155,5 +155,4 @@ public class ProductRessource {
         }
         return productNeeded;
     }
-
 }
