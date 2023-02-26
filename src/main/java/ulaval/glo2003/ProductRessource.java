@@ -6,7 +6,9 @@ import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import ulaval.glo2003.api.Offer.OfferRequest;
 import ulaval.glo2003.api.Product.ProductRequest;
@@ -16,7 +18,10 @@ import ulaval.glo2003.domain.*;
 import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.ProductClasses.Amount;
 import ulaval.glo2003.domain.ProductClasses.ProductCategory;
+import ulaval.glo2003.domain.ProductClasses.ProductFilter;
 import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
+
+import javax.swing.text.html.Option;
 
 @Path("/products")
 public class ProductRessource {
@@ -104,17 +109,13 @@ public class ProductRessource {
     public Response getFilteredProducts(@QueryParam("sellerId") String sellerId,
                                         @QueryParam("title") String title,
                                         @QueryParam("category") String categoryName,
-                                        @QueryParam("minPrice") float minPrice,
-                                        @QueryParam("maxPrice") float maxPrice)
+                                        @QueryParam("minPrice") String minPrice,
+                                        @QueryParam("maxPrice") String maxPrice)
     {
-        System.out.println("SellerId = " + sellerId);
-        System.out.println("Title = " + title);
-        System.out.println("Category = " + categoryName);
-        System.out.println("MinPrice = " + minPrice);
-        System.out.println("MaxPrice = " + maxPrice);
+        ProductFilter productFilter = new ProductFilter(sellerId, title, categoryName, minPrice, maxPrice);
 
         List<ProductResponse> filteredProducts = allProducts.stream()
-                .filter(product -> true)
+                .filter(productFilter::checkProduct)
                 .map(product ->  new ProductResponse(
                         product.getTitle(),
                         product.getDescription(),
@@ -125,7 +126,7 @@ public class ProductRessource {
                         product.getSeller(),
                         product.getNumberOfOffers(),
                         product.getAverageAmountOfOffers()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());;
 
         return Response.ok(filteredProducts).build();
     }
