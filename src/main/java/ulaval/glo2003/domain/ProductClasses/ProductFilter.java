@@ -24,7 +24,18 @@ public class ProductFilter
 
     public boolean checkProduct(Product product)
     {
+        if(!checkProductSeller(product))
+            return false;
+
         return true;
+    }
+
+    private boolean checkProductSeller(Product product)
+    {
+        if(sellerId == null)
+            return true;
+
+        return product.getSeller().getId().equals(sellerId);
     }
 
 }
