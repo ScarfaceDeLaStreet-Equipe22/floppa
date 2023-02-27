@@ -15,10 +15,10 @@ public class OfferValidator {
     public String buyerUsername;
 
     public OfferValidator(String amount, String message, String buyerUsername, Product product) {
-        assertParamNotNull(amount, message, buyerUsername);
+        assertParamNotNull(amount, message);
         assertParamNotEmpty(amount, message, buyerUsername);
         ValidateMinimumAmount(product, amount);
-        ValidateIfBuyerAlreadyMadeOffer(product, buyerUsername);
+        ValidateIfBuyerAlreadyMadeOfferOnProduct(product, buyerUsername);
         this.amount = new Amount(amount);
         this.message = message;
         this.buyerUsername = buyerUsername;
@@ -26,20 +26,18 @@ public class OfferValidator {
     }
 
     public String getAmount() {
-        return String.valueOf(amount);
+        return String.valueOf(amount.getAmount());
     }
 
     public String getMessage() {
-
         return message;
     }
 
     public String getBuyerUsername() {
-
         return buyerUsername;
     }
 
-    private void assertParamNotNull(String amount, String message, String buyerUsername) {
+    private void assertParamNotNull(String amount, String message) {
         if (amount == null) {
             throw new MissingAmountException();
         }
@@ -49,11 +47,10 @@ public class OfferValidator {
     }
 
     private void assertParamNotEmpty(String amount, String message, String buyerUsername) {
-
         if (amount.isEmpty()) {
             throw new InvalidTitleException();
         }
-        if (message.length()<100) {
+        if (message.length() < 100) {
             throw new InvalidDescriptionException();
         }
         if (buyerUsername.isEmpty()) {
@@ -61,18 +58,18 @@ public class OfferValidator {
         }
     }
 
-    private void ValidateMinimumAmount(Product product, String amount){
+    private void ValidateMinimumAmount(Product product, String amount) {
         Double suggestedPrice = new Amount(product.getSuggestedPrice()).getAmount();
         Double offerAmount = new Amount(amount).getAmount();
 
-        if (suggestedPrice < offerAmount){
+        if (offerAmount < suggestedPrice) {
             throw new InvalidAmountException();
         }
     }
-    private void ValidateIfBuyerAlreadyMadeOffer(Product product, String buyerUsername){
+
+    private void ValidateIfBuyerAlreadyMadeOfferOnProduct(Product product, String buyerUsername) {
         for (Offer offer : product.offers) {
-            if (offer.getBuyerUsername().equals(buyerUsername))
-                throw new NotPermittedException();
-            }
+            if (offer.getBuyerUsername().equals(buyerUsername)) throw new NotPermittedException();
         }
+    }
 }

@@ -36,12 +36,19 @@ public class ProductRessource {
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-        Product productNeeded = getProduct(productId);
-        OfferValidator offerValidator = new OfferValidator(request.getAmount(), request.getMessage(), buyerUsername, productNeeded);
+        Product productForOffer = getProduct(productId);
 
-        Offer offer = new Offer(offerValidator.getAmount(), offerValidator.getMessage(), offerValidator.getBuyerUsername());
+        OfferValidator offerValidator =
+                new OfferValidator(
+                        request.getAmount(), request.getMessage(), buyerUsername, productForOffer);
 
-        productNeeded.addOffer(offer);
+        Offer offer =
+                new Offer(
+                        offerValidator.getAmount(),
+                        offerValidator.getMessage(),
+                        offerValidator.getBuyerUsername());
+
+        productForOffer.addOffer(offer);
 
         return Response.status(201).build();
     }
@@ -52,8 +59,8 @@ public class ProductRessource {
             ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
 
         Product product;
-        if (sellerId.isEmpty()){
-            throw new MissingSellerIdException() ;
+        if (sellerId.isEmpty()) {
+            throw new MissingSellerIdException();
         }
         Seller seller = getSeller(sellerId);
         ProductCategory productCategory = new ProductCategory(request.getCategory());
@@ -126,5 +133,4 @@ public class ProductRessource {
         }
         return productNeeded;
     }
-
 }

@@ -8,7 +8,6 @@ public class Offer {
     public Amount amount;
     public String message;
     public String buyerUsername;
-
     public DateTime createdAt;
 
     public Offer(String amount, String message, String buyerUsername) {
@@ -18,18 +17,15 @@ public class Offer {
         this.createdAt = new DateTime();
     }
 
-    public Double getAmount() {
-
-        return amount.getAmount();
+    public String getAmount() {
+        return String.valueOf(amount);
     }
 
     public String getMessage() {
-
         return message;
     }
 
     public String getBuyerUsername() {
-
         return buyerUsername;
     }
 }
