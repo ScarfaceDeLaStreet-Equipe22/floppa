@@ -34,7 +34,9 @@ public class ProductRessource {
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-        Offer offer = new Offer(request.getAmount(), request.getMessage(), buyerUsername);
+        OfferValidator offerValidator = new OfferValidator(request.getAmount(), request.getMessage(), buyerUsername);
+
+        Offer offer = new Offer(offerValidator.getAmount(), offerValidator.getMessage(), offerValidator.getBuyerUsername());
 
         Product productNeeded = getProduct(productId);
 
@@ -122,5 +124,4 @@ public class ProductRessource {
         }
         return productNeeded;
     }
-
 }
