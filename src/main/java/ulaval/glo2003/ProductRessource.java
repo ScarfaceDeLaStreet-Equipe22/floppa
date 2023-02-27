@@ -52,6 +52,11 @@ public class ProductRessource {
 
         Product newProduct;
 
+        Product product;
+        if (sellerId.isEmpty()){
+            throw new MissingSellerIdException() ;
+        }
+        Seller seller = getSeller(sellerId);
         ProductCategory productCategory = new ProductCategory(request.getCategory());
         Amount suggestedPrice = new Amount(request.getSuggestedPrice());
 
@@ -61,9 +66,7 @@ public class ProductRessource {
                         request.getDescription(),
                         productCategory,
                         suggestedPrice);
-
-        Seller seller = getSeller(sellerId);
-        newProduct =
+        product =
                 new Product(
                         productParameterValidator.getTitle(),
                         productParameterValidator.getDescription(),
@@ -71,8 +74,8 @@ public class ProductRessource {
                         productParameterValidator.getSuggestedPrice(),
                         seller);
 
-        seller.addProduct(newProduct);
-        products.add(newProduct);
+        seller.addProduct(product);
+        products.add(product);
 
         String url = "http://localhost:8080/Products/" + sellerId;
 
@@ -108,7 +111,7 @@ public class ProductRessource {
             }
         }
         if (sellerNeeded == null) {
-            throw new ItemNotFoundException();
+            throw new ItemNotFoundSellerIdException();
         }
         return sellerNeeded;
     }
@@ -119,9 +122,10 @@ public class ProductRessource {
             if (product.getId().equals(id)) {
                 productNeeded = product;
             } else {
-                throw new ItemNotFoundException();
+                throw new ItemNotFoundProductIdException();
             }
         }
         return productNeeded;
     }
+
 }
