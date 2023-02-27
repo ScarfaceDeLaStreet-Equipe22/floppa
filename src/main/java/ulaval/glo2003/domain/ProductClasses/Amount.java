@@ -12,7 +12,6 @@ public class Amount {
     }
 
     private void AmountValidation(String amount) {
-//        try {
             if (amount != null) {
                 if (amount.isEmpty()) {
                     throw new InvalidSuggestedPriceException();
@@ -26,10 +25,7 @@ public class Amount {
                 }
             } else {
                 throw new MissingSuggestedPriceException() ;
-//            }
-//        } catch (Exception e) {
-//            throw new InvalidSuggestedPriceException();
-//        }
+
     }
     }
 
