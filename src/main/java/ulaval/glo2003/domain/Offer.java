@@ -24,7 +24,7 @@ public class Offer {
         return message;
     }
 
-    public String buyerUsername() {
+    public String getBuyerUsername() {
 
         return buyerUsername;
     }

@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import ulaval.glo2003.api.Offer.OfferRequest;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
+import ulaval.glo2003.api.ProductExceptions.ItemNotFoundProductIdException;
+import ulaval.glo2003.api.ProductExceptions.ItemNotFoundSellerIdException;
+import ulaval.glo2003.api.ProductExceptions.MissingSellerIdException;
 import ulaval.glo2003.domain.*;
 import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.ProductClasses.Amount;
@@ -34,11 +36,10 @@ public class ProductRessource {
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-        OfferValidator offerValidator = new OfferValidator(request.getAmount(), request.getMessage(), buyerUsername);
+        Product productNeeded = getProduct(productId);
+        OfferValidator offerValidator = new OfferValidator(request.getAmount(), request.getMessage(), buyerUsername, productNeeded);
 
         Offer offer = new Offer(offerValidator.getAmount(), offerValidator.getMessage(), offerValidator.getBuyerUsername());
-
-        Product productNeeded = getProduct(productId);
 
         productNeeded.addOffer(offer);
 
@@ -49,8 +50,6 @@ public class ProductRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProduct(
             ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
-
-        Product newProduct;
 
         Product product;
         if (sellerId.isEmpty()){

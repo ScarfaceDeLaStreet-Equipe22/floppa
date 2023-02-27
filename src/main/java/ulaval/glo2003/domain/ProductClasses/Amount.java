@@ -1,5 +1,6 @@
 package ulaval.glo2003.domain.ProductClasses;
 
+import ulaval.glo2003.api.ProductExceptions.InvalidAmountException;
 import ulaval.glo2003.api.ProductExceptions.InvalidSuggestedPriceException;
 import ulaval.glo2003.api.ProductExceptions.MissingSuggestedPriceException;
 
@@ -16,17 +17,17 @@ public class Amount {
                 if (amount.isEmpty()) {
                     throw new InvalidSuggestedPriceException();
                 } else {
-                    double amountDouble =  Double.parseDouble(amount);
-                    if (amountDouble < 1){
-                        throw new InvalidSuggestedPriceException() ;
-                    } else {
-                        this.amount = amountDouble ;
+                    try{
+                        double amountDouble =  Double.parseDouble(amount);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new InvalidAmountException();
                     }
                 }
             } else {
-                throw new MissingSuggestedPriceException() ;
-
-    }
+                throw new MissingSuggestedPriceException();
+        }
     }
 
     public double getAmount() {
