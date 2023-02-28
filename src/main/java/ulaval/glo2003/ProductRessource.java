@@ -14,15 +14,13 @@ import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
 import ulaval.glo2003.api.Validators.ProductRequestValidator;
 import ulaval.glo2003.domain.*;
 import ulaval.glo2003.domain.Product;
-import ulaval.glo2003.domain.ProductClasses.Amount;
-import ulaval.glo2003.domain.ProductClasses.ProductCategory;
-import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
+
 
 @Path("/products")
 public class ProductRessource {
 
-    private final ArrayList<Seller> sellers;
-    private final ArrayList<Product> products;
+    private final ArrayList<Seller> sellers; //TODO ICI DEVRAIT ETRE LE SELLERREPOSITORY INJECTÉ
+    private final ArrayList<Product> products; //TODO ICI DEVRAIT ETRE LE PRODUCTREPOSITORY INJECTÉ
 
     public ProductRessource(ArrayList<Seller> sellers, ArrayList<Product> products) {
         this.sellers = sellers;
@@ -54,7 +52,8 @@ public class ProductRessource {
         productRequestValidator.validateRequest();
 
         Seller seller = getSeller(sellerId);
-        Product productCreated = (new ProductMapper()).mapRequestToEntity(productRequest, seller);
+        ProductMapper productMapper = new ProductMapper();
+        Product productCreated = productMapper.mapRequestToEntity(productRequest, seller); //TODO ICI DEVRAIT USE LE SELLERREPOSITORY
 
         seller.addProduct(productCreated); //TODO ajout des Repository
         products.add(productCreated);
@@ -74,7 +73,7 @@ public class ProductRessource {
         return Response.ok(productResponse).build();
     }
 
-    public Seller getSeller(String id) { //TODO PRENDRE LA METHODE FINDBYID DANS LE SELLERREPOSITORY
+    public Seller getSeller(String id) { //TODO PRENDRE LA METHODE FINDBYID DANS LE SELLERREPOSITORY DONC À SUPP EVENTUELLEMENT
         Seller sellerNeeded = null;
         for (Seller seller : sellers) {
             if (seller.getId().equals(id)) {
@@ -87,7 +86,7 @@ public class ProductRessource {
         return sellerNeeded;
     }
 
-    public Product getProduct(String id) { //TODO PRENDRE LA METHODE FINDBYID DANS LE PRODUCTREPOSITORY
+    public Product getProduct(String id) { //TODO PRENDRE LA METHODE FINDBYID DANS LE PRODUCTREPOSITORY DONC À SUPP EVENTUELLEMENT
         Product productNeeded = null;
         for (Product product : products) {
             if (product.getId().equals(id)) {

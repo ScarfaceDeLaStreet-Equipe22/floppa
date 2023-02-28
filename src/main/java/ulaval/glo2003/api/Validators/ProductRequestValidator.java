@@ -6,7 +6,7 @@ import ulaval.glo2003.domain.ProductClasses.Amount;
 
 public class ProductRequestValidator implements IValidator<ProductRequest>{
 
-    ProductRequest productRequest;
+    private final ProductRequest productRequest;
     public ProductRequestValidator(ProductRequest productRequest){
         this.productRequest = productRequest;
     }
