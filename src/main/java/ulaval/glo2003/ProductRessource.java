@@ -5,10 +5,13 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
+
+import ulaval.glo2003.api.Mappers.ProductMapper;
 import ulaval.glo2003.api.Offer.OfferRequest;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
+import ulaval.glo2003.api.Validators.ProductRequestValidator;
 import ulaval.glo2003.domain.*;
 import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.ProductClasses.Amount;
@@ -45,35 +48,18 @@ public class ProductRessource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createProduct(
-            ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
+    public Response createProduct(ProductRequest productRequest, @HeaderParam("X-Seller-Id") String sellerId) {
 
-        Product newProduct;
-
-        ProductCategory productCategory = new ProductCategory(request.getCategory());
-        Amount suggestedPrice = new Amount(request.getSuggestedPrice());
-
-        ProductParameterValidator productParameterValidator =
-                new ProductParameterValidator(
-                        request.getTitle(),
-                        request.getDescription(),
-                        productCategory,
-                        suggestedPrice);
+        ProductRequestValidator productRequestValidator = new ProductRequestValidator(productRequest);
+        productRequestValidator.validateRequest();
 
         Seller seller = getSeller(sellerId);
-        newProduct =
-                new Product(
-                        productParameterValidator.getTitle(),
-                        productParameterValidator.getDescription(),
-                        productParameterValidator.getCategory(),
-                        productParameterValidator.getSuggestedPrice(),
-                        seller);
+        Product productCreated = (new ProductMapper()).mapRequestToEntity(productRequest, seller);
 
-        seller.addProduct(newProduct);
-        products.add(newProduct);
+        seller.addProduct(productCreated);
+        products.add(productCreated);
 
         String url = "http://localhost:8080/Products/" + sellerId;
-
         return Response.created(URI.create(url)).build();
     }
 
