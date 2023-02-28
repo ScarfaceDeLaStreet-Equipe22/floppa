@@ -7,11 +7,24 @@ import ulaval.glo2003.domain.Seller;
 public class SellerMapper {
 
     public SellerResponse mapEntityToResponse(Seller seller) {
-        return null;
+        return new SellerResponse(
+                seller.getId(),
+                seller.getName(),
+                seller.getBio(),
+                seller.getBirthDate(),
+                seller.getEmail(),
+                seller.getPhoneNumber(),
+                seller.getProducts(),
+                seller.getCreatedAt());
     }
 
 
     public Seller mapRequestToEntity(SellerRequest sellerRequest) {
-        return null;
+        return new Seller(
+                sellerRequest.getName(),
+                sellerRequest.getBirthdate(),
+                sellerRequest.getEmail(),
+                sellerRequest.getPhoneNumber(),
+                sellerRequest.getBio());
     }
 }

@@ -12,8 +12,8 @@ public class ProductRequestValidator implements IValidator<ProductRequest>{
     }
     @Override
     public void validateRequest() {
-        assertParamNotEmpty(productRequest);
         assertParamNotNull(productRequest);
+        assertParamNotEmpty(productRequest);
     }
 
     @Override

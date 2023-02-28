@@ -19,7 +19,6 @@ public class Offer {
 
     public String getAmount() {
         return String.valueOf(amount);
-
     }
 
     public String getMessage() {

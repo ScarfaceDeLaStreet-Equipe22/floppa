@@ -15,8 +15,8 @@ public class SellerRequestValidator implements IValidator<SellerRequest>{
     }
     @Override
     public void validateRequest() {
-        assertParamNotEmpty(sellerRequest);
         assertParamNotNull(sellerRequest);
+        assertParamNotEmpty(sellerRequest);
     }
 
     @Override
