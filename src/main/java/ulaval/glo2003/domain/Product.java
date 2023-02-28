@@ -73,7 +73,7 @@ public class Product {
         if (offers.size() != 0) {
             double total = 0;
             for (Offer offer : offers) {
-                total += offer.getAmount();
+                total += Double.parseDouble(offer.getAmount());
             }
             return total / offers.size();
         } else {

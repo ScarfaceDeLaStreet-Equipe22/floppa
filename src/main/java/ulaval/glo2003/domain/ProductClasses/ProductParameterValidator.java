@@ -12,6 +12,8 @@ public class ProductParameterValidator {
             String title, String description, ProductCategory category, Amount suggestedPrice) {
         assertParamNotNull(title, description, category, suggestedPrice);
         assertParamNotEmpty(title, description, category, suggestedPrice);
+        assertSuggestedPrice(suggestedPrice);
+
         this.category = category;
         this.suggestedPrice = suggestedPrice;
         this.description = description;
@@ -61,6 +63,12 @@ public class ProductParameterValidator {
         }
         if (category.getCategory().isEmpty()) {
             throw new InvalidCategoryException();
+        }
+    }
+
+    private void assertSuggestedPrice(Amount suggestedPrice) {
+        if (suggestedPrice.getAmount() < 1) {
+            throw new InvalidSuggestedPriceException();
         }
     }
 }
