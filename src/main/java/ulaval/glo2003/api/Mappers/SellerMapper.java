@@ -6,7 +6,7 @@ import ulaval.glo2003.domain.Seller;
 
 public class SellerMapper {
 
-    public SellerResponse mapEntitytoResponse(Seller seller) {
+    public SellerResponse mapEntityToResponse(Seller seller) {
         return null;
     }
 

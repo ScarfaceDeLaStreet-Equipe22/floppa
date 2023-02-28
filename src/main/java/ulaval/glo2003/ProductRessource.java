@@ -56,7 +56,7 @@ public class ProductRessource {
         Seller seller = getSeller(sellerId);
         Product productCreated = (new ProductMapper()).mapRequestToEntity(productRequest, seller);
 
-        seller.addProduct(productCreated);
+        seller.addProduct(productCreated); //TODO ajout des Repository
         products.add(productCreated);
 
         String url = "http://localhost:8080/Products/" + sellerId;
@@ -68,23 +68,13 @@ public class ProductRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getProducts(@PathParam("Productid") String productId) {
 
-        Product productNeeded = getProduct(productId);
+        Product product = getProduct(productId);
+        ProductResponse productResponse = (new ProductMapper()).mapEntityToResponse(product);
 
-        ProductResponse productResponse =
-                new ProductResponse(
-                        productNeeded.getTitle(),
-                        productNeeded.getDescription(),
-                        productNeeded.getCategory(),
-                        productNeeded.getSuggestedPrice(),
-                        productNeeded.getId(),
-                        productNeeded.getCreatedAt(),
-                        productNeeded.getSeller(),
-                        productNeeded.getNumberOfOffers(),
-                        productNeeded.getAverageAmountOfOffers());
         return Response.ok(productResponse).build();
     }
 
-    public Seller getSeller(String id) {
+    public Seller getSeller(String id) { //TODO PRENDRE LA METHODE FINDBYID DANS LE SELLERREPOSITORY
         Seller sellerNeeded = null;
         for (Seller seller : sellers) {
             if (seller.getId().equals(id)) {
@@ -97,7 +87,7 @@ public class ProductRessource {
         return sellerNeeded;
     }
 
-    public Product getProduct(String id) {
+    public Product getProduct(String id) { //TODO PRENDRE LA METHODE FINDBYID DANS LE PRODUCTREPOSITORY
         Product productNeeded = null;
         for (Product product : products) {
             if (product.getId().equals(id)) {

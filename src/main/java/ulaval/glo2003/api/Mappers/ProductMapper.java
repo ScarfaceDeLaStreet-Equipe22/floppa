@@ -11,8 +11,17 @@ public class ProductMapper{
 
 
     public ProductMapper(){}
-    public ProductResponse mapEntitytoResponse(Product product) {
-        return null;
+    public ProductResponse mapEntityToResponse(Product product) {
+        return new ProductResponse(
+                product.getTitle(),
+                product.getDescription(),
+                product.getCategory(),
+                product.getSuggestedPrice(),
+                product.getId(),
+                product.getCreatedAt(),
+                product.getSeller(),
+                product.getNumberOfOffers(),
+                product.getAverageAmountOfOffers());
     }
 
     public Product mapRequestToEntity(ProductRequest productRequest, Seller seller) {

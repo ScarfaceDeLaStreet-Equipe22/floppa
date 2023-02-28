@@ -6,7 +6,7 @@ import ulaval.glo2003.domain.Offer;
 
 public class OfferMapper{
 
-    public OfferResponse mapEntitytoResponse(Offer offer) {
+    public OfferResponse mapEntityToResponse(Offer offer) {
         return null;
     }
 
