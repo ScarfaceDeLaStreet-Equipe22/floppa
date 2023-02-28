@@ -1,6 +1,6 @@
 package ulaval.glo2003.application;
 
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
+import ulaval.glo2003.api.Utils.ItemNotFoundException;
 import ulaval.glo2003.domain.Seller;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class SellerRepository implements IRepository<Seller>{
         }
         catch (Exception e)
         {
-            throw new ItemNotFoundException();
+            throw new ItemNotFoundException("seller not found");
         }
     }
 
@@ -39,7 +39,7 @@ public class SellerRepository implements IRepository<Seller>{
                 return seller;
             }
         }
-        throw new ItemNotFoundException();
+        throw new ItemNotFoundException("seller not found");
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SellerRepository implements IRepository<Seller>{
             }
         }
         if (!isSellerFound) {
-            throw new ItemNotFoundException();
+            throw new ItemNotFoundException("seller not found");
         }
     }
 

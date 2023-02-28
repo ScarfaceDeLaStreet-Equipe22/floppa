@@ -124,7 +124,7 @@ public class ProductRessource {
                 new ProductFilter(sellerId, title, categoryName, minPrice, maxPrice);
 
         List<ProductResponse> filteredProducts =
-                allProducts.stream()
+                products.stream()
                         .filter(productFilter::checkProduct)
                         .map(
                                 product ->

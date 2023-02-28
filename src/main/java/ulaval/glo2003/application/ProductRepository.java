@@ -1,6 +1,6 @@
 package ulaval.glo2003.application;
 
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
+import ulaval.glo2003.api.Utils.ItemNotFoundException;
 import ulaval.glo2003.domain.Product;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class ProductRepository implements IRepository<Product>{
         }
         catch (Exception e)
         {
-            throw new ItemNotFoundException();
+            throw new ItemNotFoundException("Product not found");
         }
     }
 
@@ -39,7 +39,7 @@ public class ProductRepository implements IRepository<Product>{
                 return product;
             }
         }
-        throw new ItemNotFoundException();
+        throw new ItemNotFoundException("Product not found");
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ProductRepository implements IRepository<Product>{
             }
         }
         if (!isProductFound) {
-            throw new ItemNotFoundException();
+            throw new ItemNotFoundException("Product not found");
         }
     }
 
