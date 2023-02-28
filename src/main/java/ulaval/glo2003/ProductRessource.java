@@ -7,14 +7,18 @@ import java.net.URI;
 import java.util.ArrayList;
 
 import ulaval.glo2003.api.Mappers.ProductMapper;
+import java.util.List;
+import java.util.stream.Collectors;
 import ulaval.glo2003.api.Offer.OfferRequest;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
-import ulaval.glo2003.api.Validators.ProductRequestValidator;
 import ulaval.glo2003.domain.*;
 import ulaval.glo2003.domain.Product;
 
+import ulaval.glo2003.domain.ProductClasses.Amount;
+import ulaval.glo2003.domain.ProductClasses.ProductCategory;
+import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
 
 @Path("/products")
 public class ProductRessource {
@@ -35,11 +39,19 @@ public class ProductRessource {
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-        Offer offer = new Offer(request.getAmount(), request.getMessage(), buyerUsername);
+        Product productForOffer = getProduct(productId);
 
-        Product productNeeded = getProduct(productId);
+        OfferValidator offerValidator =
+                new OfferValidator(
+                        request.getAmount(), request.getMessage(), buyerUsername, productForOffer);
 
-        productNeeded.addOffer(offer);
+        Offer offer =
+                new Offer(
+                        offerValidator.getAmount(),
+                        offerValidator.getMessage(),
+                        offerValidator.getBuyerUsername());
+
+        productForOffer.addOffer(offer);
 
         return Response.status(201).build();
     }
@@ -59,6 +71,7 @@ public class ProductRessource {
         products.add(productCreated);
 
         String url = "http://localhost:8080/Products/" + sellerId;
+
         return Response.created(URI.create(url)).build();
     }
 
@@ -70,10 +83,53 @@ public class ProductRessource {
         Product product = getProduct(productId);
         ProductResponse productResponse = (new ProductMapper()).mapEntityToResponse(product);
 
+        ProductResponse productResponse =
+                new ProductResponse(
+                        productNeeded.getTitle(),
+                        productNeeded.getDescription(),
+                        productNeeded.getCategory(),
+                        productNeeded.getSuggestedPrice(),
+                        productNeeded.getId(),
+                        productNeeded.getCreatedAt(),
+                        productNeeded.getSeller(),
+                        productNeeded.getNumberOfOffers(),
+                        productNeeded.getAverageAmountOfOffers());
         return Response.ok(productResponse).build();
     }
 
     public Seller getSeller(String id) { //TODO PRENDRE LA METHODE FINDBYID DANS LE SELLERREPOSITORY DONC À SUPP EVENTUELLEMENT
+    @GET
+    public Response getFilteredProducts(
+            @QueryParam("sellerId") String sellerId,
+            @QueryParam("title") String title,
+            @QueryParam("category") String categoryName,
+            @QueryParam("minPrice") String minPrice,
+            @QueryParam("maxPrice") String maxPrice) {
+        ProductFilter productFilter =
+                new ProductFilter(sellerId, title, categoryName, minPrice, maxPrice);
+
+        List<ProductResponse> filteredProducts =
+                products.stream()
+                        .filter(productFilter::checkProduct)
+                        .map(
+                                product ->
+                                        new ProductResponse(
+                                                product.getTitle(),
+                                                product.getDescription(),
+                                                product.getCategory(),
+                                                product.getSuggestedPrice(),
+                                                product.getId(),
+                                                product.getCreatedAt(),
+                                                product.getSeller(),
+                                                product.getNumberOfOffers(),
+                                                product.getAverageAmountOfOffers()))
+                        .collect(Collectors.toList());
+        ;
+
+        return Response.ok(new ProductListResponse(filteredProducts)).build();
+    }
+
+    public Seller getSeller(String id) {
         Seller sellerNeeded = null;
         for (Seller seller : sellers) {
             if (seller.getId().equals(id)) {
@@ -81,7 +137,7 @@ public class ProductRessource {
             }
         }
         if (sellerNeeded == null) {
-            throw new ItemNotFoundException();
+            throw new ItemNotFoundSellerIdException();
         }
         return sellerNeeded;
     }
@@ -92,7 +148,7 @@ public class ProductRessource {
             if (product.getId().equals(id)) {
                 productNeeded = product;
             } else {
-                throw new ItemNotFoundException();
+                throw new ItemNotFoundProductIdException();
             }
         }
         return productNeeded;

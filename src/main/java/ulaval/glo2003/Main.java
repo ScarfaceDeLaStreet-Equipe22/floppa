@@ -9,6 +9,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.Utils.InvalidParamExceptionMapper;
 import ulaval.glo2003.api.Utils.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.api.Utils.MissingParamExceptionMapper;
+import ulaval.glo2003.api.Utils.NotPermitedExceptionMapper;
 import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.Seller;
 
@@ -31,7 +32,8 @@ public class Main {
                 .register(produit)
                 .register(new MissingParamExceptionMapper())
                 .register(new InvalidParamExceptionMapper())
-                .register(new ItemNotFoundExceptionMapper());
+                .register(new ItemNotFoundExceptionMapper())
+                .register(new NotPermitedExceptionMapper());
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
 

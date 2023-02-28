@@ -6,7 +6,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
+import ulaval.glo2003.api.ProductExceptions.ItemNotFoundSellerIdException;
 import ulaval.glo2003.api.Seller.SellerRequest;
 import ulaval.glo2003.api.Seller.SellerResponse;
 import ulaval.glo2003.api.Validators.SellerRequestValidator;
@@ -77,7 +77,7 @@ public class SellerRessource {
                 this.sellers.stream()
                         .filter(seller -> seller.getId().equals(sellerId))
                         .findFirst()
-                        .orElseThrow(() -> new ItemNotFoundException());
+                        .orElseThrow(() -> new ItemNotFoundSellerIdException());
 
         SellerResponse response =
                 new SellerResponse(
