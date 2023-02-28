@@ -1,7 +1,5 @@
 package ulaval.glo2003.application;
 
-import ulaval.glo2003.domain.Product;
-
 import java.util.ArrayList;
 
 public interface IRepository<T> {
@@ -12,7 +10,6 @@ public interface IRepository<T> {
 
     void deleteAll();
 
-    T findById(String id);
 
     void update(T entity);
 

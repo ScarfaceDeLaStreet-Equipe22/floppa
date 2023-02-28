@@ -19,7 +19,13 @@ public class ProductRepository implements IRepository<Product>{
 
     @Override
     public void remove(Product product) {
-        products.remove(product);
+        try{
+            products.remove(product);
+        }
+        catch (Exception e)
+        {
+            throw new ItemNotFoundException();
+        }
     }
 
     @Override
@@ -27,7 +33,6 @@ public class ProductRepository implements IRepository<Product>{
         products.clear();
     }
 
-    @Override
     public Product findById(String id){
         for (Product product : products) {
             if (product.getId().equals(id)) {
@@ -39,7 +44,16 @@ public class ProductRepository implements IRepository<Product>{
 
     @Override
     public void update(Product product){
-
+        boolean isProductFound = false;
+        for (Product currentProduct : products) {
+            if (currentProduct.getId().equals(product.getId())) {
+                products.set(products.indexOf(currentProduct), product);
+                isProductFound = true;
+            }
+        }
+        if (!isProductFound) {
+            throw new ItemNotFoundException();
+        }
     }
 
     @Override
