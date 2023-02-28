@@ -5,7 +5,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import ulaval.glo2003.api.Offer.OfferRequest;
+import ulaval.glo2003.api.Product.ProductListResponse;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
@@ -13,6 +16,7 @@ import ulaval.glo2003.domain.*;
 import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.ProductClasses.Amount;
 import ulaval.glo2003.domain.ProductClasses.ProductCategory;
+import ulaval.glo2003.domain.ProductClasses.ProductFilter;
 import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
 
 @Path("/products")
@@ -98,6 +102,37 @@ public class ProductRessource {
         return Response.ok(productResponse).build();
     }
 
+    @GET
+    public Response getFilteredProducts(
+            @QueryParam("sellerId") String sellerId,
+            @QueryParam("title") String title,
+            @QueryParam("category") String categoryName,
+            @QueryParam("minPrice") String minPrice,
+            @QueryParam("maxPrice") String maxPrice) {
+        ProductFilter productFilter =
+                new ProductFilter(sellerId, title, categoryName, minPrice, maxPrice);
+
+        List<ProductResponse> filteredProducts =
+                allProducts.stream()
+                        .filter(productFilter::checkProduct)
+                        .map(
+                                product ->
+                                        new ProductResponse(
+                                                product.getTitle(),
+                                                product.getDescription(),
+                                                product.getCategory(),
+                                                product.getSuggestedPrice(),
+                                                product.getId(),
+                                                product.getCreatedAt(),
+                                                product.getSeller(),
+                                                product.getNumberOfOffers(),
+                                                product.getAverageAmountOfOffers()))
+                        .collect(Collectors.toList());
+        ;
+
+        return Response.ok(new ProductListResponse(filteredProducts)).build();
+    }
+
     public Seller getSeller(String id) {
         Seller sellerNeeded = null;
         for (Seller seller : sellers) {
@@ -122,5 +157,4 @@ public class ProductRessource {
         }
         return productNeeded;
     }
-
 }
