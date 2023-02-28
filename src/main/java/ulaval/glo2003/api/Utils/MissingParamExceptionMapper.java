@@ -7,6 +7,6 @@ public class MissingParamExceptionMapper implements ExceptionMapper<MissingParam
     @Override
     public Response toResponse(MissingParamException e) {
         ErrorResponse response = new ErrorResponse(ExceptionCode.MISSING_PARAMETER, e.getMessage());
-        return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+        return Response.status(400).entity(response).build();
     }
 }

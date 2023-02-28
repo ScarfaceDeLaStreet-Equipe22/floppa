@@ -2,7 +2,6 @@ package ulaval.glo2003.api.Utils;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
 
 public class ItemNotFoundExceptionMapper implements ExceptionMapper<ItemNotFoundException> {
 
