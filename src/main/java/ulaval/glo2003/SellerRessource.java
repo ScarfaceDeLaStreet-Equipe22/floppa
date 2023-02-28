@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundException;
 import ulaval.glo2003.api.Seller.SellerRequest;
 import ulaval.glo2003.api.Seller.SellerResponse;
+import ulaval.glo2003.api.Validators.SellerRequestValidator;
 import ulaval.glo2003.domain.Seller;
 import ulaval.glo2003.domain.SellerClasses.SellerParamsValidator;
 
@@ -31,6 +32,9 @@ public class SellerRessource {
         String birthDate = sellerRequest.birthdate;
         String email = sellerRequest.email;
         String phoneNumber = sellerRequest.phoneNumber;
+
+        SellerRequestValidator sellerRequestValidator = new SellerRequestValidator(sellerRequest);
+        sellerRequestValidator.validateRequest();
 
         SellerParamsValidator sellerParams =
                 new SellerParamsValidator(name, bio, birthDate, email, phoneNumber);
