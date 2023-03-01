@@ -1,7 +1,11 @@
 package ulaval.glo2003.api.Product;
 
+import ulaval.glo2003.domain.Seller;
+
 public class ProductRequest {
 
+
+    public Seller seller;
     public String title;
     public String description;
     public String suggestedPrice;
@@ -23,5 +27,9 @@ public class ProductRequest {
 
     public String getCategory() {
         return category;
+    }
+
+    public Seller getSeller() {
+        return seller;
     }
 }

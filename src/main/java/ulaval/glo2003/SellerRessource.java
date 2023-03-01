@@ -3,54 +3,45 @@ package ulaval.glo2003;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundSellerIdException;
+
+import ulaval.glo2003.api.Mappers.SellerMapper;
 import ulaval.glo2003.api.Seller.SellerRequest;
 import ulaval.glo2003.api.Seller.SellerResponse;
+import ulaval.glo2003.api.Validators.SellerRequestValidator;
+import ulaval.glo2003.application.SellerRepository;
 import ulaval.glo2003.domain.Seller;
-import ulaval.glo2003.domain.SellerClasses.SellerParamsValidator;
 
 @Path("/sellers")
 public class SellerRessource {
 
-    private final ArrayList<Seller> sellers;
+    private final SellerRepository sellerRepository;
 
-    public SellerRessource(ArrayList<Seller> sellers) {
-        this.sellers = sellers;
+    public SellerRessource(SellerRepository sellerRepository) {
+        this.sellerRepository = sellerRepository;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response seller(SellerRequest sellerRequest) {
 
-        Seller seller;
-        String name = sellerRequest.name;
-        String bio = sellerRequest.bio;
-        String birthDate = sellerRequest.birthdate;
-        String email = sellerRequest.email;
-        String phoneNumber = sellerRequest.phoneNumber;
+        SellerRequestValidator sellerRequestValidator = new SellerRequestValidator(sellerRequest);
+        sellerRequestValidator.validateRequest();
 
-        SellerParamsValidator sellerParams =
-                new SellerParamsValidator(name, bio, birthDate, email, phoneNumber);
-        seller =
-                new Seller(
-                        sellerParams.name,
-                        sellerRequest.birthdate,
-                        sellerRequest.email,
-                        sellerRequest.phoneNumber,
-                        sellerParams.bio);
+        SellerMapper sellerMapper = new SellerMapper();
+        Seller sellerCreated = sellerMapper.mapRequestToEntity(sellerRequest);
 
-        sellers.add(seller);
+        sellerRepository.save(sellerCreated);
 
-        return Response.status(201).entity(seller).build();
+        return Response.status(201).entity(sellerCreated).build();
     }
 
     @GET
     public Response getAllSellers() {
         List<SellerResponse> sellerResponses =
-                this.sellers.stream()
+                this.sellerRepository.findAll().stream()
                         .map(
                                 seller ->
                                         new SellerResponse(
@@ -69,22 +60,12 @@ public class SellerRessource {
     @GET
     @Path("{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
-        Seller foundSeller =
-                this.sellers.stream()
-                        .filter(seller -> seller.getId().equals(sellerId))
-                        .findFirst()
-                        .orElseThrow(() -> new ItemNotFoundSellerIdException());
 
-        SellerResponse response =
-                new SellerResponse(
-                        foundSeller.getId(),
-                        foundSeller.getName(),
-                        foundSeller.getBio(),
-                        foundSeller.getBirthDate(),
-                        foundSeller.getEmail(),
-                        foundSeller.getPhoneNumber(),
-                        foundSeller.getProducts(),
-                        foundSeller.getCreatedAt());
-        return Response.ok(response).build();
+        Seller foundSeller = this.sellerRepository.findById(sellerId);
+
+        SellerMapper sellerMapper = new SellerMapper();
+        SellerResponse sellerResponse = sellerMapper.mapEntityToResponse(foundSeller);
+
+        return Response.ok(sellerResponse).build();
     }
 }

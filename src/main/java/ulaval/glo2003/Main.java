@@ -10,6 +10,8 @@ import ulaval.glo2003.api.Utils.InvalidParamExceptionMapper;
 import ulaval.glo2003.api.Utils.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.api.Utils.MissingParamExceptionMapper;
 import ulaval.glo2003.api.Utils.NotPermitedExceptionMapper;
+import ulaval.glo2003.application.ProductRepository;
+import ulaval.glo2003.application.SellerRepository;
 import ulaval.glo2003.domain.Product;
 import ulaval.glo2003.domain.Seller;
 
@@ -17,12 +19,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        ArrayList<Seller> sellers = new ArrayList<>();
-        ArrayList<Product> allProducts = new ArrayList<>();
+        ProductRepository productRepository = new ProductRepository();
+        SellerRepository sellerRepository = new SellerRepository();
 
         // seller and product config
-        SellerRessource seller = new SellerRessource(sellers);
-        ProductRessource produit = new ProductRessource(sellers, allProducts);
+        SellerRessource seller = new SellerRessource(sellerRepository);
+        ProductRessource produit = new ProductRessource(sellerRepository, productRepository);
 
         ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource());
 

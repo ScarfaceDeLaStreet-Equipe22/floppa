@@ -4,88 +4,68 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
-import java.util.ArrayList;
+
+import ulaval.glo2003.api.Mappers.OfferMapper;
+import ulaval.glo2003.api.Mappers.ProductMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import ulaval.glo2003.api.Offer.OfferRequest;
 import ulaval.glo2003.api.Product.ProductListResponse;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundProductIdException;
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundSellerIdException;
-import ulaval.glo2003.api.ProductExceptions.MissingSellerIdException;
+import ulaval.glo2003.api.Validators.OfferRequestValidator;
+import ulaval.glo2003.api.Validators.ProductRequestValidator;
+import ulaval.glo2003.application.ProductRepository;
+import ulaval.glo2003.application.SellerRepository;
 import ulaval.glo2003.domain.*;
 import ulaval.glo2003.domain.Product;
-import ulaval.glo2003.domain.ProductClasses.Amount;
-import ulaval.glo2003.domain.ProductClasses.ProductCategory;
 import ulaval.glo2003.domain.ProductClasses.ProductFilter;
-import ulaval.glo2003.domain.ProductClasses.ProductParameterValidator;
 
 @Path("/products")
 public class ProductRessource {
 
-    private final ArrayList<Seller> sellers;
-    private final ArrayList<Product> products;
+    private final SellerRepository sellerRepository;
+    private final ProductRepository productRepository;
 
-    public ProductRessource(ArrayList<Seller> sellers, ArrayList<Product> products) {
-        this.sellers = sellers;
-        this.products = products;
+    public ProductRessource(SellerRepository sellerRepository, ProductRepository productRepository) {
+        this.sellerRepository = sellerRepository;
+        this.productRepository = productRepository;
     }
 
     @POST
     @Path("{Productid}/offers")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response offre(
-            OfferRequest request,
+    public Response createOffre(
+            OfferRequest offerRequest,
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-        Product productForOffer = getProduct(productId);
+        Product productForOffer = productRepository.findById(productId);
 
-        OfferValidator offerValidator =
-                new OfferValidator(
-                        request.getAmount(), request.getMessage(), buyerUsername, productForOffer);
+        OfferRequestValidator offerRequestValidator = new OfferRequestValidator(offerRequest, buyerUsername, productForOffer);
+        offerRequestValidator.validateRequest();
 
-        Offer offer =
-                new Offer(
-                        offerValidator.getAmount(),
-                        offerValidator.getMessage(),
-                        offerValidator.getBuyerUsername());
+        OfferMapper offerMapper = new OfferMapper();
+        Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername);
 
-        productForOffer.addOffer(offer);
+        productForOffer.offerRepository.save(offer);
 
         return Response.status(201).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createProduct(
-            ProductRequest request, @HeaderParam("X-Seller-Id") String sellerId) {
+    public Response createProduct(ProductRequest productRequest, @HeaderParam("X-Seller-Id") String sellerId) {
 
-        Product product;
-        if (sellerId.isEmpty()) {
-            throw new MissingSellerIdException();
-        }
-        Seller seller = getSeller(sellerId);
-        ProductCategory productCategory = new ProductCategory(request.getCategory());
-        Amount suggestedPrice = new Amount(request.getSuggestedPrice());
+        ProductRequestValidator productRequestValidator = new ProductRequestValidator(productRequest);
+        productRequestValidator.validateRequest();
 
-        ProductParameterValidator productParameterValidator =
-                new ProductParameterValidator(
-                        request.getTitle(),
-                        request.getDescription(),
-                        productCategory,
-                        suggestedPrice);
-        product =
-                new Product(
-                        productParameterValidator.getTitle(),
-                        productParameterValidator.getDescription(),
-                        productParameterValidator.getCategory(),
-                        productParameterValidator.getSuggestedPrice(),
-                        seller);
+        Seller seller = sellerRepository.findById(sellerId);
+        ProductMapper productMapper = new ProductMapper();
+        Product productCreated = productMapper.mapRequestToEntity(productRequest, seller);
 
-        seller.addProduct(product);
-        products.add(product);
+        seller.addProduct(productCreated);
+        productRepository.save(productCreated);
 
         String url = "http://localhost:8080/Products/" + sellerId;
 
@@ -97,19 +77,10 @@ public class ProductRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getProducts(@PathParam("Productid") String productId) {
 
-        Product productNeeded = getProduct(productId);
+        Product product = productRepository.findById(productId);
+        ProductMapper productMapper = new ProductMapper();
+        ProductResponse productResponse = productMapper.mapEntityToResponse(product);
 
-        ProductResponse productResponse =
-                new ProductResponse(
-                        productNeeded.getTitle(),
-                        productNeeded.getDescription(),
-                        productNeeded.getCategory(),
-                        productNeeded.getSuggestedPrice(),
-                        productNeeded.getId(),
-                        productNeeded.getCreatedAt(),
-                        productNeeded.getSeller(),
-                        productNeeded.getNumberOfOffers(),
-                        productNeeded.getAverageAmountOfOffers());
         return Response.ok(productResponse).build();
     }
 
@@ -124,7 +95,7 @@ public class ProductRessource {
                 new ProductFilter(sellerId, title, categoryName, minPrice, maxPrice);
 
         List<ProductResponse> filteredProducts =
-                products.stream()
+                productRepository.findAll().stream()
                         .filter(productFilter::checkProduct)
                         .map(
                                 product ->
@@ -139,33 +110,8 @@ public class ProductRessource {
                                                 product.getNumberOfOffers(),
                                                 product.getAverageAmountOfOffers()))
                         .collect(Collectors.toList());
-        ;
 
         return Response.ok(new ProductListResponse(filteredProducts)).build();
     }
-
-    public Seller getSeller(String id) {
-        Seller sellerNeeded = null;
-        for (Seller seller : sellers) {
-            if (seller.getId().equals(id)) {
-                sellerNeeded = seller;
-            }
-        }
-        if (sellerNeeded == null) {
-            throw new ItemNotFoundSellerIdException();
-        }
-        return sellerNeeded;
-    }
-
-    public Product getProduct(String id) {
-        Product productNeeded = null;
-        for (Product product : products) {
-            if (product.getId().equals(id)) {
-                productNeeded = product;
-            } else {
-                throw new ItemNotFoundProductIdException();
-            }
-        }
-        return productNeeded;
-    }
 }
+
