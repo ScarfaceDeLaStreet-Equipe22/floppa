@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 
+import ulaval.glo2003.api.Mappers.OfferMapper;
 import ulaval.glo2003.api.Mappers.ProductMapper;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import ulaval.glo2003.api.Offer.OfferRequest;
 import ulaval.glo2003.api.Product.ProductListResponse;
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.Product.ProductResponse;
+import ulaval.glo2003.api.Validators.OfferRequestValidator;
 import ulaval.glo2003.api.Validators.ProductRequestValidator;
 import ulaval.glo2003.application.ProductRepository;
 import ulaval.glo2003.application.SellerRepository;
@@ -33,22 +35,20 @@ public class ProductRessource {
     @POST
     @Path("{Productid}/offers")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response offre(
-            OfferRequest request,
+    public Response createOffre(
+            OfferRequest offerRequest,
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
         Product productForOffer = productRepository.findById(productId);
 
-        OfferValidator offerValidator = new OfferValidator(request.getAmount(), request.getMessage(), buyerUsername, productForOffer);
+        OfferRequestValidator offerRequestValidator = new OfferRequestValidator(offerRequest, buyerUsername, productForOffer);
+        offerRequestValidator.validateRequest();
 
-        Offer offer =
-                new Offer(
-                        offerValidator.getAmount(),
-                        offerValidator.getMessage(),
-                        offerValidator.getBuyerUsername());
+        OfferMapper offerMapper = new OfferMapper();
+        Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername);
 
-        productForOffer.addOffer(offer);
+        productForOffer.offerRepository.save(offer);
 
         return Response.status(201).build();
     }

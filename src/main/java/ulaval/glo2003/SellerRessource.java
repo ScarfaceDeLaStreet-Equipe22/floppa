@@ -8,13 +8,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ulaval.glo2003.api.Mappers.SellerMapper;
-import ulaval.glo2003.api.ProductExceptions.ItemNotFoundSellerIdException;
 import ulaval.glo2003.api.Seller.SellerRequest;
 import ulaval.glo2003.api.Seller.SellerResponse;
 import ulaval.glo2003.api.Validators.SellerRequestValidator;
 import ulaval.glo2003.application.SellerRepository;
 import ulaval.glo2003.domain.Seller;
-import ulaval.glo2003.domain.SellerClasses.SellerParamsValidator;
 
 @Path("/sellers")
 public class SellerRessource {

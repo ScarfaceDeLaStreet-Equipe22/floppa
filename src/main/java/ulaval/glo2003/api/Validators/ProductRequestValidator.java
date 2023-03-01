@@ -2,22 +2,21 @@ package ulaval.glo2003.api.Validators;
 
 import ulaval.glo2003.api.Product.ProductRequest;
 import ulaval.glo2003.api.ProductExceptions.*;
-import ulaval.glo2003.domain.ProductClasses.Amount;
 
-public class ProductRequestValidator implements IValidator<ProductRequest>{
+public class ProductRequestValidator{
 
     private final ProductRequest productRequest;
     public ProductRequestValidator(ProductRequest productRequest){
         this.productRequest = productRequest;
     }
-    @Override
+
     public void validateRequest() {
-        assertParamNotNull(productRequest);
-        assertParamNotEmpty(productRequest);
+        assertParamNotNull();
+        assertParamNotEmpty();
     }
 
-    @Override
-    public void assertParamNotNull(ProductRequest productRequest) {
+
+    public void assertParamNotNull() {
         if (productRequest.getTitle() == null) {
             throw new MissingTitleException();
         }
@@ -28,12 +27,12 @@ public class ProductRequestValidator implements IValidator<ProductRequest>{
             throw new MissingCategoryException();
         }
         if (productRequest.getSuggestedPrice() == null) {
-            // Il faut merge le fix à Nabil
+            throw new MissingSuggestedPriceException();
         }
     }
 
-    @Override
-    public void assertParamNotEmpty(ProductRequest productRequest) {
+
+    public void assertParamNotEmpty() {
         if (productRequest.getTitle().isEmpty()) {
             throw new InvalidTitleException();
         }

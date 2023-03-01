@@ -6,12 +6,11 @@ import ulaval.glo2003.domain.Offer;
 
 public class OfferMapper{
 
-    public OfferResponse mapEntityToResponse(Offer offer) {
-        return null;
-    }
-
-
-    public Offer mapRequestToEntity(OfferRequest offerRequest) {
-        return null;
+    public OfferMapper(){}
+    public Offer mapRequestToEntity(OfferRequest offerRequest, String BuyerUsername) {
+        return new Offer(
+                offerRequest.getAmount(),
+                offerRequest.getMessage(),
+                BuyerUsername);
     }
 }

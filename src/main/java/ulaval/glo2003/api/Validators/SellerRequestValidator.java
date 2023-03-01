@@ -6,20 +6,20 @@ import ulaval.glo2003.api.SellerExceptions.*;
 import ulaval.glo2003.api.Utils.InvalidNameException;
 import ulaval.glo2003.api.Utils.MissingNameException;
 
-public class SellerRequestValidator implements IValidator<SellerRequest>{
+public class SellerRequestValidator{
 
     private final SellerRequest sellerRequest;
 
     public SellerRequestValidator(SellerRequest sellerRequest){
         this.sellerRequest = sellerRequest;
     }
-    @Override
+
     public void validateRequest() {
         assertParamNotNull(sellerRequest);
         assertParamNotEmpty(sellerRequest);
     }
 
-    @Override
+
     public void assertParamNotNull(SellerRequest sellerRequest) {
         if (sellerRequest.getName().isEmpty()) {
             throw new InvalidNameException();
@@ -38,7 +38,7 @@ public class SellerRequestValidator implements IValidator<SellerRequest>{
         }
     }
 
-    @Override
+
     public void assertParamNotEmpty(SellerRequest sellerRequest) {
         if (sellerRequest.getName() == null) {
             throw new MissingNameException();
