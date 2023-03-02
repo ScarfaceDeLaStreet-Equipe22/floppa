@@ -16,7 +16,7 @@ public class ProductRequestValidator{
     }
 
 
-    public void assertParamNotNull() {
+    private void assertParamNotNull() {
         if (productRequest.getTitle() == null) {
             throw new MissingTitleException();
         }
@@ -32,7 +32,7 @@ public class ProductRequestValidator{
     }
 
 
-    public void assertParamNotEmpty() {
+    private void assertParamNotEmpty() {
         if (productRequest.getTitle().isEmpty()) {
             throw new InvalidTitleException();
         }

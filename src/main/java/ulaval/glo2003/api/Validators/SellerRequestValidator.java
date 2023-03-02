@@ -5,6 +5,7 @@ import ulaval.glo2003.api.Seller.SellerRequest;
 import ulaval.glo2003.api.SellerExceptions.*;
 import ulaval.glo2003.api.Utils.InvalidNameException;
 import ulaval.glo2003.api.Utils.MissingNameException;
+import ulaval.glo2003.domain.SellerClasses.Date;
 
 public class SellerRequestValidator{
 
@@ -15,12 +16,13 @@ public class SellerRequestValidator{
     }
 
     public void validateRequest() {
-        assertParamNotNull(sellerRequest);
-        assertParamNotEmpty(sellerRequest);
+        assertParamNotNull();
+        assertParamNotEmpty();
+        assertAge();
     }
 
 
-    public void assertParamNotNull(SellerRequest sellerRequest) {
+    private void assertParamNotNull() {
         if (sellerRequest.getName().isEmpty()) {
             throw new InvalidNameException();
         }
@@ -38,8 +40,7 @@ public class SellerRequestValidator{
         }
     }
 
-
-    public void assertParamNotEmpty(SellerRequest sellerRequest) {
+    private void assertParamNotEmpty() {
         if (sellerRequest.getName() == null) {
             throw new MissingNameException();
         }
@@ -55,5 +56,10 @@ public class SellerRequestValidator{
         if (sellerRequest.getPhoneNumber() == null) {
             throw new MissingPhoneNumberException();
         }
+    }
+
+    private void assertAge(){
+        Date birthdate = new Date(sellerRequest.getBirthdate());
+        birthdate.assertAge();
     }
 }
