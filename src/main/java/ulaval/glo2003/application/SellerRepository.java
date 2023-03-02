@@ -1,6 +1,7 @@
 package ulaval.glo2003.application;
 
 import ulaval.glo2003.api.ProductExceptions.ItemNotFoundSellerIdException;
+import ulaval.glo2003.api.ProductExceptions.MissingSellerIdException;
 import ulaval.glo2003.api.Utils.ItemNotFoundException;
 import ulaval.glo2003.domain.Seller;
 
@@ -38,7 +39,7 @@ public class SellerRepository implements IRepository<Seller>{
         return sellers.stream()
                 .filter(seller -> seller.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new ItemNotFoundSellerIdException());
+                .orElseThrow(() -> new MissingSellerIdException());
     }
 
     @Override

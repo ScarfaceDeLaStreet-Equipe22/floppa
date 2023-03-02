@@ -1,6 +1,7 @@
 package ulaval.glo2003.api.Validators;
 
 import ulaval.glo2003.api.Offer.OfferRequest;
+import ulaval.glo2003.api.OfferExceptions.InvalidbuyerUsername;
 import ulaval.glo2003.api.OfferExceptions.MissingAmountException;
 import ulaval.glo2003.api.OfferExceptions.MissingMessageException;
 import ulaval.glo2003.api.OfferExceptions.NotPermittedException;
@@ -35,6 +36,10 @@ public class OfferRequestValidator {
         }
         if (offerRequest.getMessage() == null) {
             throw new MissingMessageException();
+        }
+        if (buyerUsername == null)
+        {
+            throw new InvalidbuyerUsername();
         }
     }
 
