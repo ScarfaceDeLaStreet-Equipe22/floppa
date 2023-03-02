@@ -13,6 +13,7 @@ public class ProductRequestValidator{
     public void validateRequest() {
         assertParamNotNull();
         assertParamNotEmpty();
+        amountValidation(productRequest.getSuggestedPrice());
     }
 
 
@@ -41,6 +42,25 @@ public class ProductRequestValidator{
         }
         if (productRequest.getCategory().isEmpty()) {
             throw new InvalidCategoryException();
+        }
+    }
+    private void amountValidation(String amount) {
+        if (amount != null) {
+            if (amount.isEmpty()) {
+                throw new InvalidSuggestedPriceException();
+            } else {
+                try {
+                    double amountDouble = Double.parseDouble(amount);
+                    if (amountDouble < 1){
+                        throw new InvalidSuggestedPriceException() ;
+                    }
+                } catch (Exception e){
+                    throw new InvalidSuggestedPriceException() ;
+                }
+
+            }
+        } else {
+            throw new MissingSuggestedPriceException() ;
         }
     }
 }

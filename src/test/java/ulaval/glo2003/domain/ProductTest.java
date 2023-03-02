@@ -25,8 +25,8 @@ class ProductTest {
                                 "je suis un vendeur sympa"));
         Offer offer1 = new Offer("10", "offre", "acheteur");
         Offer offer2 = new Offer("20", "offre", "acheteur");
-        product.addOffer(offer1);
-        product.addOffer(offer2);
+        product.offerRepository.save(offer1);
+        product.offerRepository.save(offer2);
 
         double averageOffers = product.getAverageAmountOfOffers();
 
