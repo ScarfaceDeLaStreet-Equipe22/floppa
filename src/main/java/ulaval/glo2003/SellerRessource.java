@@ -4,9 +4,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.ws.rs.core.UriBuilder;
 import ulaval.glo2003.api.Mappers.SellerMapper;
 import ulaval.glo2003.api.Seller.SellerRequest;
 import ulaval.glo2003.api.Seller.SellerResponse;
@@ -35,7 +37,8 @@ public class SellerRessource {
 
         sellerRepository.save(sellerCreated);
 
-        return Response.status(201).entity(sellerCreated).build();
+        URI location = UriBuilder.fromPath("/sellers/{id}").build(sellerCreated.getId());
+        return Response.created(location).status(201).build();
     }
 
     @GET
