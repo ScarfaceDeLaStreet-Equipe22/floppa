@@ -12,7 +12,6 @@ import ulaval.glo2003.api.requests.OfferRequest;
 import ulaval.glo2003.api.requests.ProductRequest;
 import ulaval.glo2003.api.responses.ProductListResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
-import ulaval.glo2003.api.validators.OfferRequestValidator;
 import ulaval.glo2003.api.validators.ProductRequestValidator;
 import ulaval.glo2003.application.repository.ProductRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
