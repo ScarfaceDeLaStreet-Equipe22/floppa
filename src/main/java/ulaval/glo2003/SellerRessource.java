@@ -3,16 +3,16 @@ package ulaval.glo2003;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
+import jakarta.ws.rs.core.UriBuilder;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import ulaval.glo2003.api.Mappers.SellerMapper;
-import ulaval.glo2003.api.Seller.SellerRequest;
-import ulaval.glo2003.api.Seller.SellerResponse;
-import ulaval.glo2003.api.Validators.SellerRequestValidator;
-import ulaval.glo2003.application.SellerRepository;
-import ulaval.glo2003.domain.Seller;
+import ulaval.glo2003.api.mappers.SellerMapper;
+import ulaval.glo2003.api.requests.SellerRequest;
+import ulaval.glo2003.api.responses.SellerResponse;
+import ulaval.glo2003.api.validators.SellerRequestValidator;
+import ulaval.glo2003.application.repository.SellerRepository;
+import ulaval.glo2003.domain.entities.Seller;
 
 @Path("/sellers")
 public class SellerRessource {
@@ -35,7 +35,8 @@ public class SellerRessource {
 
         sellerRepository.save(sellerCreated);
 
-        return Response.status(201).entity(sellerCreated).build();
+        URI location = UriBuilder.fromPath("/sellers/{id}").build(sellerCreated.getId());
+        return Response.created(location).status(201).build();
     }
 
     @GET
@@ -48,7 +49,7 @@ public class SellerRessource {
                                                 seller.getId(),
                                                 seller.getName(),
                                                 seller.getBio(),
-                                                seller.getBirthDate(),
+                                                seller.getBirthdate().getDate(),
                                                 seller.getEmail(),
                                                 seller.getPhoneNumber(),
                                                 seller.getProducts(),
