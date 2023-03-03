@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
 import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidBirthdateException;
 
 public class Date {
@@ -31,5 +33,10 @@ public class Date {
 
     public String getDate() {
         return date;
+    }
+
+    public static String getFormattedCurrentDate() {
+        java.util.Date currentDate = new java.util.Date();
+        return dateFormat.format(currentDate);
     }
 }
