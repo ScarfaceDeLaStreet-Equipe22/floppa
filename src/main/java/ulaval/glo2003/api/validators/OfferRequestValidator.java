@@ -3,7 +3,7 @@ package ulaval.glo2003.api.validators;
 import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingAmountException;
 import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingMessageException;
 import ulaval.glo2003.api.requests.OfferRequest;
-import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidbuyerUsername;
+import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingParamBuyerUsername;
 
 public class OfferRequestValidator implements IValidatorRequest {
 
@@ -28,7 +28,7 @@ public class OfferRequestValidator implements IValidatorRequest {
             throw new MissingMessageException();
         }
         if (buyerUsername == null) {
-            throw new InvalidbuyerUsername();
+            throw new MissingParamBuyerUsername();
         }
     }
 }

@@ -4,6 +4,7 @@ import ulaval.glo2003.api.exceptions.ProductRequestExceptions.*;
 import ulaval.glo2003.api.requests.ProductRequest;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidCategoryException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidDescriptionException;
+import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidSuggestedPriceException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidTitleException;
 
 public class ProductRequestValidator implements IValidatorRequest {

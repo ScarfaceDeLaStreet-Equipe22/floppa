@@ -43,9 +43,7 @@ public class ProductRessource {
 
         Product productForOffer = productRepository.findById(productId);
 
-        OfferRequestValidator offerRequestValidator =
-                new OfferRequestValidator(offerRequest, buyerUsername);
-        offerRequestValidator.validateRequest();
+
 
         OfferMapper offerMapper = new OfferMapper();
         Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername, productForOffer);
