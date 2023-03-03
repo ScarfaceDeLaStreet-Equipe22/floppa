@@ -26,21 +26,10 @@ public class Date {
         }
     }
 
-    public void assertAge() {
-
-        try {
-            java.util.Date birthdate = dateFormat.parse(date);
-
-            LocalDate birthdateLocal = birthdate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            int age = Period.between(birthdateLocal, LocalDate.now()).getYears();
-
-            if (age < 18) {
-                throw new InvalidBirthdateException();
-            }
-        } catch (ParseException exception) {
-            throw new InvalidBirthdateException();
-        }
-
+    public int getYearsBetweenNow() {
+        LocalDate birthdate = LocalDate.parse(date);
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthdate, currentDate).getYears();
     }
 
     public String getDate() {

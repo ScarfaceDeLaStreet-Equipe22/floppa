@@ -2,6 +2,7 @@ package ulaval.glo2003.domain;
 
 import java.util.UUID;
 
+import ulaval.glo2003.api.ProductExceptions.InvalidSuggestedPriceException;
 import ulaval.glo2003.application.OfferRepository;
 import ulaval.glo2003.domain.ProductClasses.Amount;
 import ulaval.glo2003.domain.ProductClasses.ProductCategory;
@@ -19,12 +20,8 @@ public class Product {
 
     public OfferRepository offerRepository;
 
-    public Product(
-            String title,
-            String description,
-            ProductCategory category,
-            Amount suggestedPrice,
-            Seller seller) {
+    public Product(String title, String description, ProductCategory category, Amount suggestedPrice, Seller seller) {
+        assertSuggestedPrice(suggestedPrice);
         this.category = category;
         this.suggestedPrice = suggestedPrice;
         this.description = description;
@@ -76,6 +73,13 @@ public class Product {
             return total / offerRepository.findAll().size();
         } else {
             return 0;
+        }
+    }
+
+    private void assertSuggestedPrice(Amount suggestedPrice){
+        if(suggestedPrice.getAmount() < 1)
+        {
+            throw new InvalidSuggestedPriceException();
         }
     }
 }

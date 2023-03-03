@@ -1,5 +1,6 @@
 package ulaval.glo2003.domain;
 
+import ulaval.glo2003.api.ProductExceptions.InvalidAmountException;
 import ulaval.glo2003.domain.ProductClasses.*;
 import ulaval.glo2003.domain.SellerClasses.DateTime;
 

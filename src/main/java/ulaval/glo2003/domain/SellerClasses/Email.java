@@ -13,10 +13,10 @@ public class Email {
     private Matcher matcher;
 
     public Email(String email) {
-        EmailValidator(email);
+        assertEmail(email);
     }
 
-    public void EmailValidator(String email) {
+    public void assertEmail(String email) {
         pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
 
         matcher = pattern.matcher(email);

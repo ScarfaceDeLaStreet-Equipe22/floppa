@@ -6,14 +6,14 @@ public class PhoneNumber {
     private String numero;
 
     public PhoneNumber(String numero) {
-        phoneNumberValidator(numero);
+        assertPhoneNumber(numero);
     }
 
     public String getNumero() {
         return numero;
     }
 
-    private void phoneNumberValidator(String numero) {
+    private void assertPhoneNumber(String numero) {
         if (numero.matches("\\d+") && numero.length() == 11) {
             this.numero = numero;
         } else {

@@ -1,14 +1,21 @@
 package ulaval.glo2003.domain;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import ulaval.glo2003.api.SellerExceptions.InvalidBirthdateException;
 import ulaval.glo2003.domain.SellerClasses.Date;
 import ulaval.glo2003.domain.SellerClasses.DateTime;
 import ulaval.glo2003.domain.SellerClasses.Email;
 import ulaval.glo2003.domain.SellerClasses.PhoneNumber;
 
-public class Seller {
 
+public class Seller {
     public String name;
     public String bio;
     public Date birthDate;
@@ -20,6 +27,7 @@ public class Seller {
     private final String id;
 
     public Seller(String name, String birthDate, String email, String phoneNumber, String bio) {
+        assertAge(new Date(birthDate));
         this.name = name;
         this.birthDate = new Date(birthDate);
         this.email = new Email(email);
@@ -65,5 +73,11 @@ public class Seller {
 
     public DateTime getCreatedAt() {
         return createdAt;
+    }
+
+    private void assertAge(Date birthDate) {
+        if (birthDate.getYearsBetweenNow() < 18) {
+                throw new InvalidBirthdateException();
+            }
     }
 }

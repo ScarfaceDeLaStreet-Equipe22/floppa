@@ -18,7 +18,6 @@ public class SellerRequestValidator{
     public void validateRequest() {
         assertParamNotNull();
         assertParamNotEmpty();
-        assertAge();
     }
 
 
@@ -56,10 +55,5 @@ public class SellerRequestValidator{
         if (sellerRequest.getPhoneNumber() == null) {
             throw new MissingPhoneNumberException();
         }
-    }
-
-    private void assertAge(){
-        Date birthdate = new Date(sellerRequest.getBirthdate());
-        birthdate.assertAge();
     }
 }
