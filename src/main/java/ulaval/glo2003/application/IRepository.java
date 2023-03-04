@@ -11,7 +11,6 @@ public interface IRepository<T> {
     void deleteAll();
 
 
-    void update(T entity);
 
     ArrayList<T> findAll();
 }

@@ -41,19 +41,6 @@ public class ProductRepository implements IRepository<Product>{
         throw new ItemNotFoundException("Product not found");
     }
 
-    @Override
-    public void update(Product product){
-        boolean isProductFound = false;
-        for (Product currentProduct : products) {
-            if (currentProduct.getId().equals(product.getId())) {
-                products.set(products.indexOf(currentProduct), product);
-                isProductFound = true;
-            }
-        }
-        if (!isProductFound) {
-            throw new ItemNotFoundException("Product not found");
-        }
-    }
 
     @Override
     public ArrayList<Product> findAll(){

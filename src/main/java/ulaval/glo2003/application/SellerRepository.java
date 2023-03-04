@@ -42,19 +42,6 @@ public class SellerRepository implements IRepository<Seller>{
                 .orElseThrow(() -> new MissingSellerIdException());
     }
 
-    @Override
-    public void update(Seller seller) {
-        boolean isSellerFound = false;
-        for (Seller currentSeller : sellers) {
-            if (currentSeller.getId().equals(seller.getId())) {
-                sellers.set(sellers.indexOf(currentSeller), seller);
-                isSellerFound = true;
-            }
-        }
-        if (!isSellerFound) {
-            throw new ItemNotFoundException("seller not found");
-        }
-    }
 
     @Override
     public ArrayList<Seller> findAll() {

@@ -117,62 +117,7 @@ class ProductRepositoryTest {
         assertThrows(ItemNotFoundException.class, () -> repository.findById("123"));
     }
 
-    @Test
-    void update_withExistingProduct_shouldUpdateProduct() {
-        // Arrange
-        Product product =
-                new Product(
-                        "ballon",
-                        "ballon de foot",
-                        new ProductCategory("Sport"),
-                        new Amount("15"),
-                        new Seller(
-                                "ahmed",
-                                "1968-05-12",
-                                "ahmed@gmail.com",
-                                "14185691931",
-                                "je suis un vendeur sympa"));
-        repository.save(product);
 
-        Product updatedProduct =
-                new Product(
-                        "ballon",
-                        "ballon de foot",
-                        new ProductCategory("beauty"),
-                        new Amount("15"),
-                        new Seller(
-                                "ahmed",
-                                "1968-05-12",
-                                "ahmed@gmail.com",
-                                "14185691931",
-                                "je suis un vendeur sympa"));
-
-        // Act
-        repository.update(updatedProduct);
-
-        // Assert
-        assertEquals(updatedProduct, repository.findById(updatedProduct.getId()));
-    }
-
-    @Test
-    void update_withNonExistingProduct_shouldThrowItemNotFoundException() {
-        // Arrange
-        Product product =
-                new Product(
-                        "ballon",
-                        "ballon de foot",
-                        new ProductCategory("Sport"),
-                        new Amount("15"),
-                        new Seller(
-                                "ahmed",
-                                "1968-05-12",
-                                "ahmed@gmail.com",
-                                "14185691931",
-                                "je suis un vendeur sympa"));
-
-        // Act & Assert
-        assertThrows(ItemNotFoundException.class, () -> repository.update(product));
-    }
 
     @Test
     void deleteAll_shouldRemoveAllProducts() {

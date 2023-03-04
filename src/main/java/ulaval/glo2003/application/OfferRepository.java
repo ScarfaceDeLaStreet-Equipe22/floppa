@@ -33,19 +33,6 @@ public class OfferRepository implements IRepository<Offer>{
         offers.clear();
     }
 
-    @Override
-    public void update(Offer offer) {
-        boolean isofferFound = false;
-        for (Offer currentOffer : offers) {
-            if (currentOffer.getBuyerUsername().equals(offer.getBuyerUsername())) {
-                offers.set(offers.indexOf(currentOffer), offer);
-                isofferFound = true;
-            }
-        }
-        if (!isofferFound) {
-            throw new ItemNotFoundException("Offer not found");
-        }
-    }
 
     @Override
     public ArrayList<Offer> findAll() {
