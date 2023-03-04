@@ -5,13 +5,18 @@ import ulaval.glo2003.domain.Seller;
 public class ProductRequest {
 
 
-    public Seller seller;
     public String title;
     public String description;
     public String suggestedPrice;
     public String category;
 
     public ProductRequest() {}
+    public ProductRequest(String title, String description, String suggestedPrice, String category) {
+        this.suggestedPrice = suggestedPrice ;
+        this.description = description ;
+        this.category = category ;
+        this.title = title ;
+    }
 
     public String getTitle() {
         return title;
@@ -29,7 +34,4 @@ public class ProductRequest {
         return category;
     }
 
-    public Seller getSeller() {
-        return seller;
-    }
 }

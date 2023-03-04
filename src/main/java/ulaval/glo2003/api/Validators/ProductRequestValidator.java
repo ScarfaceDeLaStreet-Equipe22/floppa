@@ -10,10 +10,15 @@ public class ProductRequestValidator{
         this.productRequest = productRequest;
     }
 
-    public void validateRequest() {
-        assertParamNotNull();
-        assertParamNotEmpty();
-        amountValidation(productRequest.getSuggestedPrice());
+    public boolean validateRequest() {
+        try {
+            assertParamNotNull();
+            assertParamNotEmpty();
+            amountValidation(productRequest.getSuggestedPrice());
+            return true ;
+        } catch (Exception e) {
+            return false ;
+        }
     }
 
 

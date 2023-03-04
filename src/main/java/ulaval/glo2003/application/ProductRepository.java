@@ -19,11 +19,10 @@ public class ProductRepository implements IRepository<Product>{
 
     @Override
     public void remove(Product product) {
-        try{
+
+        if (products.contains(product)){
             products.remove(product);
-        }
-        catch (Exception e)
-        {
+        } else {
             throw new ItemNotFoundException("Product not found");
         }
     }
