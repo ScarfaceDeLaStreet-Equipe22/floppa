@@ -12,8 +12,6 @@ import ulaval.glo2003.api.requests.OfferRequest;
 import ulaval.glo2003.api.requests.ProductRequest;
 import ulaval.glo2003.api.responses.ProductListResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
-import ulaval.glo2003.api.validators.OfferRequestValidator;
-import ulaval.glo2003.api.validators.ProductRequestValidator;
 import ulaval.glo2003.application.repository.ProductRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Offer;
@@ -26,11 +24,14 @@ public class ProductRessource {
 
     private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
+    private final OfferMapper offerMapper;
 
-    public ProductRessource(
-            SellerRepository sellerRepository, ProductRepository productRepository) {
+    public ProductRessource(SellerRepository sellerRepository, ProductRepository productRepository, ProductMapper productMapper, OfferMapper offerMapper) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
+        this.offerMapper = offerMapper;
     }
 
     @POST
@@ -43,11 +44,6 @@ public class ProductRessource {
 
         Product productForOffer = productRepository.findById(productId);
 
-        OfferRequestValidator offerRequestValidator =
-                new OfferRequestValidator(offerRequest, buyerUsername);
-        offerRequestValidator.validateRequest();
-
-        OfferMapper offerMapper = new OfferMapper();
         Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername, productForOffer);
 
         productForOffer.offers.add(offer);
@@ -57,15 +53,9 @@ public class ProductRessource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createProduct(
-            ProductRequest productRequest, @HeaderParam("X-Seller-Id") String sellerId) {
-
-        ProductRequestValidator productRequestValidator =
-                new ProductRequestValidator(productRequest);
-        productRequestValidator.validateRequest();
-
+    public Response createProduct(ProductRequest productRequest, @HeaderParam("X-Seller-Id") String sellerId) {
         Seller seller = sellerRepository.findById(sellerId);
-        ProductMapper productMapper = new ProductMapper();
+
         Product productCreated = productMapper.mapRequestToEntity(productRequest, seller);
 
         seller.addProduct(productCreated);
@@ -80,9 +70,8 @@ public class ProductRessource {
     @Path("{Productid}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getProducts(@PathParam("Productid") String productId) {
-
         Product product = productRepository.findById(productId);
-        ProductMapper productMapper = new ProductMapper();
+
         ProductResponse productResponse = productMapper.mapEntityToResponse(product);
 
         return Response.ok(productResponse).build();

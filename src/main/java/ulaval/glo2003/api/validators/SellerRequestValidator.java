@@ -2,11 +2,7 @@ package ulaval.glo2003.api.validators;
 
 import ulaval.glo2003.api.exceptions.SellerRequestExceptions.*;
 import ulaval.glo2003.api.requests.SellerRequest;
-import ulaval.glo2003.domain.exceptions.InvalidNameException;
-import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidBioException;
-import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidBirthdateException;
-import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidEmailException;
-import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidPhoneNumberException;
+
 
 public class SellerRequestValidator implements IValidatorRequest {
 
