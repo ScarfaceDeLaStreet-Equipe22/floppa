@@ -7,7 +7,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 import ulaval.glo2003.api.mappers.OfferMapper;
-import ulaval.glo2003.api.mappers.ProductFilterMapper;
+import ulaval.glo2003.api.mappers.ProductFiltersMapper;
 import ulaval.glo2003.api.mappers.ProductMapper;
 import ulaval.glo2003.api.requests.OfferRequest;
 import ulaval.glo2003.api.requests.ProductRequest;
@@ -18,7 +18,7 @@ import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
-import ulaval.glo2003.api.requests.ProductFilterRequest;
+import ulaval.glo2003.domain.utils.ProductFilters;
 
 @Path("/products")
 public class ProductRessource {
@@ -26,15 +26,15 @@ public class ProductRessource {
     private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-    private final ProductFilterMapper productFilterMapper;
+    private final ProductFiltersMapper productFiltersMapper;
     private final OfferMapper offerMapper;
 
-    public ProductRessource(SellerRepository sellerRepository, ProductRepository productRepository, ProductMapper productMapper, OfferMapper offerMapper, ProductFilterMapper productFilterMapper) {
+    public ProductRessource(SellerRepository sellerRepository, ProductRepository productRepository, ProductMapper productMapper, OfferMapper offerMapper, ProductFiltersMapper productFiltersMapper) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.offerMapper = offerMapper;
-        this.productFilterMapper = productFilterMapper;
+        this.productFiltersMapper = productFiltersMapper;
     }
 
     @POST
@@ -87,11 +87,11 @@ public class ProductRessource {
             @QueryParam("category") String categoryName,
             @QueryParam("minPrice") String minPrice,
             @QueryParam("maxPrice") String maxPrice) {
-        ProductFilterRequest productFilterRequest = productFilterMapper.mapQueryParamsToRequest(sellerId, title, categoryName, minPrice, maxPrice);
+        ProductFilters productFilters = productFiltersMapper.mapQueryParamsToRequest(sellerId, title, categoryName, minPrice, maxPrice);
 
         List<ProductResponse> filteredProducts =
                 productRepository.findAll().stream()
-                        .filter(productFilterRequest::checkProduct)
+                        .filter(productFilters::checkProduct)
                         .map(productMapper::mapEntityToResponse)
                         .collect(Collectors.toList());
 

@@ -1,17 +1,15 @@
-package ulaval.glo2003.api.requests;
+package ulaval.glo2003.domain.utils;
 
 import ulaval.glo2003.domain.entities.Product;
-import ulaval.glo2003.domain.utils.Amount;
-import ulaval.glo2003.domain.utils.ProductCategory;
 
-public class ProductFilterRequest {
+public class ProductFilters {
     private final String sellerId;
     private final String title;
     private final ProductCategory category;
     private final Amount minPrice;
     private final Amount maxPrice;
 
-    public ProductFilterRequest(
+    public ProductFilters(
             String sellerId, String title, ProductCategory category, Amount minPrice, Amount maxPrice) {
         this.sellerId = sellerId;
         this.title = title;

@@ -1,12 +1,12 @@
 package ulaval.glo2003.api.mappers;
 
-import ulaval.glo2003.api.requests.ProductFilterRequest;
+import ulaval.glo2003.domain.utils.ProductFilters;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.ProductCategory;
 
-public class ProductFilterMapper {
+public class ProductFiltersMapper {
 
-    public ProductFilterRequest mapQueryParamsToRequest(String sellerId, String title, String categoryName, String minPrice, String maxPrice)
+    public ProductFilters mapQueryParamsToRequest(String sellerId, String title, String categoryName, String minPrice, String maxPrice)
     {
         ProductCategory category = new ProductCategory(categoryName);
         Amount minPriceAmount = null;
@@ -18,7 +18,7 @@ public class ProductFilterMapper {
         if(maxPrice != null)
             maxPriceAmount = new Amount(maxPrice);
 
-        return new ProductFilterRequest(sellerId, title, category, minPriceAmount, maxPriceAmount);
+        return new ProductFilters(sellerId, title, category, minPriceAmount, maxPriceAmount);
     }
 
 }
