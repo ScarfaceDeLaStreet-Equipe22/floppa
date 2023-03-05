@@ -65,4 +65,24 @@ public class Seller {
     public DateTime getCreatedAt() {
         return createdAt;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
