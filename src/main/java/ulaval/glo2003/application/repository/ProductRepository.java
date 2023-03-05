@@ -18,11 +18,15 @@ public class ProductRepository implements IRepository<Product> {
 
     @Override
     public void remove(Product product) {
-        try {
-            products.remove(product);
-        } catch (Exception e) {
-            throw new ItemNotFoundException("Product not found");
+        for (int i = 0; i < products.size(); i++) {
+            Product itProduct = products.get(i);
+            if (product.getId().equals(itProduct.getId())) {
+                products.remove(i);
+                return;
+            }
         }
+
+        throw new ItemNotFoundException("Product not found");
     }
 
     @Override
