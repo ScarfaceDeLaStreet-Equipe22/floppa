@@ -57,4 +57,9 @@ public class ProductRepository implements IRepository<Product> {
     public ArrayList<Product> findAll() {
         return products;
     }
+
+    @Override
+    public int count() {
+        return products.size();
+    }
 }

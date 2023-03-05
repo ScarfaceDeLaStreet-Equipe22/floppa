@@ -57,4 +57,9 @@ public class SellerRepository implements IRepository<Seller> {
     public ArrayList<Seller> findAll() {
         return sellers;
     }
+
+    @Override
+    public int count() {
+        return sellers.size();
+    }
 }

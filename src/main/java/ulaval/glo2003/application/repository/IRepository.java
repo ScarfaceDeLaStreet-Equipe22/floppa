@@ -13,4 +13,6 @@ public interface IRepository<T> {
     void update(T entity);
 
     ArrayList<T> findAll();
+
+    int count();
 }
