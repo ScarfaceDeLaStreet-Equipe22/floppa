@@ -34,5 +34,14 @@ public class ProductFiltersMapperTests
         assertDoesNotThrow(executable);
     }
 
+    @Test
+    public void givenAllNullFilters_whenMapping_thenDoesNotThrow()
+    {
+        //act
+        Executable executable = () -> productFiltersMapper.mapQueryParamsToRequest(null, null, null, null, null);
+
+        //assert
+        assertDoesNotThrow(executable);
+    }
 
 }

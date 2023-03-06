@@ -11,9 +11,12 @@ public class ProductFiltersMapper {
 
     public ProductFilters mapQueryParamsToRequest(String sellerId, String title, String categoryName, String minPrice, String maxPrice)
     {
-        ProductCategory category = new ProductCategory(categoryName);
+        ProductCategory category = null;
         Amount minPriceAmount = null;
         Amount maxPriceAmount = null;
+
+        if(categoryName != null)
+            category = new ProductCategory(categoryName);
 
         try
         {
