@@ -2,20 +2,20 @@ package ulaval.glo2003.domain.utils;
 
 import ulaval.glo2003.domain.entities.Product;
 
-public class ProductFilter {
-    private String sellerId;
-    private String title;
-    private String categoryName;
-    private Amount minPrice;
-    private Amount maxPrice;
+public class ProductFilters {
+    private final String sellerId;
+    private final String title;
+    private final ProductCategory category;
+    private final Amount minPrice;
+    private final Amount maxPrice;
 
-    public ProductFilter(
-            String sellerId, String title, String categoryName, String minPrice, String maxPrice) {
+    public ProductFilters(
+            String sellerId, String title, ProductCategory category, Amount minPrice, Amount maxPrice) {
         this.sellerId = sellerId;
         this.title = title;
-        this.categoryName = categoryName;
-        this.minPrice = minPrice == null ? null : new Amount(minPrice);
-        this.maxPrice = maxPrice == null ? null : new Amount(maxPrice);
+        this.category = category;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
     }
 
     public boolean checkProduct(Product product) {
@@ -45,9 +45,9 @@ public class ProductFilter {
     }
 
     private boolean checkProductCategory(Product product) {
-        if (categoryName == null) return true;
+        if (category == null) return true;
 
-        return product.getCategory().equals(categoryName);
+        return product.getCategory().equals(category.getCategory());
     }
 
     private boolean checkProductMinPrice(Product product) {
