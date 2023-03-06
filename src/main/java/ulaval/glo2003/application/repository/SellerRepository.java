@@ -41,7 +41,7 @@ public class SellerRepository implements IRepository<Seller> {
         return sellers.stream()
                 .filter(seller -> seller.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new MissingSellerIdException());
+                .orElseThrow(() -> new ItemNotFoundException("Seller not found"));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SellerRepository implements IRepository<Seller> {
             }
         }
         if (!isSellerFound) {
-            throw new ItemNotFoundException("seller not found");
+            throw new ItemNotFoundException("Seller not found");
         }
     }
 

@@ -141,7 +141,7 @@ public class SellerRepositoryTests
         Executable executable = () -> sellerRepository.findById(seller.getId());
 
         //assert
-        assertThrows(MissingSellerIdException.class, executable);
+        assertThrows(ItemNotFoundException.class, executable);
     }
 
     @Test
