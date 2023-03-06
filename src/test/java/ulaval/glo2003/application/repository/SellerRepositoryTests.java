@@ -157,4 +157,87 @@ public class SellerRepositoryTests
         assertThrows(ItemNotFoundException.class, executable);
     }
 
+
+    @Test
+    public void givenExistingSeller_whenRemoving_thenOnlyOneSellerIsRemoved()
+    {
+        //arrange
+        Seller firstSeller = new Seller("First Seller Name", "1979-01-01", "sellerfirst@test.com", "15140009876", "bio first");
+        Seller seller = new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
+        Seller lastSeller = new Seller("Last Seller Name", "1981-01-01", "sellerlast@test.com", "15140209876", "bio last");
+        sellerRepository.save(firstSeller);
+        sellerRepository.save(seller);
+        sellerRepository.save(lastSeller);
+
+        //act
+        int countBeforeRemove = sellerRepository.count();
+        sellerRepository.remove(seller);
+
+        //assert
+        assertEquals(countBeforeRemove - 1, sellerRepository.count());
+    }
+
+    @Test
+    public void whenDeletingAll_thenAllSellersAreRemoved()
+    {
+        //arrange
+        Seller firstSeller = new Seller("First Seller Name", "1979-01-01", "sellerfirst@test.com", "15140009876", "bio first");
+        Seller seller = new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
+        Seller lastSeller = new Seller("Last Seller Name", "1981-01-01", "sellerlast@test.com", "15140209876", "bio last");
+        sellerRepository.save(firstSeller);
+        sellerRepository.save(seller);
+        sellerRepository.save(lastSeller);
+
+        //act
+        sellerRepository.deleteAll();
+
+        //assert
+        assertEquals(0, sellerRepository.count());
+    }
+
+    @Test
+    public void givenExistingId_whenFinding_thenSellerIsReturned()
+    {
+        //arrange
+        Seller seller = new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
+        sellerRepository.save(seller);
+
+        //act
+        Seller foundSeller = sellerRepository.findById(seller.getId());
+
+        //assert
+        assertEquals(seller, foundSeller);
+    }
+
+    @Test
+    public void givenNonExistingId_whenFinding_thenThrowItemNoutFoundException()
+    {
+        //arrange
+        Seller seller = new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
+
+        //act
+        Executable executable = () -> sellerRepository.findById(seller.getId());
+
+        //assert
+        assertThrows(MissingSellerIdException.class, executable);
+    }
+
+    @Test
+    public void whenFindingAll_thenAllSellersAreReturn()
+    {
+        //arrange
+        Seller firstSeller = new Seller("First Seller Name", "1979-01-01", "sellerfirst@test.com", "15140009876", "bio first");
+        Seller seller = new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
+        Seller lastSeller = new Seller("Last Seller Name", "1981-01-01", "sellerlast@test.com", "15140209876", "bio last");
+        sellerRepository.save(firstSeller);
+        sellerRepository.save(seller);
+        sellerRepository.save(lastSeller);
+
+        //act
+        ArrayList<Seller> sellers = sellerRepository.findAll();
+
+        //assert
+        assertEquals(sellers.size(), sellerRepository.count());
+    }
+
 }
