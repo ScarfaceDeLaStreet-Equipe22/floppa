@@ -29,7 +29,12 @@ public class ProductRessource {
     private final ProductFiltersMapper productFiltersMapper;
     private final OfferMapper offerMapper;
 
-    public ProductRessource(SellerRepository sellerRepository, ProductRepository productRepository, ProductMapper productMapper, OfferMapper offerMapper, ProductFiltersMapper productFiltersMapper) {
+    public ProductRessource(
+            SellerRepository sellerRepository,
+            ProductRepository productRepository,
+            ProductMapper productMapper,
+            OfferMapper offerMapper,
+            ProductFiltersMapper productFiltersMapper) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.productMapper = productMapper;
@@ -56,7 +61,8 @@ public class ProductRessource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createProduct(ProductRequest productRequest, @HeaderParam("X-Seller-Id") String sellerId) {
+    public Response createProduct(
+            ProductRequest productRequest, @HeaderParam("X-Seller-Id") String sellerId) {
         Seller seller = sellerRepository.findById(sellerId);
 
         Product productCreated = productMapper.mapRequestToEntity(productRequest, seller);
@@ -87,7 +93,9 @@ public class ProductRessource {
             @QueryParam("category") String categoryName,
             @QueryParam("minPrice") String minPrice,
             @QueryParam("maxPrice") String maxPrice) {
-        ProductFilters productFilters = productFiltersMapper.mapQueryParamsToRequest(sellerId, title, categoryName, minPrice, maxPrice);
+        ProductFilters productFilters =
+                productFiltersMapper.mapQueryParamsToRequest(
+                        sellerId, title, categoryName, minPrice, maxPrice);
 
         List<ProductResponse> filteredProducts =
                 productRepository.findAll().stream()

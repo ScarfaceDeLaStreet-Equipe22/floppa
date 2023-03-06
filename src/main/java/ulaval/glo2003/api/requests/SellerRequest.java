@@ -28,7 +28,9 @@ public class SellerRequest {
     public String phoneNumber;
 
     public SellerRequest() {}
-    public SellerRequest(String name, String bio, String birthdate, String email, String phoneNumber) {
+
+    public SellerRequest(
+            String name, String bio, String birthdate, String email, String phoneNumber) {
         this.name = name;
         this.bio = bio;
         this.birthdate = birthdate;

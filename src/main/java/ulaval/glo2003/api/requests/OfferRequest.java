@@ -6,7 +6,8 @@ public class OfferRequest {
     public String message;
 
     public OfferRequest() {}
-    public OfferRequest(String amount, String Message){
+
+    public OfferRequest(String amount, String Message) {
         this.amount = amount;
         this.message = Message;
     }

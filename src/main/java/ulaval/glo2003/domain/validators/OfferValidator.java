@@ -2,10 +2,9 @@ package ulaval.glo2003.domain.validators;
 
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
+import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidAmountException;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidMessageException;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.NotPermittedException;
-import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidAmountException;
-import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidDescriptionException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidTitleException;
 
 public class OfferValidator implements IValidator {

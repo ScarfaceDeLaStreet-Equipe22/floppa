@@ -10,7 +10,11 @@ public class ProductFilters {
     private final Amount maxPrice;
 
     public ProductFilters(
-            String sellerId, String title, ProductCategory category, Amount minPrice, Amount maxPrice) {
+            String sellerId,
+            String title,
+            ProductCategory category,
+            Amount minPrice,
+            Amount maxPrice) {
         this.sellerId = sellerId;
         this.title = title;
         this.category = category;

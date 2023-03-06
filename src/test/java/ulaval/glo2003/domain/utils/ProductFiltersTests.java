@@ -1,14 +1,13 @@
 package ulaval.glo2003.domain.utils;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-import ulaval.glo2003.domain.entities.Product;
-import ulaval.glo2003.domain.entities.Seller;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ProductFiltersTests
-{
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import ulaval.glo2003.domain.entities.Product;
+import ulaval.glo2003.domain.entities.Seller;
+
+public class ProductFiltersTests {
 
     private Product testProduct;
     private String sellerId;
@@ -22,172 +21,215 @@ public class ProductFiltersTests
     private static final String INVALID_PRODUCT_TITLE = "InvalidTitle";
     private static final ProductCategory INVALID_PRODUCT_CATEGORY = new ProductCategory("Sport");
 
-
-
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
-        testProduct = new Product(VALID_PRODUCT_TITLE, PRODUCT_DESCRIPTION, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, seller);
+        testProduct =
+                new Product(
+                        VALID_PRODUCT_TITLE,
+                        PRODUCT_DESCRIPTION,
+                        VALID_PRODUCT_CATEGORY,
+                        PRODUCT_PRICE,
+                        seller);
         sellerId = seller.getId();
     }
 
     @Test
-    public void givenExacltyMatchingFilter_whenChecking_thenReturnsTrue()
-    {
-        //arrange
-        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+    public void givenExacltyMatchingFilter_whenChecking_thenReturnsTrue() {
+        // arrange
+        ProductFilters productFilters =
+                new ProductFilters(
+                        sellerId,
+                        VALID_PRODUCT_TITLE,
+                        VALID_PRODUCT_CATEGORY,
+                        PRODUCT_PRICE,
+                        PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertTrue(result);
     }
 
     @Test
-    public void givenAllNullFilter_whenChecking_thenReturnsTrue()
-    {
-        //arrange
+    public void givenAllNullFilter_whenChecking_thenReturnsTrue() {
+        // arrange
         ProductFilters productFilters = new ProductFilters(null, null, null, null, null);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertTrue(result);
     }
 
     @Test
-    public void givenFilterWithLowercaseTitle_whenChecking_thenReturnsTrue()
-    {
-        //arrange
+    public void givenFilterWithLowercaseTitle_whenChecking_thenReturnsTrue() {
+        // arrange
         String title = VALID_PRODUCT_TITLE.toLowerCase();
-        ProductFilters productFilters = new ProductFilters(sellerId, title, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+        ProductFilters productFilters =
+                new ProductFilters(
+                        sellerId, title, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertTrue(result);
     }
 
     @Test
-    public void givenFilterWithPartTitle_whenChecking_thenReturnsTrue()
-    {
-        //arrange
+    public void givenFilterWithPartTitle_whenChecking_thenReturnsTrue() {
+        // arrange
         int titleLength = VALID_PRODUCT_TITLE.length();
         String title = VALID_PRODUCT_TITLE.substring(2, titleLength - 2);
-        ProductFilters productFilters = new ProductFilters(sellerId, title, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+        ProductFilters productFilters =
+                new ProductFilters(
+                        sellerId, title, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertTrue(result);
     }
 
     @Test
-    public void givenFilterWithInvalidTitle_whenChecking_thenReturnsFalse()
-    {
-        //arrange
-        ProductFilters productFilters = new ProductFilters(sellerId, INVALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+    public void givenFilterWithInvalidTitle_whenChecking_thenReturnsFalse() {
+        // arrange
+        ProductFilters productFilters =
+                new ProductFilters(
+                        sellerId,
+                        INVALID_PRODUCT_TITLE,
+                        VALID_PRODUCT_CATEGORY,
+                        PRODUCT_PRICE,
+                        PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertFalse(result);
     }
 
     @Test
-    public void givenFilterWithInvalidCategory_whenChecking_thenReturnsFalse()
-    {
-        //arrange
-        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, INVALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+    public void givenFilterWithInvalidCategory_whenChecking_thenReturnsFalse() {
+        // arrange
+        ProductFilters productFilters =
+                new ProductFilters(
+                        sellerId,
+                        VALID_PRODUCT_TITLE,
+                        INVALID_PRODUCT_CATEGORY,
+                        PRODUCT_PRICE,
+                        PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertFalse(result);
     }
 
     @Test
-    public void givenFilterWithInvalidSellerId_whenChecking_thenReturnsFalse()
-    {
-        //arrange
-        ProductFilters productFilters = new ProductFilters(INVALID_SELLER_ID, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+    public void givenFilterWithInvalidSellerId_whenChecking_thenReturnsFalse() {
+        // arrange
+        ProductFilters productFilters =
+                new ProductFilters(
+                        INVALID_SELLER_ID,
+                        VALID_PRODUCT_TITLE,
+                        VALID_PRODUCT_CATEGORY,
+                        PRODUCT_PRICE,
+                        PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertFalse(result);
     }
 
     @Test
-    public void givenFilterWithLowerMinPrice_whenChecking_thenReturnsTrue()
-    {
+    public void givenFilterWithLowerMinPrice_whenChecking_thenReturnsTrue() {
         double minPrice = PRODUCT_PRICE.toDouble() - 1;
         Amount minPriceAmount = new Amount(Double.toString(minPrice));
 
-        //arrange
-        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, minPriceAmount, PRODUCT_PRICE);
+        // arrange
+        ProductFilters productFilters =
+                new ProductFilters(
+                        sellerId,
+                        VALID_PRODUCT_TITLE,
+                        VALID_PRODUCT_CATEGORY,
+                        minPriceAmount,
+                        PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertTrue(result);
     }
 
     @Test
-    public void givenFilterWithHigherMinPrice_whenChecking_thenReturnsFalse()
-    {
+    public void givenFilterWithHigherMinPrice_whenChecking_thenReturnsFalse() {
         double minPrice = PRODUCT_PRICE.toDouble() + 1;
         Amount minPriceAmount = new Amount(Double.toString(minPrice));
 
-        //arrange
-        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, minPriceAmount, PRODUCT_PRICE);
+        // arrange
+        ProductFilters productFilters =
+                new ProductFilters(
+                        sellerId,
+                        VALID_PRODUCT_TITLE,
+                        VALID_PRODUCT_CATEGORY,
+                        minPriceAmount,
+                        PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertFalse(result);
     }
 
     @Test
-    public void givenFilterWithLowerMaxPrice_whenChecking_thenReturnsTrue()
-    {
+    public void givenFilterWithLowerMaxPrice_whenChecking_thenReturnsTrue() {
         double maxPrice = PRODUCT_PRICE.toDouble() - 1;
         Amount maxPriceAmount = new Amount(Double.toString(maxPrice));
 
-        //arrange
-        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, maxPriceAmount, PRODUCT_PRICE);
+        // arrange
+        ProductFilters productFilters =
+                new ProductFilters(
+                        sellerId,
+                        VALID_PRODUCT_TITLE,
+                        VALID_PRODUCT_CATEGORY,
+                        maxPriceAmount,
+                        PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertTrue(result);
     }
 
     @Test
-    public void givenFilterWithHigherMaxPrice_whenChecking_thenReturnsFalse()
-    {
+    public void givenFilterWithHigherMaxPrice_whenChecking_thenReturnsFalse() {
         double maxPrice = PRODUCT_PRICE.toDouble() + 1;
         Amount maxPriceAmount = new Amount(Double.toString(maxPrice));
 
-        //arrange
-        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, maxPriceAmount, PRODUCT_PRICE);
+        // arrange
+        ProductFilters productFilters =
+                new ProductFilters(
+                        sellerId,
+                        VALID_PRODUCT_TITLE,
+                        VALID_PRODUCT_CATEGORY,
+                        maxPriceAmount,
+                        PRODUCT_PRICE);
 
-        //act
+        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        //assert
+        // assert
         assertFalse(result);
     }
-
 }
