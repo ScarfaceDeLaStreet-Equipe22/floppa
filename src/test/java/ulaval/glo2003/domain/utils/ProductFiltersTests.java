@@ -58,4 +58,33 @@ public class ProductFiltersTests
         assertTrue(result);
     }
 
+    @Test
+    public void givenFilterWithLowercaseTitle_whenChecking_thenReturnsTrue()
+    {
+        //arrange
+        String title = VALID_PRODUCT_TITLE.toLowerCase();
+        ProductFilters productFilters = new ProductFilters(sellerId, title, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+
+        //act
+        boolean result = productFilters.checkProduct(testProduct);
+
+        //assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void givenFilterWithPartTitle_whenChecking_thenReturnsTrue()
+    {
+        //arrange
+        int titleLength = VALID_PRODUCT_TITLE.length();
+        String title = VALID_PRODUCT_TITLE.substring(2, titleLength - 2);
+        ProductFilters productFilters = new ProductFilters(sellerId, title, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+
+        //act
+        boolean result = productFilters.checkProduct(testProduct);
+
+        //assert
+        assertTrue(result);
+    }
+
 }
