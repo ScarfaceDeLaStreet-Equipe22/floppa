@@ -87,4 +87,107 @@ public class ProductFiltersTests
         assertTrue(result);
     }
 
+    @Test
+    public void givenFilterWithInvalidTitle_whenChecking_thenReturnsFalse()
+    {
+        //arrange
+        ProductFilters productFilters = new ProductFilters(sellerId, INVALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+
+        //act
+        boolean result = productFilters.checkProduct(testProduct);
+
+        //assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void givenFilterWithInvalidCategory_whenChecking_thenReturnsFalse()
+    {
+        //arrange
+        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, INVALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+
+        //act
+        boolean result = productFilters.checkProduct(testProduct);
+
+        //assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void givenFilterWithInvalidSellerId_whenChecking_thenReturnsFalse()
+    {
+        //arrange
+        ProductFilters productFilters = new ProductFilters(INVALID_SELLER_ID, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
+
+        //act
+        boolean result = productFilters.checkProduct(testProduct);
+
+        //assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void givenFilterWithLowerMinPrice_whenChecking_thenReturnsTrue()
+    {
+        double minPrice = PRODUCT_PRICE.toDouble() - 1;
+        Amount minPriceAmount = new Amount(Double.toString(minPrice));
+
+        //arrange
+        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, minPriceAmount, PRODUCT_PRICE);
+
+        //act
+        boolean result = productFilters.checkProduct(testProduct);
+
+        //assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void givenFilterWithHigherMinPrice_whenChecking_thenReturnsFalse()
+    {
+        double minPrice = PRODUCT_PRICE.toDouble() + 1;
+        Amount minPriceAmount = new Amount(Double.toString(minPrice));
+
+        //arrange
+        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, minPriceAmount, PRODUCT_PRICE);
+
+        //act
+        boolean result = productFilters.checkProduct(testProduct);
+
+        //assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void givenFilterWithLowerMaxPrice_whenChecking_thenReturnsTrue()
+    {
+        double maxPrice = PRODUCT_PRICE.toDouble() - 1;
+        Amount maxPriceAmount = new Amount(Double.toString(maxPrice));
+
+        //arrange
+        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, maxPriceAmount, PRODUCT_PRICE);
+
+        //act
+        boolean result = productFilters.checkProduct(testProduct);
+
+        //assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void givenFilterWithHigherMaxPrice_whenChecking_thenReturnsFalse()
+    {
+        double maxPrice = PRODUCT_PRICE.toDouble() + 1;
+        Amount maxPriceAmount = new Amount(Double.toString(maxPrice));
+
+        //arrange
+        ProductFilters productFilters = new ProductFilters(sellerId, VALID_PRODUCT_TITLE, VALID_PRODUCT_CATEGORY, maxPriceAmount, PRODUCT_PRICE);
+
+        //act
+        boolean result = productFilters.checkProduct(testProduct);
+
+        //assert
+        assertFalse(result);
+    }
+
 }
