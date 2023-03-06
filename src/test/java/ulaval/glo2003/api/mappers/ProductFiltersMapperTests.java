@@ -44,4 +44,44 @@ public class ProductFiltersMapperTests
         assertDoesNotThrow(executable);
     }
 
+    @Test
+    public void givenInvalidCategory_whenMapping_thenThrowInvalidParamException()
+    {
+        //arrange
+        String invalidCategoryName = "invalid-category";
+
+        //assert
+        Executable executable = () -> productFiltersMapper.mapQueryParamsToRequest(VALID_SELLER_ID, VALID_TITLE, invalidCategoryName, VALID_PRICE, VALID_PRICE);
+
+        //assert
+        assertThrows(InvalidParamException.class, executable);
+    }
+
+    @Test
+    public void givenInvalidMinPrice_whenMapping_thenThrowInvalidParamException()
+    {
+        //arrange
+        String invalidPrice = "aaaa";
+
+        //assert
+        Executable executable = () -> productFiltersMapper.mapQueryParamsToRequest(VALID_SELLER_ID, VALID_TITLE, VALID_CATEGORY_NAME, invalidPrice, VALID_PRICE);
+
+        //assert
+        assertThrows(InvalidParamException.class, executable);
+    }
+
+    @Test
+    public void givenInvalidMaxPrice_whenMapping_thenThrowInvalidParamException()
+    {
+        //arrange
+        String invalidPrice = "aaaa";
+
+        //assert
+        Executable executable = () -> productFiltersMapper.mapQueryParamsToRequest(VALID_SELLER_ID, VALID_TITLE, VALID_CATEGORY_NAME, VALID_PRICE, invalidPrice);
+
+        //assert
+        assertThrows(InvalidParamException.class, executable);
+    }
+
+
 }
