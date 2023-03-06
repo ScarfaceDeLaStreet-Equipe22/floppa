@@ -12,7 +12,6 @@ public class DateTime {
 
     public DateTime(String dateTime) {
         assertDateTime(dateTime);
-
         this.dateTime = dateTime;
     }
 

@@ -34,4 +34,22 @@ public class ProductResponse {
         this.seller = new SellerInProductResponse(seller.getId(), seller.getName());
         this.offers = new OffersInProductsResponse(numberOfOffers, average);
     }
+
+    public ProductResponse(
+            String title,
+            String description,
+            String category,
+            double suggestedPrice,
+            String id,
+            DateTime createdAt,
+            int numberOfOffers,
+            Double average) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.suggestedPrice = suggestedPrice;
+        this.id = id;
+        this.createdAt = createdAt.getDateTime();
+        this.offers = new OffersInProductsResponse(numberOfOffers, average);
+    }
 }
