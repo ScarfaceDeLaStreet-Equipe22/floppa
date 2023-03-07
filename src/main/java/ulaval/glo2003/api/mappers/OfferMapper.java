@@ -13,7 +13,7 @@ public class OfferMapper {
 
     public OfferResponse mapEntityToResponse(Offer offer)
     {
-        return new OfferResponse(offer.buyerUsername, new DateTime(), offer.getAmount(), offer.getMessage());
+        return new OfferResponse(offer.buyerUsername, offer.getCreatedAt(), offer.getAmount(), offer.getMessage());
     }
 
     public Offer mapRequestToEntity(

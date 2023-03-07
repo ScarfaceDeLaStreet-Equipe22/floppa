@@ -37,6 +37,8 @@ public class SellerMapper {
                     product.getCreatedAt(),
                     product.getSeller(),
                     offers);
+
+            products.add(productReponse);
         }
 
         return new SellerResponse(
