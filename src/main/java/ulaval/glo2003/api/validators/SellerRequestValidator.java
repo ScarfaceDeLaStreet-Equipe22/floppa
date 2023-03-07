@@ -3,7 +3,6 @@ package ulaval.glo2003.api.validators;
 import ulaval.glo2003.api.exceptions.SellerRequestExceptions.*;
 import ulaval.glo2003.api.requests.SellerRequest;
 
-
 public class SellerRequestValidator implements IValidatorRequest {
 
     private final SellerRequest sellerRequest;

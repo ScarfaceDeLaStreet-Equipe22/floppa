@@ -2,7 +2,7 @@ package ulaval.glo2003.application.repository;
 
 import java.util.ArrayList;
 import ulaval.glo2003.api.exceptions.ProductRequestExceptions.MissingSellerIdException;
-import ulaval.glo2003.application.IRepository;
+import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 
@@ -21,11 +21,15 @@ public class SellerRepository implements IRepository<Seller> {
 
     @Override
     public void remove(Seller seller) {
-        try {
-            sellers.remove(seller);
-        } catch (Exception e) {
-            throw new ItemNotFoundException("seller not found");
+        for (int i = 0; i < sellers.size(); i++) {
+            Seller itSeller = sellers.get(i);
+            if (seller.getId().equals(itSeller.getId())) {
+                sellers.remove(i);
+                return;
+            }
         }
+
+        throw new ItemNotFoundException("Seller not found");
     }
 
     @Override
@@ -37,12 +41,32 @@ public class SellerRepository implements IRepository<Seller> {
         return sellers.stream()
                 .filter(seller -> seller.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new MissingSellerIdException());
+                .orElseThrow(() -> new ItemNotFoundException("Seller not found"));
+    }
+
+
+    @Override
+    public void update(Seller seller) {
+        boolean isSellerFound = false;
+        for (Seller currentSeller : sellers) {
+            if (currentSeller.getId().equals(seller.getId())) {
+                sellers.set(sellers.indexOf(currentSeller), seller);
+                isSellerFound = true;
+            }
+        }
+        if (!isSellerFound) {
+            throw new ItemNotFoundException("Seller not found");
+        }
     }
 
 
     @Override
     public ArrayList<Seller> findAll() {
         return sellers;
+    }
+
+    @Override
+    public int count() {
+        return sellers.size();
     }
 }

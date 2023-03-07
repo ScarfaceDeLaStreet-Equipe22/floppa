@@ -1,13 +1,13 @@
 package ulaval.glo2003.api.validators;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingAmountException;
 import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingMessageException;
 import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingParamBuyerUsername;
 import ulaval.glo2003.api.requests.OfferRequest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class OfferRequestValidatorTest {
 

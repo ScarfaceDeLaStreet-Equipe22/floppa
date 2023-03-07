@@ -79,9 +79,11 @@ public class SellerResponse {
                             product.getSuggestedPrice().toDouble(),
                             product.getId(),
                             product.getCreatedAt(),
-                            product.getSeller(),
+                            product.getOffers(),
                             product.getNumberOfOffers(),
-                            product.getAverageAmountOfOffers());
+                            product.getAverageAmountOfOffers(),
+                            product.getMinimumAmountOfOffers(),
+                            product.getMaximumAmountOfOffers());
             productResponses.add(productResponse);
         }
 

@@ -28,4 +28,6 @@ public class Offer {
     public String getBuyerUsername() {
         return buyerUsername;
     }
+
+    public DateTime getCreatedAt() { return createdAt; }
 }

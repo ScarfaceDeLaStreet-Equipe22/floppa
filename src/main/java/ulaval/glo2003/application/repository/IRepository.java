@@ -13,4 +13,6 @@ public interface IRepository<T> {
 
 
     ArrayList<T> findAll();
+
+    int count();
 }

@@ -13,14 +13,12 @@ public class Amount {
     }
 
     private void AmountValidation(String amount) {
-        if (amount.isEmpty())
-        {
+        if (amount.isEmpty()) {
             throw new MissingAmountException();
         }
         try {
             Double.parseDouble(amount);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new InvalidAmountException();
         }
     }

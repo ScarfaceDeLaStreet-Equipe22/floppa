@@ -1,5 +1,7 @@
 package ulaval.glo2003.api.mappers;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.requests.ProductRequest;
@@ -8,9 +10,7 @@ import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.ProductCategory;
-
-import static com.google.common.truth.Truth.assertThat;
-
+import ulaval.glo2003.api.mappers.ProductMapper ;
 
 class ProductMapperTest {
     private ulaval.glo2003.api.mappers.ProductMapper productMapper;
@@ -34,7 +34,8 @@ class ProductMapperTest {
         assertThat(product.getTitle()).isEqualTo(request.getTitle());
         assertThat(product.getDescription()).isEqualTo(request.getDescription());
         assertThat(product.getCategory()).isEqualTo(request.getCategory());
-        assertThat(product.getSuggestedPrice().toDouble()).isEqualTo(new Amount(request.getSuggestedPrice()).toDouble());
+        assertThat(product.getSuggestedPrice().toDouble())
+                .isEqualTo(new Amount(request.getSuggestedPrice()).toDouble());
         assertThat(product.getSeller()).isEqualTo(seller);
     }
 
@@ -42,7 +43,13 @@ class ProductMapperTest {
     public void mapEntityToResponse_withValidProduct_shouldReturnProductResponse() {
         // Given
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
-        Product product = new Product("title", "description", new ProductCategory("Sport"), new Amount("10"), seller);
+        Product product =
+                new Product(
+                        "title",
+                        "description",
+                        new ProductCategory("Sport"),
+                        new Amount("10"),
+                        seller);
 
         // When
         ProductResponse response = productMapper.mapEntityToResponse(product);
