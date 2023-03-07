@@ -22,7 +22,7 @@ public class SellerResponse {
             String birthDate,
             String email,
             String phoneNumber,
-            ArrayList<Product> products,
+            ArrayList<ProductResponse> products,
             DateTime createdAt) {
         this.id = id;
         this.name = name;
@@ -30,10 +30,11 @@ public class SellerResponse {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.bio = bio;
-        this.products = transformProductIntoProductResponse(products);
+        this.products = products;
         this.createdAt = createdAt.getDateTime();
     }
 
+    /*
     private ArrayList<ProductResponse> transformProductIntoProductResponse(
             ArrayList<Product> productList) {
         ArrayList<ProductResponse> productResponses = new ArrayList<>();
@@ -55,5 +56,5 @@ public class SellerResponse {
         }
 
         return productResponses;
-    }
+    }*/
 }

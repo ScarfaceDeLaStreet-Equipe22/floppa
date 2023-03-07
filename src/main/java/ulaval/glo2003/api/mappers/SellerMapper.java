@@ -1,16 +1,43 @@
 package ulaval.glo2003.api.mappers;
 
 import ulaval.glo2003.api.requests.SellerRequest;
+import ulaval.glo2003.api.responses.OfferResponse;
+import ulaval.glo2003.api.responses.OffersInProductsInSellerResponse;
+import ulaval.glo2003.api.responses.ProductResponse;
 import ulaval.glo2003.api.responses.SellerResponse;
 import ulaval.glo2003.api.validators.SellerRequestValidator;
+import ulaval.glo2003.domain.entities.Offer;
+import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.validators.SellerValidator;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class SellerMapper {
+
+    private final OfferMapper offerMapper = new OfferMapper();
 
     public SellerResponse mapEntityToResponse(Seller seller) {
         SellerValidator sellerValidator = new SellerValidator(seller);
         sellerValidator.validateEntity();
+
+        ArrayList<ProductResponse> products = new ArrayList<>();
+
+        for (Product product : seller.getProducts())
+        {
+            OffersInProductsInSellerResponse offers = getOffersReponses(product);
+
+            ProductResponse productReponse = new ProductResponse(
+                    product.getTitle(),
+                    product.getDescription(),
+                    product.getCategory(),
+                    product.getSuggestedPrice().toDouble(),
+                    product.getId(),
+                    product.getCreatedAt(),
+                    product.getSeller(),
+                    offers);
+        }
 
         return new SellerResponse(
                 seller.getId(),
@@ -19,8 +46,18 @@ public class SellerMapper {
                 seller.getBirthdate().getDate(),
                 seller.getEmail(),
                 seller.getPhoneNumber(),
-                seller.getProducts(),
+                products,
                 seller.getCreatedAt());
+    }
+
+    private OffersInProductsInSellerResponse getOffersReponses(Product product)
+    {
+        ArrayList<OfferResponse> offerResponses = new ArrayList<OfferResponse>();
+
+        for(Offer offer : product.getOffers())
+            offerResponses.add(offerMapper.mapEntityToResponse(offer));
+
+        return new OffersInProductsInSellerResponse(product.getNumberOfOffers(), product.getAverageAmountOfOffers(), product.getMinimumAmountOfOffers(), product.getMaximumAmountOfOffers(), offerResponses);
     }
 
     public Seller mapRequestToEntity(SellerRequest sellerRequest) {

@@ -39,17 +39,7 @@ public class SellerRessource {
     public Response getAllSellers() {
         List<SellerResponse> sellerResponses =
                 this.sellerRepository.findAll().stream()
-                        .map(
-                                seller ->
-                                        new SellerResponse(
-                                                seller.getId(),
-                                                seller.getName(),
-                                                seller.getBio(),
-                                                seller.getBirthdate().getDate(),
-                                                seller.getEmail(),
-                                                seller.getPhoneNumber(),
-                                                seller.getProducts(),
-                                                seller.getCreatedAt()))
+                        .map(sellerMapper::mapEntityToResponse)
                         .collect(Collectors.toList());
         return Response.ok(sellerResponses).build();
     }
