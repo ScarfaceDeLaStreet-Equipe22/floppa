@@ -1,7 +1,5 @@
 package ulaval.glo2003.api.requests;
 
-import ulaval.glo2003.domain.entities.Seller;
-
 public class ProductRequest {
 
     public String title;
@@ -10,7 +8,9 @@ public class ProductRequest {
     public String category;
 
     public ProductRequest() {}
-    public ProductRequest(String title, String description, String category, String suggestedPrice) {
+
+    public ProductRequest(
+            String title, String description, String category, String suggestedPrice) {
         this.title = title;
         this.description = description;
         this.suggestedPrice = suggestedPrice;

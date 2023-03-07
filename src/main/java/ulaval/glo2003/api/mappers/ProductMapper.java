@@ -30,7 +30,8 @@ public class ProductMapper {
     }
 
     public Product mapRequestToEntity(ProductRequest productRequest, Seller seller) {
-        ProductRequestValidator productRequestValidator = new ProductRequestValidator(productRequest);
+        ProductRequestValidator productRequestValidator =
+                new ProductRequestValidator(productRequest);
         productRequestValidator.validateRequest();
 
         Product product =

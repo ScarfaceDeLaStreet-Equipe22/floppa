@@ -63,6 +63,8 @@ public class Product {
         return seller;
     }
 
+    public ArrayList<Offer> getOffers() { return offers; }
+
     public int getNumberOfOffers() {
         return offers.size();
     }
@@ -94,6 +96,34 @@ public class Product {
                 total += offer.getAmount();
             }
             return total / offers.size();
+        } else {
+            return 0;
+        }
+    }
+
+    public double getMinimumAmountOfOffers() {
+        if (offers.size() != 0) {
+            double minAmount = 0;
+            for (Offer offer : offers) {
+                if (offer.getAmount() < minAmount) {
+                    minAmount = offer.getAmount();
+                }
+            }
+            return minAmount;
+        } else {
+            return 0;
+        }
+    }
+
+    public double getMaximumAmountOfOffers() {
+        if (offers.size() != 0) {
+            double maxAmount = 0;
+            for (Offer offer : offers) {
+                if (offer.getAmount() > maxAmount) {
+                    maxAmount = offer.getAmount();
+                }
+            }
+            return maxAmount;
         } else {
             return 0;
         }
