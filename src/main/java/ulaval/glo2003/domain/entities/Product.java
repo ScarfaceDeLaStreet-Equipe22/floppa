@@ -16,6 +16,7 @@ public class Product {
     public DateTime createdAt;
 
     public Seller seller;
+
     public ArrayList<Offer> offers;
 
     public Product(
@@ -64,6 +65,26 @@ public class Product {
 
     public int getNumberOfOffers() {
         return offers.size();
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setSuggestedPrice(Amount suggestedPrice) {
+        this.suggestedPrice = suggestedPrice;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
     }
 
     public double getAverageAmountOfOffers() {
