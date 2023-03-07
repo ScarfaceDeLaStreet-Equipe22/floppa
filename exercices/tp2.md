@@ -54,6 +54,12 @@ De plus, plus une issue est grande, plus il faudra l'attendre si une de ses tâc
 - Simplifier notre statégie de branchage qui était trop complexe pour nos besoins
 - Être plus disponible et réactif sur notre Discord afin de pouvoir mieux coopérer
 
+# Diagramme de classe
+
+<p align="center">
+  <img src="./img/tp2/diagramme_classes.png">
+</p>
+
 # Planification du travail sur Github
 
 ## Github Project
@@ -109,3 +115,9 @@ Voici l'historique de notre branche develop.
 <p align="center">
   <img src="./img/tp2/arbreCommits-it2.png">
 </p>
+
+# Analyse de formattage
+Vérifier le formattage du code : `mvn spotless:check`
+<br/>
+Appliquer le formattage du code : `mvn spotless:apply`
+
