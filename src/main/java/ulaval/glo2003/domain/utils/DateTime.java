@@ -2,7 +2,6 @@ package ulaval.glo2003.domain.utils;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
-import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class DateTime {
     public String dateTime;

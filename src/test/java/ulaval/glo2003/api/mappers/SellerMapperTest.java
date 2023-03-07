@@ -5,12 +5,8 @@ import static com.google.common.truth.Truth.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.api.requests.SellerRequest;
-import ulaval.glo2003.api.responses.ProductResponse;
 import ulaval.glo2003.api.responses.SellerResponse;
-import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
-import ulaval.glo2003.domain.utils.Amount;
-import ulaval.glo2003.domain.utils.ProductCategory;
 
 class SellerMapperTest {
     private SellerMapper sellerMapper;
@@ -32,7 +28,7 @@ class SellerMapperTest {
         assertThat(seller).isNotNull();
         assertThat(seller.getName()).isEqualTo(request.getName());
         assertThat(seller.getBio()).isEqualTo(request.getBio());
-        assertThat(seller.getBirthdate()).isEqualTo(request.getBirthdate());
+        assertThat(seller.getBirthdate().getDate()).isEqualTo(request.getBirthdate());
         assertThat(seller.getEmail()).isEqualTo(request.getEmail());
         assertThat(seller.getPhoneNumber()).isEqualTo(request.getPhoneNumber());
     }
@@ -48,7 +44,7 @@ class SellerMapperTest {
         assertThat(seller).isNotNull();
         assertThat(seller.getName()).isEqualTo(response.name);
         assertThat(seller.getBio()).isEqualTo(response.bio);
-        assertThat(seller.getBirthdate()).isEqualTo(response.birthDate);
+        assertThat(seller.getBirthdate().getDate()).isEqualTo(response.birthDate);
         assertThat(seller.getEmail()).isEqualTo(response.email);
         assertThat(seller.getPhoneNumber()).isEqualTo(response.phoneNumber);
     }
