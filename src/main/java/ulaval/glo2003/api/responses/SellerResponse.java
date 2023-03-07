@@ -7,6 +7,39 @@ import ulaval.glo2003.domain.utils.DateTime;
 public class SellerResponse {
     public String name;
     public String bio;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public String getBirthdate() {
+        return birthDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public ArrayList<ProductResponse> getProducts() {
+        return products;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     public String birthDate;
     public String email;
     public String phoneNumber;

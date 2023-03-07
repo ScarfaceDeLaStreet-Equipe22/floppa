@@ -1,5 +1,12 @@
 package ulaval.glo2003.api.mappers;
 
+import org.junit.jupiter.api.Test;
+import ulaval.glo2003.api.requests.SellerRequest;
+import ulaval.glo2003.api.responses.SellerResponse;
+import ulaval.glo2003.domain.entities.Seller;
+
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SellerMapperTest {
@@ -7,10 +14,9 @@ class SellerMapperTest {
     @Test
     public void mapEntityToResponse_shouldMapSellerToSellerResponse() {
         // Arrange
-        LocalDate birthdate = LocalDate.now().minusYears(30);
-        Seller seller = new Seller("John Doe", birthdate, "johndoe@example.com", "123-456-7890", "Bio");
-        seller.setId("123");
-        seller.setCreatedAt(LocalDate.now().minusDays(7));
+
+        Seller seller = new Seller("John Doe", "1968-05-12", "johndoe@example.com", "14185691931", "Bio");
+
 
         SellerMapper sellerMapper = new SellerMapper();
 
@@ -25,13 +31,12 @@ class SellerMapperTest {
         assertEquals(seller.getEmail(), sellerResponse.getEmail());
         assertEquals(seller.getPhoneNumber(), sellerResponse.getPhoneNumber());
         assertEquals(seller.getProducts(), sellerResponse.getProducts());
-        assertEquals(seller.getCreatedAt(), sellerResponse.getCreatedAt());
     }
 
     @Test
     public void mapRequestToEntity_shouldMapSellerRequestToSeller() {
         // Arrange
-        SellerRequest sellerRequest = new SellerRequest("John Doe", LocalDate.now().minusYears(30), "johndoe@example.com", "123-456-7890", "Bio");
+        SellerRequest sellerRequest = new SellerRequest("John Doe", "BIO", "1968-05-12", "johndoe@example.com","14185691931");
         SellerMapper sellerMapper = new SellerMapper();
 
         // Act
