@@ -3,36 +3,30 @@ package ulaval.glo2003;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
+import jakarta.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import jakarta.ws.rs.core.UriBuilder;
-import ulaval.glo2003.api.Mappers.SellerMapper;
-import ulaval.glo2003.api.Seller.SellerRequest;
-import ulaval.glo2003.api.Seller.SellerResponse;
-import ulaval.glo2003.api.Validators.SellerRequestValidator;
-import ulaval.glo2003.application.SellerRepository;
-import ulaval.glo2003.domain.Seller;
+import ulaval.glo2003.api.mappers.SellerMapper;
+import ulaval.glo2003.api.requests.SellerRequest;
+import ulaval.glo2003.api.responses.SellerResponse;
+import ulaval.glo2003.application.repository.SellerRepository;
+import ulaval.glo2003.domain.entities.Seller;
 
 @Path("/sellers")
 public class SellerRessource {
 
     private final SellerRepository sellerRepository;
+    private final SellerMapper sellerMapper;
 
-    public SellerRessource(SellerRepository sellerRepository) {
+    public SellerRessource(SellerRepository sellerRepository, SellerMapper sellerMapper) {
         this.sellerRepository = sellerRepository;
+        this.sellerMapper = sellerMapper;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response seller(SellerRequest sellerRequest) {
-
-        SellerRequestValidator sellerRequestValidator = new SellerRequestValidator(sellerRequest);
-        sellerRequestValidator.validateRequest();
-
-        SellerMapper sellerMapper = new SellerMapper();
         Seller sellerCreated = sellerMapper.mapRequestToEntity(sellerRequest);
 
         sellerRepository.save(sellerCreated);
@@ -51,7 +45,7 @@ public class SellerRessource {
                                                 seller.getId(),
                                                 seller.getName(),
                                                 seller.getBio(),
-                                                seller.getBirthDate(),
+                                                seller.getBirthdate().getDate(),
                                                 seller.getEmail(),
                                                 seller.getPhoneNumber(),
                                                 seller.getProducts(),
@@ -66,7 +60,6 @@ public class SellerRessource {
 
         Seller foundSeller = this.sellerRepository.findById(sellerId);
 
-        SellerMapper sellerMapper = new SellerMapper();
         SellerResponse sellerResponse = sellerMapper.mapEntityToResponse(foundSeller);
 
         return Response.ok(sellerResponse).build();

@@ -4,32 +4,34 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
-
-import ulaval.glo2003.api.Mappers.OfferMapper;
-import ulaval.glo2003.api.Mappers.ProductMapper;
 import java.util.List;
 import java.util.stream.Collectors;
-import ulaval.glo2003.api.Offer.OfferRequest;
-import ulaval.glo2003.api.Product.ProductListResponse;
-import ulaval.glo2003.api.Product.ProductRequest;
-import ulaval.glo2003.api.Product.ProductResponse;
-import ulaval.glo2003.api.Validators.OfferRequestValidator;
-import ulaval.glo2003.api.Validators.ProductRequestValidator;
-import ulaval.glo2003.application.ProductRepository;
-import ulaval.glo2003.application.SellerRepository;
-import ulaval.glo2003.domain.*;
-import ulaval.glo2003.domain.Product;
-import ulaval.glo2003.domain.ProductClasses.ProductFilter;
+import ulaval.glo2003.api.mappers.OfferMapper;
+import ulaval.glo2003.api.mappers.ProductMapper;
+import ulaval.glo2003.api.requests.OfferRequest;
+import ulaval.glo2003.api.requests.ProductRequest;
+import ulaval.glo2003.api.responses.ProductListResponse;
+import ulaval.glo2003.api.responses.ProductResponse;
+import ulaval.glo2003.application.repository.ProductRepository;
+import ulaval.glo2003.application.repository.SellerRepository;
+import ulaval.glo2003.domain.entities.Offer;
+import ulaval.glo2003.domain.entities.Product;
+import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.utils.ProductFilter;
 
 @Path("/products")
 public class ProductRessource {
 
     private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
+    private final OfferMapper offerMapper;
 
-    public ProductRessource(SellerRepository sellerRepository, ProductRepository productRepository) {
+    public ProductRessource(SellerRepository sellerRepository, ProductRepository productRepository, ProductMapper productMapper, OfferMapper offerMapper) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
+        this.offerMapper = offerMapper;
     }
 
     @POST
@@ -42,13 +44,9 @@ public class ProductRessource {
 
         Product productForOffer = productRepository.findById(productId);
 
-        OfferRequestValidator offerRequestValidator = new OfferRequestValidator(offerRequest, buyerUsername, productForOffer);
-        offerRequestValidator.validateRequest();
+        Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername, productForOffer);
 
-        OfferMapper offerMapper = new OfferMapper();
-        Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername);
-
-        productForOffer.offerRepository.save(offer);
+        productForOffer.offers.add(offer);
 
         return Response.status(201).build();
     }
@@ -56,12 +54,8 @@ public class ProductRessource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProduct(ProductRequest productRequest, @HeaderParam("X-Seller-Id") String sellerId) {
-
-        ProductRequestValidator productRequestValidator = new ProductRequestValidator(productRequest);
-        productRequestValidator.validateRequest();
-
         Seller seller = sellerRepository.findById(sellerId);
-        ProductMapper productMapper = new ProductMapper();
+
         Product productCreated = productMapper.mapRequestToEntity(productRequest, seller);
 
         seller.addProduct(productCreated);
@@ -76,9 +70,8 @@ public class ProductRessource {
     @Path("{Productid}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getProducts(@PathParam("Productid") String productId) {
-
         Product product = productRepository.findById(productId);
-        ProductMapper productMapper = new ProductMapper();
+
         ProductResponse productResponse = productMapper.mapEntityToResponse(product);
 
         return Response.ok(productResponse).build();
@@ -103,7 +96,7 @@ public class ProductRessource {
                                                 product.getTitle(),
                                                 product.getDescription(),
                                                 product.getCategory(),
-                                                product.getSuggestedPrice(),
+                                                product.getSuggestedPrice().toDouble(),
                                                 product.getId(),
                                                 product.getCreatedAt(),
                                                 product.getSeller(),
@@ -114,4 +107,3 @@ public class ProductRessource {
         return Response.ok(new ProductListResponse(filteredProducts)).build();
     }
 }
-

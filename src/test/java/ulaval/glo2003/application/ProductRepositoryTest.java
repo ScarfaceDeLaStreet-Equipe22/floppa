@@ -2,11 +2,12 @@ package ulaval.glo2003.application;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ulaval.glo2003.api.Utils.ItemNotFoundException;
-import ulaval.glo2003.domain.Product;
-import ulaval.glo2003.domain.ProductClasses.Amount;
-import ulaval.glo2003.domain.ProductClasses.ProductCategory;
-import ulaval.glo2003.domain.Seller;
+import ulaval.glo2003.application.repository.ProductRepository;
+import ulaval.glo2003.domain.entities.Product;
+import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
+import ulaval.glo2003.domain.utils.Amount;
+import ulaval.glo2003.domain.utils.ProductCategory;
 
 import java.util.ArrayList;
 
