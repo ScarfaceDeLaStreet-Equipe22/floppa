@@ -70,7 +70,7 @@ public class ProductRessource {
         seller.addProduct(productCreated);
         productRepository.save(productCreated);
 
-        String url = "http://localhost:8080/Products/" + sellerId;
+        String url = "http://localhost:8080/Products/" + productCreated.getId();
 
         return Response.created(URI.create(url)).build();
     }
