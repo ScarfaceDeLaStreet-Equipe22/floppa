@@ -16,7 +16,6 @@ import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidMessageException;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.ProductCategory;
 
-
 class OfferMapperTest {
     private OfferMapper offerMapper;
     private OfferRequest offerRequest;
