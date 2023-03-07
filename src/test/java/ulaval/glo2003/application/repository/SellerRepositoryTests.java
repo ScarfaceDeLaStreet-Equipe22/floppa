@@ -210,7 +210,7 @@ public class SellerRepositoryTests
     }
 
     @Test
-    public void givenNonExistingId_whenFinding_thenThrowItemNoutFoundException()
+    public void givenNonExistingId_whenFinding_thenThrowItemNotFoundException()
     {
         //arrange
         Seller seller = new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
