@@ -44,7 +44,7 @@ class SellerMapperTest {
         assertThat(seller).isNotNull();
         assertThat(seller.getName()).isEqualTo(response.name);
         assertThat(seller.getBio()).isEqualTo(response.bio);
-        assertThat(seller.getBirthdate().getDate()).isEqualTo(response.birthDate);
+        assertThat(seller.getBirthdate().getDate()).isEqualTo(response.birthdate);
         assertThat(seller.getEmail()).isEqualTo(response.email);
         assertThat(seller.getPhoneNumber()).isEqualTo(response.phoneNumber);
     }
