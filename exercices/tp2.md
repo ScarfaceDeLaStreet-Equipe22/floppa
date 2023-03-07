@@ -88,7 +88,7 @@ Voici quelques exemples d'issues
 
 
 ## Pull requests
-Voici quelques exemples de pull request.
+Voici quelques exemples de pull request. La dernière comprend aussi un exemple code-review
 ### Screenshots
 <p align="center">
   <img src="./img/tp2/pr1-it2.png">
@@ -98,6 +98,9 @@ Voici quelques exemples de pull request.
 </p>
 <p align="center">
   <img src="./img/tp2/pr3-it2.png">
+</p>
+<p align="center">
+  <img src="./img/tp2/pr4-it2.png">
 </p>
 
 ## Arbre de commits
