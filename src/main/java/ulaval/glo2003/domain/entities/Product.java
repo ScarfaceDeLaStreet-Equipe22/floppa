@@ -62,7 +62,9 @@ public class Product {
         return seller;
     }
 
-    public ArrayList<Offer> getOffers() { return offers; }
+    public ArrayList<Offer> getOffers() {
+        return offers;
+    }
 
     public int getNumberOfOffers() {
         return offers.size();
@@ -82,7 +84,7 @@ public class Product {
 
     public double getMinimumAmountOfOffers() {
         if (offers.size() != 0) {
-            double minAmount = 0;
+            double minAmount = Double.MAX_VALUE;
             for (Offer offer : offers) {
                 if (offer.getAmount() < minAmount) {
                     minAmount = offer.getAmount();

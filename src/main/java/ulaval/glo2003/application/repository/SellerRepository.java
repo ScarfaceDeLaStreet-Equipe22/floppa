@@ -1,8 +1,6 @@
 package ulaval.glo2003.application.repository;
 
 import java.util.ArrayList;
-import ulaval.glo2003.api.exceptions.ProductRequestExceptions.MissingSellerIdException;
-import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 
