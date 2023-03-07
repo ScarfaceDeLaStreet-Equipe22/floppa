@@ -10,13 +10,14 @@ import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.ProductCategory;
+import ulaval.glo2003.api.mappers.ProductMapper ;
 
 class ProductMapperTest {
     private ProductMapper productMapper;
 
     @BeforeEach
     public void setUpMapper() {
-        productMapper = new ProductMapper();
+        productMapper = new ulaval.glo2003.api.mappers.ProductMapper();
     }
 
     @Test
