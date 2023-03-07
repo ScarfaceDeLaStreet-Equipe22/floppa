@@ -7,6 +7,7 @@
   jobs:
     build:
       runs-on: ubuntu-latest
+      timeout-minutes: 5
       steps:
       - name: clone-project
         uses: actions/checkout@v3
@@ -21,13 +22,16 @@
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
+      - name: Test
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+
+      - name: Report
+        uses: dorny/test-reporter@v1
+        if: always()
         with:
-          name: my-java-app
-          path: target/my-java-app.jar
-
-
-
+          name: Maven Tests
+          path: target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
 
 
