@@ -11,7 +11,6 @@ public class Seller {
     public String name;
     public String bio;
     public Date birthDate;
-
     public Email email;
     public PhoneNumber phoneNumber;
     public ArrayList<Product> products;
