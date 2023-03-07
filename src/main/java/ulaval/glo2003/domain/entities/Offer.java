@@ -29,5 +29,7 @@ public class Offer {
         return buyerUsername;
     }
 
-    public DateTime getCreatedAt() { return createdAt; }
+    public DateTime getCreatedAt() {
+        return createdAt;
+    }
 }

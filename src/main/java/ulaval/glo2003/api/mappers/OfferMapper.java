@@ -6,14 +6,13 @@ import ulaval.glo2003.api.validators.OfferRequestValidator;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.utils.Amount;
-import ulaval.glo2003.domain.utils.DateTime;
 import ulaval.glo2003.domain.validators.OfferValidator;
 
 public class OfferMapper {
 
-    public OfferResponse mapEntityToResponse(Offer offer)
-    {
-        return new OfferResponse(offer.buyerUsername, offer.getCreatedAt(), offer.getAmount(), offer.getMessage());
+    public OfferResponse mapEntityToResponse(Offer offer) {
+        return new OfferResponse(
+                offer.buyerUsername, offer.getCreatedAt(), offer.getAmount(), offer.getMessage());
     }
 
     public Offer mapRequestToEntity(

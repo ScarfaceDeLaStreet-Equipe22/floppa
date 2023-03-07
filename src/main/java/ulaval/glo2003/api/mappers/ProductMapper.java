@@ -18,7 +18,9 @@ public class ProductMapper {
         ProductValidator productValidator = new ProductValidator(product);
         productValidator.validateEntity();
 
-        OffersInProductsResponse offers = new OffersInProductsResponse(product.getNumberOfOffers(), product.getAverageAmountOfOffers());
+        OffersInProductsResponse offers =
+                new OffersInProductsResponse(
+                        product.getNumberOfOffers(), product.getAverageAmountOfOffers());
 
         return new ProductResponse(
                 product.getTitle(),

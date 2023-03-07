@@ -1,24 +1,18 @@
 package ulaval.glo2003.api.responses;
 
-import ulaval.glo2003.domain.entities.Offer;
-
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class OffersInProductsResponse {
     public Integer count;
     public Optional<Double> avgAmount = Optional.empty();
 
-
     public OffersInProductsResponse(int numberOfOffers, Double average) {
         this.count = numberOfOffers;
-        
-        if(count > 0)
-            avgAmount = Optional.of(average);
-        
+
+        if (count > 0) avgAmount = Optional.of(average);
     }
 
-  /*  public OffersInProductsResponse(ArrayList offers, int numberOfOffers, Double average, double minimumAmount, double maximumAmount) {
+    /*  public OffersInProductsResponse(ArrayList offers, int numberOfOffers, Double average, double minimumAmount, double maximumAmount) {
         if (numberOfOffers == 0) {
             this.count = numberOfOffers;
             this.items = new ArrayList<>();

@@ -62,7 +62,9 @@ public class Product {
         return seller;
     }
 
-    public ArrayList<Offer> getOffers() { return offers; }
+    public ArrayList<Offer> getOffers() {
+        return offers;
+    }
 
     public int getNumberOfOffers() {
         return offers.size();

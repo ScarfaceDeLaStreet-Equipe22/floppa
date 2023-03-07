@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
-import ulaval.glo2003.api.mappers.ProductFiltersMapper;
 
 public class ProductFiltersMapperTests {
     private ProductFiltersMapper productFiltersMapper;

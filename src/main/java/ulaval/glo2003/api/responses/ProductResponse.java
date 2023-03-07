@@ -3,8 +3,6 @@ package ulaval.glo2003.api.responses;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.utils.DateTime;
 
-import java.util.ArrayList;
-
 public class ProductResponse {
 
     public String title;
