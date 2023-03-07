@@ -8,7 +8,6 @@ public class DateTime {
     public String dateTime;
 
     public DateTime(String dateTime) {
-        assertDateTime(dateTime);
         this.dateTime = dateTime;
     }
     
