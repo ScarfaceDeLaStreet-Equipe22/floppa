@@ -20,11 +20,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        //configuration des repository
+        // configuration des repository
         ProductRepository productRepository = new ProductRepository();
         SellerRepository sellerRepository = new SellerRepository();
 
-        //configuration des mappers
+        // configuration des mappers
         ProductMapper productMapper = new ProductMapper();
         SellerMapper sellerMapper = new SellerMapper();
         OfferMapper offerMapper = new OfferMapper();
@@ -32,7 +32,13 @@ public class Main {
 
         // seller and product config
         SellerRessource seller = new SellerRessource(sellerRepository, sellerMapper);
-        ProductRessource produit = new ProductRessource(sellerRepository, productRepository, productMapper, offerMapper, productFiltersMapper);
+        ProductRessource produit =
+                new ProductRessource(
+                        sellerRepository,
+                        productRepository,
+                        productMapper,
+                        offerMapper,
+                        productFiltersMapper);
 
         ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource());
 

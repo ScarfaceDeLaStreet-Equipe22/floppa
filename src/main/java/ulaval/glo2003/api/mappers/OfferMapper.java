@@ -9,15 +9,18 @@ import ulaval.glo2003.domain.validators.OfferValidator;
 
 public class OfferMapper {
 
-    public Offer mapRequestToEntity(OfferRequest offerRequest, String buyerUsername, Product product) {
+    public Offer mapRequestToEntity(
+            OfferRequest offerRequest, String buyerUsername, Product product) {
 
-        OfferRequestValidator offerRequestValidator = new OfferRequestValidator(offerRequest, buyerUsername);
+        OfferRequestValidator offerRequestValidator =
+                new OfferRequestValidator(offerRequest, buyerUsername);
         offerRequestValidator.validateRequest();
 
-        Offer offer = new Offer(
-                                new Amount(offerRequest.getAmount()),
-                                offerRequest.getMessage(),
-                                buyerUsername);
+        Offer offer =
+                new Offer(
+                        new Amount(offerRequest.getAmount()),
+                        offerRequest.getMessage(),
+                        buyerUsername);
 
         OfferValidator offerValidator = new OfferValidator(offer, product);
         offerValidator.validateEntity();

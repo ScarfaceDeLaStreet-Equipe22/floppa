@@ -1,9 +1,7 @@
 package ulaval.glo2003.domain.utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidCategoryException;
 
 public class ProductCategory {
@@ -19,8 +17,9 @@ public class ProductCategory {
     }
 
     private void assertProductCategory() {
-        List<String> validCategories = Arrays.asList("Sport", "electronics", "apparel", "beauty", "housing", "other");
-        if(!validCategories.contains(category)) {
+        List<String> validCategories =
+                Arrays.asList("Sport", "electronics", "apparel", "beauty", "housing", "other");
+        if (!validCategories.contains(category)) {
             throw new InvalidCategoryException();
         }
     }

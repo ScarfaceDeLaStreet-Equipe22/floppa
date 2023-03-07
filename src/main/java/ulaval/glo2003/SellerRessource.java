@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import ulaval.glo2003.api.mappers.SellerMapper;
 import ulaval.glo2003.api.requests.SellerRequest;
 import ulaval.glo2003.api.responses.SellerResponse;
-import ulaval.glo2003.api.validators.SellerRequestValidator;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Seller;
 
