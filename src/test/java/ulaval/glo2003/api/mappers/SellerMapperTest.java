@@ -23,7 +23,7 @@ class SellerMapperTest {
     @Test
     public void mapRequestToEntity_withValidRequest_shouldReturnSeller() {
         // arrange
-        SellerRequest request = new SellerRequest("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+        SellerRequest request = new SellerRequest("name", "allo", "1965-01-01", "test123@gmail.com", "18191234567");
 
         // act
         Seller seller = sellerMapper.mapRequestToEntity(request);
@@ -39,7 +39,7 @@ class SellerMapperTest {
 
     public void mapEntityToResponse_withValidSeller_shouldReturnSellerResponse() {
         // Given
-        Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+        Seller seller = new Seller("name", "1965-01-01", "test@test.com", "18191234567", "bio");
 
         // When
         SellerResponse response = sellerMapper.mapEntityToResponse(seller);
