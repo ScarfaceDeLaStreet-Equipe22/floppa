@@ -16,6 +16,7 @@ public class Product {
     public DateTime createdAt;
 
     public Seller seller;
+
     public ArrayList<Offer> offers;
 
     public Product(
@@ -62,10 +63,32 @@ public class Product {
         return seller;
     }
 
-    public ArrayList<Offer> getOffers() { return offers; }
+    public ArrayList<Offer> getOffers() {
+        return offers;
+    }
 
     public int getNumberOfOffers() {
         return offers.size();
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setSuggestedPrice(Amount suggestedPrice) {
+        this.suggestedPrice = suggestedPrice;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
     }
 
     public double getAverageAmountOfOffers() {
@@ -82,7 +105,7 @@ public class Product {
 
     public double getMinimumAmountOfOffers() {
         if (offers.size() != 0) {
-            double minAmount = 0;
+            double minAmount = Double.MAX_VALUE;
             for (Offer offer : offers) {
                 if (offer.getAmount() < minAmount) {
                     minAmount = offer.getAmount();

@@ -1,13 +1,12 @@
 package ulaval.glo2003.api.responses;
 
 import java.util.ArrayList;
-import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.utils.DateTime;
 
 public class SellerResponse {
     public String name;
     public String bio;
-    public String birthDate;
+    public String birthdate;
     public String email;
     public String phoneNumber;
 
@@ -22,18 +21,19 @@ public class SellerResponse {
             String birthDate,
             String email,
             String phoneNumber,
-            ArrayList<Product> products,
+            ArrayList<ProductResponse> products,
             DateTime createdAt) {
         this.id = id;
         this.name = name;
-        this.birthDate = birthDate;
+        this.birthdate = birthDate;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.bio = bio;
-        this.products = transformProductIntoProductResponse(products);
+        this.products = products;
         this.createdAt = createdAt.getDateTime();
     }
 
+    /*
     private ArrayList<ProductResponse> transformProductIntoProductResponse(
             ArrayList<Product> productList) {
         ArrayList<ProductResponse> productResponses = new ArrayList<>();
@@ -55,5 +55,5 @@ public class SellerResponse {
         }
 
         return productResponses;
-    }
+    }*/
 }

@@ -1,7 +1,7 @@
 package ulaval.glo2003.domain.utils;
 
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DateTime {
     public String dateTime;
@@ -9,11 +9,12 @@ public class DateTime {
     public DateTime(String dateTime) {
         this.dateTime = dateTime;
     }
-    
+
     public DateTime() {
         try {
-            DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
-            this.dateTime =  LocalDateTime.now().format(dateTimeFormat);
+            DateTimeFormatter dateTimeFormat =
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+            this.dateTime = LocalDateTime.now().format(dateTimeFormat);
         } catch (Exception e) {
             e.printStackTrace();
         }

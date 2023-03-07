@@ -1,6 +1,7 @@
 package ulaval.glo2003.api.mappers;
 
 import ulaval.glo2003.api.requests.ProductRequest;
+import ulaval.glo2003.api.responses.OffersInProductsResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
 import ulaval.glo2003.api.validators.ProductRequestValidator;
 import ulaval.glo2003.domain.entities.Product;
@@ -17,6 +18,10 @@ public class ProductMapper {
         ProductValidator productValidator = new ProductValidator(product);
         productValidator.validateEntity();
 
+        OffersInProductsResponse offers =
+                new OffersInProductsResponse(
+                        product.getNumberOfOffers(), product.getAverageAmountOfOffers());
+
         return new ProductResponse(
                 product.getTitle(),
                 product.getDescription(),
@@ -25,8 +30,7 @@ public class ProductMapper {
                 product.getId(),
                 product.getCreatedAt(),
                 product.getSeller(),
-                product.getNumberOfOffers(),
-                product.getAverageAmountOfOffers());
+                offers);
     }
 
     public Product mapRequestToEntity(ProductRequest productRequest, Seller seller) {
