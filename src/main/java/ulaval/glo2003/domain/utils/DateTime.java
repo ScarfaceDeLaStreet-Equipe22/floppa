@@ -7,6 +7,11 @@ import ulaval.glo2003.domain.exceptions.InvalidParamException;
 public class DateTime {
     public String dateTime;
 
+    public DateTime(String dateTime) {
+        assertDateTime(dateTime);
+        this.dateTime = dateTime;
+    }
+    
     public DateTime() {
         try {
             DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");

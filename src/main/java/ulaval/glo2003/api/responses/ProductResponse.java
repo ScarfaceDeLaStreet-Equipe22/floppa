@@ -3,6 +3,8 @@ package ulaval.glo2003.api.responses;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.utils.DateTime;
 
+import java.util.ArrayList;
+
 public class ProductResponse {
 
     public String title;
@@ -33,5 +35,27 @@ public class ProductResponse {
         this.createdAt = createdAt.getDateTime();
         this.seller = new SellerInProductResponse(seller.getId(), seller.getName());
         this.offers = new OffersInProductsResponse(numberOfOffers, average);
+    }
+
+    public ProductResponse(
+            String title,
+            String description,
+            String category,
+            double suggestedPrice,
+            String id,
+            DateTime createdAt,
+            ArrayList offersList,
+            int numberOfOffers,
+            Double average,
+            double minimumAmount,
+            double maximumAmount
+            ) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.suggestedPrice = suggestedPrice;
+        this.id = id;
+        this.createdAt = createdAt.getDateTime();
+        this.offers = new OffersInProductsResponse(offersList, numberOfOffers, average, minimumAmount, maximumAmount);
     }
 }
