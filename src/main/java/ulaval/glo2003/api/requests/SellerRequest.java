@@ -35,4 +35,7 @@ public class SellerRequest {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
+
+    public SellerRequest() {
+    }
 }

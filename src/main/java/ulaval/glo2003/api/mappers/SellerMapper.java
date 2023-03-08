@@ -33,7 +33,6 @@ public class SellerMapper {
                             product.getSuggestedPrice().toDouble(),
                             product.getId(),
                             product.getCreatedAt(),
-                            product.getSeller(),
                             offers);
 
             products.add(productReponse);
