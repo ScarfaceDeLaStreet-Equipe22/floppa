@@ -1,5 +1,9 @@
 package ulaval.glo2003.application.repository;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -8,51 +12,57 @@ import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 import ulaval.glo2003.domain.utils.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class ProductRepositoryTest {
     ProductRepository productRepository;
-    private static final Seller SELLER = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+    private static final Seller SELLER =
+            new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
 
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         productRepository = new ProductRepository();
     }
 
     @Test
-    public void givenProduct_whenSaving_thenProductIsSaved()
-    {
-        //arrange
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
+    public void givenProduct_whenSaving_thenProductIsSaved() {
+        // arrange
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
         List<Product> singleProduct = List.of(product);
 
-        //act
+        // act
         productRepository.save(product);
         ArrayList<Product> repositorySellers = productRepository.findAll();
 
-        //assert
+        // assert
         assertIterableEquals(singleProduct, repositorySellers);
     }
 
     @Test
-    public void givenExistingProduct_whenUpdating_thenProductIsUpdated()
-    {
-        //arrange
+    public void givenExistingProduct_whenUpdating_thenProductIsUpdated() {
+        // arrange
         ProductCategory updatedCategory = new ProductCategory("electronics");
         String updatedTitle = "title2";
         String updatedDescrption = "description2";
         Amount updatedSuggestedPrice = new Amount("10");
-        Seller updatedSeller = new Seller("test", "01-02-1995", "tet@tst.com", "18191234567", "bio");
+        Seller updatedSeller =
+                new Seller("test", "01-02-1995", "tet@tst.com", "18191234567", "bio");
 
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
         String productId = product.getId();
         productRepository.save(product);
 
-        //act
+        // act
         product.setCategory(updatedCategory);
         product.setDescription(updatedDescrption);
         product.setTitle(updatedTitle);
@@ -61,7 +71,7 @@ class ProductRepositoryTest {
         productRepository.update(product);
         Product foundProduct = productRepository.findById(productId);
 
-        //assert
+        // assert
         assertEquals(foundProduct.getCategory(), updatedCategory.getCategory());
         assertEquals(foundProduct.getDescription(), updatedDescrption);
         assertEquals(foundProduct.getTitle(), updatedTitle);
@@ -70,18 +80,36 @@ class ProductRepositoryTest {
     }
 
     @Test
-    public void givenExistingProduct_whenUpdating_thenOtherProductsAreNotUpdated()
-    {
-        //arrange
+    public void givenExistingProduct_whenUpdating_thenOtherProductsAreNotUpdated() {
+        // arrange
         ProductCategory updatedCategory = new ProductCategory("electronics");
         String updatedTitle = "title2";
         String updatedDescrption = "description2";
         Amount updatedSuggestedPrice = new Amount("10");
-        Seller updatedSeller = new Seller("test", "01-02-1995", "tet@tst.com", "18191234567", "bio");
+        Seller updatedSeller =
+                new Seller("test", "01-02-1995", "tet@tst.com", "18191234567", "bio");
 
-        Product firstProduct = new Product("FirstProduct", "firstdescription", new ProductCategory("Sport"), new Amount("2"), SELLER);
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
-        Product lastProduct = new Product("LastProduct", "lastdescription", new ProductCategory("Sport"), new Amount("4"), SELLER);
+        Product firstProduct =
+                new Product(
+                        "FirstProduct",
+                        "firstdescription",
+                        new ProductCategory("Sport"),
+                        new Amount("2"),
+                        SELLER);
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
+        Product lastProduct =
+                new Product(
+                        "LastProduct",
+                        "lastdescription",
+                        new ProductCategory("Sport"),
+                        new Amount("4"),
+                        SELLER);
 
         String firstProductId = firstProduct.getId();
         String lastProductId = lastProduct.getId();
@@ -89,7 +117,7 @@ class ProductRepositoryTest {
         productRepository.save(product);
         productRepository.save(lastProduct);
 
-        //act
+        // act
         product.setCategory(updatedCategory);
         product.setDescription(updatedDescrption);
         product.setTitle(updatedTitle);
@@ -100,7 +128,7 @@ class ProductRepositoryTest {
         Product foundFirstProduct = productRepository.findById(firstProductId);
         Product foundLastProduct = productRepository.findById(lastProductId);
 
-        //assert
+        // assert
         assertNotEquals(foundFirstProduct.getCategory(), updatedCategory.getCategory());
         assertNotEquals(foundFirstProduct.getDescription(), updatedDescrption);
         assertNotEquals(foundFirstProduct.getTitle(), updatedTitle);
@@ -115,127 +143,201 @@ class ProductRepositoryTest {
     }
 
     @Test
-    public void givenNewProduct_whenUpdating_thenThrowItemNotFoundException()
-    {
-        //arrange
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
+    public void givenNewProduct_whenUpdating_thenThrowItemNotFoundException() {
+        // arrange
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
 
-        //act
+        // act
         Executable executable = () -> productRepository.update(product);
 
-        //assert
+        // assert
         assertThrows(ItemNotFoundException.class, executable);
     }
 
     @Test
-    public void givenExistingProduct_whenRemoving_thenProductIsRemoved()
-    {
-        //arrange
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
+    public void givenExistingProduct_whenRemoving_thenProductIsRemoved() {
+        // arrange
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
         productRepository.save(product);
 
-        //act
+        // act
         productRepository.remove(product);
         Executable executable = () -> productRepository.findById(product.getId());
 
-        //assert
+        // assert
         assertThrows(ItemNotFoundException.class, executable);
     }
 
     @Test
-    public void givenNewProduct_whenRemoving_thenThrowsItemNotFoundException()
-    {
-        //arrange
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
+    public void givenNewProduct_whenRemoving_thenThrowsItemNotFoundException() {
+        // arrange
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
 
-        //act
+        // act
         Executable executable = () -> productRepository.remove(product);
 
-        //assert
+        // assert
         assertThrows(ItemNotFoundException.class, executable);
     }
 
-
     @Test
-    public void givenExistingProduct_whenRemoving_thenOnlyOneProductIsRemoved()
-    {
-        //arrange
-        Product firstProduct = new Product("FirstProduct", "firstdescription", new ProductCategory("Sport"), new Amount("2"), SELLER);
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
-        Product lastProduct = new Product("LastProduct", "lastdescription", new ProductCategory("Sport"), new Amount("4"), SELLER);
+    public void givenExistingProduct_whenRemoving_thenOnlyOneProductIsRemoved() {
+        // arrange
+        Product firstProduct =
+                new Product(
+                        "FirstProduct",
+                        "firstdescription",
+                        new ProductCategory("Sport"),
+                        new Amount("2"),
+                        SELLER);
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
+        Product lastProduct =
+                new Product(
+                        "LastProduct",
+                        "lastdescription",
+                        new ProductCategory("Sport"),
+                        new Amount("4"),
+                        SELLER);
         productRepository.save(firstProduct);
         productRepository.save(product);
         productRepository.save(lastProduct);
 
-        //act
+        // act
         int countBeforeRemove = productRepository.count();
         productRepository.remove(product);
 
-        //assert
+        // assert
         assertEquals(countBeforeRemove - 1, productRepository.count());
     }
 
     @Test
-    public void whenDeletingAll_thenAllProductsAreRemoved()
-    {
-        //arrange
-        Product firstProduct = new Product("FirstProduct", "firstdescription", new ProductCategory("Sport"), new Amount("2"), SELLER);
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
-        Product lastProduct = new Product("LastProduct", "lastdescription", new ProductCategory("Sport"), new Amount("4"), SELLER);
+    public void whenDeletingAll_thenAllProductsAreRemoved() {
+        // arrange
+        Product firstProduct =
+                new Product(
+                        "FirstProduct",
+                        "firstdescription",
+                        new ProductCategory("Sport"),
+                        new Amount("2"),
+                        SELLER);
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
+        Product lastProduct =
+                new Product(
+                        "LastProduct",
+                        "lastdescription",
+                        new ProductCategory("Sport"),
+                        new Amount("4"),
+                        SELLER);
         productRepository.save(firstProduct);
         productRepository.save(product);
         productRepository.save(lastProduct);
 
-        //act
+        // act
         productRepository.deleteAll();
 
-        //assert
+        // assert
         assertEquals(0, productRepository.count());
     }
 
     @Test
-    public void givenExistingId_whenFinding_thenProductIsReturned()
-    {
-        //arrange
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
+    public void givenExistingId_whenFinding_thenProductIsReturned() {
+        // arrange
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
         productRepository.save(product);
 
-        //act
+        // act
         Product foundProduct = productRepository.findById(product.getId());
 
-        //assert
+        // assert
         assertEquals(product, foundProduct);
     }
 
     @Test
-    public void givenNonExistingId_whenFinding_thenThrowItemNotFoundException()
-    {
-        //arrange
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
+    public void givenNonExistingId_whenFinding_thenThrowItemNotFoundException() {
+        // arrange
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
 
-        //act
+        // act
         Executable executable = () -> productRepository.findById(product.getId());
 
-        //assert
+        // assert
         assertThrows(ItemNotFoundException.class, executable);
     }
 
     @Test
-    public void whenFindingAll_thenAllProductsAreReturn()
-    {
-        //arrange
-        Product firstProduct = new Product("FirstProduct", "firstdescription", new ProductCategory("Sport"), new Amount("2"), SELLER);
-        Product product = new Product("Valid Title", "Valid Description", new ProductCategory("Sport"), new Amount("10.50"), SELLER);
-        Product lastProduct = new Product("LastProduct", "lastdescription", new ProductCategory("Sport"), new Amount("4"), SELLER);
+    public void whenFindingAll_thenAllProductsAreReturn() {
+        // arrange
+        Product firstProduct =
+                new Product(
+                        "FirstProduct",
+                        "firstdescription",
+                        new ProductCategory("Sport"),
+                        new Amount("2"),
+                        SELLER);
+        Product product =
+                new Product(
+                        "Valid Title",
+                        "Valid Description",
+                        new ProductCategory("Sport"),
+                        new Amount("10.50"),
+                        SELLER);
+        Product lastProduct =
+                new Product(
+                        "LastProduct",
+                        "lastdescription",
+                        new ProductCategory("Sport"),
+                        new Amount("4"),
+                        SELLER);
         productRepository.save(firstProduct);
         productRepository.save(product);
         productRepository.save(lastProduct);
 
-        //act
+        // act
         ArrayList<Product> products = productRepository.findAll();
 
-        //assert
+        // assert
         assertEquals(products.size(), productRepository.count());
     }
-
 }
