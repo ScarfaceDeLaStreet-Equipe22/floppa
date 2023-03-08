@@ -17,8 +17,7 @@ public class SellerRequest {
         this.phoneNumber = phoneNumber;
     }
 
-    public SellerRequest() {
-    }
+    public SellerRequest() {}
 
     public String getName() {
         return name;
