@@ -32,28 +32,4 @@ public class SellerResponse {
         this.products = products;
         this.createdAt = createdAt.getDateTime();
     }
-
-    /*
-    private ArrayList<ProductResponse> transformProductIntoProductResponse(
-            ArrayList<Product> productList) {
-        ArrayList<ProductResponse> productResponses = new ArrayList<>();
-        for (Product product : productList) {
-            ProductResponse productResponse =
-                    new ProductResponse(
-                            product.getTitle(),
-                            product.getDescription(),
-                            product.getCategory(),
-                            product.getSuggestedPrice().toDouble(),
-                            product.getId(),
-                            product.getCreatedAt(),
-                            product.getOffers(),
-                            product.getNumberOfOffers(),
-                            product.getAverageAmountOfOffers(),
-                            product.getMinimumAmountOfOffers(),
-                            product.getMaximumAmountOfOffers());
-            productResponses.add(productResponse);
-        }
-
-        return productResponses;
-    }*/
 }
