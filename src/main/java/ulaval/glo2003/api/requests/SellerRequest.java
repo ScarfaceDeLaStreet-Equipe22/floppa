@@ -1,6 +1,22 @@
 package ulaval.glo2003.api.requests;
 
 public class SellerRequest {
+
+    public String name;
+    public String bio;
+    public String birthdate;
+    public String email;
+    public String phoneNumber;
+
+    public SellerRequest(
+            String name, String bio, String birthdate, String email, String phoneNumber) {
+        this.name = name;
+        this.bio = bio;
+        this.birthdate = birthdate;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getName() {
         return name;
     }
@@ -19,20 +35,5 @@ public class SellerRequest {
 
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public String name;
-    public String bio;
-    public String birthdate;
-    public String email;
-    public String phoneNumber;
-
-    public SellerRequest(
-            String name, String bio, String birthdate, String email, String phoneNumber) {
-        this.name = name;
-        this.bio = bio;
-        this.birthdate = birthdate;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
     }
 }

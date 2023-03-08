@@ -13,12 +13,10 @@ public class OfferRequest {
     }
 
     public String getAmount() {
-
         return amount;
     }
 
     public String getMessage() {
-
         return message;
     }
 }

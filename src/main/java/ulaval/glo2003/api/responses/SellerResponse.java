@@ -9,7 +9,6 @@ public class SellerResponse {
     public String birthdate;
     public String email;
     public String phoneNumber;
-
     public String createdAt;
     public ArrayList<ProductResponse> products;
     public String id;
