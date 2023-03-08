@@ -35,6 +35,7 @@ public class SellerRessource {
         return Response.created(location).status(201).build();
     }
 
+    //this is not dead code, this is very usefull for testing with postman
     @GET
     public Response getAllSellers() {
         List<SellerResponse> sellerResponses =
