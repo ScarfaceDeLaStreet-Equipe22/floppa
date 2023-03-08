@@ -5,6 +5,7 @@ import java.util.List;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidCategoryException;
 
 public class ProductCategory {
+
     private final String category;
 
     public ProductCategory(String category) {

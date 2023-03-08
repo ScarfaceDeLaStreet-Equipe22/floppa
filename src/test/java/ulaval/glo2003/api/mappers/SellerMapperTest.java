@@ -9,6 +9,7 @@ import ulaval.glo2003.api.responses.SellerResponse;
 import ulaval.glo2003.domain.entities.Seller;
 
 class SellerMapperTest {
+
     private SellerMapper sellerMapper;
 
     @BeforeEach

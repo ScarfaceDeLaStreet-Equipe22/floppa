@@ -13,6 +13,7 @@ import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 import ulaval.glo2003.domain.utils.*;
 
 class ProductRepositoryTest {
+
     ProductRepository productRepository;
     private static final Seller SELLER =
             new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");

@@ -7,6 +7,7 @@ import java.time.Period;
 import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidBirthdateException;
 
 public class Date {
+
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public final String date;
 

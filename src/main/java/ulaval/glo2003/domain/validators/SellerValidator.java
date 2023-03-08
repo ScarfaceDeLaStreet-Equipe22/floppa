@@ -8,6 +8,7 @@ import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidEmailException;
 import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidPhoneNumberException;
 
 public class SellerValidator implements IValidator {
+
     private final Seller seller;
 
     public SellerValidator(Seller seller) {

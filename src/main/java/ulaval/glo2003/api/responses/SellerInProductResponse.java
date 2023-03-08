@@ -1,6 +1,7 @@
 package ulaval.glo2003.api.responses;
 
 public class SellerInProductResponse {
+
     public String id;
     public String name;
 

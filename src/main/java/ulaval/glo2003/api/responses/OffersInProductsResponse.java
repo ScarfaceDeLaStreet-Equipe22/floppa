@@ -3,6 +3,7 @@ package ulaval.glo2003.api.responses;
 import java.util.Optional;
 
 public class OffersInProductsResponse {
+
     public Integer count;
     public Optional<Double> avgAmount = Optional.empty();
 

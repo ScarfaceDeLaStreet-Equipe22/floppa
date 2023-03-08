@@ -8,6 +8,7 @@ import ulaval.glo2003.domain.utils.Email;
 import ulaval.glo2003.domain.utils.PhoneNumber;
 
 public class Seller {
+
     public String name;
     public String bio;
     public Date birthDate;

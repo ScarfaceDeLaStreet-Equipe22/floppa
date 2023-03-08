@@ -8,6 +8,7 @@ import ulaval.glo2003.api.exceptions.SellerRequestExceptions.*;
 import ulaval.glo2003.api.requests.SellerRequest;
 
 class SellerRequestValidatorTest {
+
     private SellerRequestValidator sellerRequestValidator;
 
     @Test

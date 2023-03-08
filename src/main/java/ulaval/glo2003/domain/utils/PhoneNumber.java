@@ -3,6 +3,7 @@ package ulaval.glo2003.domain.utils;
 import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidPhoneNumberException;
 
 public class PhoneNumber {
+
     private String numero;
 
     public PhoneNumber(String numero) {

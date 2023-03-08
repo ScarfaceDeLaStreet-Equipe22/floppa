@@ -12,6 +12,7 @@ import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.ProductCategory;
 
 class ProductMapperTest {
+
     private ProductMapper productMapper;
 
     @BeforeEach

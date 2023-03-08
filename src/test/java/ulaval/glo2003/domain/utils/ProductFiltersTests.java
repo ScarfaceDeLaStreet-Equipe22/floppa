@@ -11,12 +11,10 @@ public class ProductFiltersTests {
 
     private Product testProduct;
     private String sellerId;
-
     private static final String VALID_PRODUCT_TITLE = "TestProduct";
     private static final String PRODUCT_DESCRIPTION = "Description";
     private static final ProductCategory VALID_PRODUCT_CATEGORY = new ProductCategory("other");
     private static final Amount PRODUCT_PRICE = new Amount("10.0");
-
     private static final String INVALID_SELLER_ID = "invalidSellerId";
     private static final String INVALID_PRODUCT_TITLE = "InvalidTitle";
     private static final ProductCategory INVALID_PRODUCT_CATEGORY = new ProductCategory("Sport");

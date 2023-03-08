@@ -7,16 +7,14 @@ import ulaval.glo2003.domain.utils.DateTime;
 import ulaval.glo2003.domain.utils.ProductCategory;
 
 public class Product {
+
     public String title;
     public String description;
     public Amount suggestedPrice;
     public ProductCategory category;
-
     public String id;
     public DateTime createdAt;
-
     public Seller seller;
-
     public ArrayList<Offer> offers;
 
     public Product(

@@ -11,6 +11,7 @@ import ulaval.glo2003.api.exceptions.ProductRequestExceptions.MissingTitleExcept
 import ulaval.glo2003.api.requests.ProductRequest;
 
 class ProductRequestValidatorTest {
+
     private ProductRequestValidator productRequestValidator;
 
     @Test

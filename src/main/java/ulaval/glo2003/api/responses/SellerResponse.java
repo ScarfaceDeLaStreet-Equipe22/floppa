@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import ulaval.glo2003.domain.utils.DateTime;
 
 public class SellerResponse {
+
     public String name;
     public String bio;
     public String birthdate;
