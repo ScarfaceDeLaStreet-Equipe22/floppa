@@ -3,6 +3,7 @@ package ulaval.glo2003.api.responses;
 import ulaval.glo2003.domain.utils.DateTime;
 
 public class OfferResponse {
+
     public String username;
     public String createdAt;
     public Double amount;

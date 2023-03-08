@@ -4,6 +4,7 @@ import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.*;
 
 public class ProductValidator implements IValidator {
+
     private final Product product;
 
     public ProductValidator(Product product) {

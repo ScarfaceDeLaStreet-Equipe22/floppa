@@ -9,6 +9,7 @@ import ulaval.glo2003.api.responses.SellerResponse;
 import ulaval.glo2003.domain.entities.Seller;
 
 class SellerMapperTest {
+
     private SellerMapper sellerMapper;
 
     @BeforeEach
@@ -19,7 +20,8 @@ class SellerMapperTest {
     @Test
     public void mapRequestToEntity_withValidRequest_shouldReturnSeller() {
         // arrange
-        SellerRequest request = new SellerRequest("name", "allo", "1965-01-01", "test123@gmail.com", "18191234567");
+        SellerRequest request =
+                new SellerRequest("name", "allo", "1965-01-01", "test123@gmail.com", "18191234567");
 
         // act
         Seller seller = sellerMapper.mapRequestToEntity(request);

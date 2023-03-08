@@ -11,7 +11,6 @@ public class ProductResponse {
     public String category;
     public String id;
     public String createdAt;
-
     public SellerInProductResponse seller;
     public OffersInProductsResponse offers;
 

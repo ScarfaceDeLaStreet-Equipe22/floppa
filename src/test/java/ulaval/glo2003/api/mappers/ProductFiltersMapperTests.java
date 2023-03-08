@@ -8,8 +8,8 @@ import org.junit.jupiter.api.function.Executable;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
 
 public class ProductFiltersMapperTests {
-    private ProductFiltersMapper productFiltersMapper;
 
+    private ProductFiltersMapper productFiltersMapper;
     private static final String VALID_SELLER_ID = "testSellerId";
     private static final String VALID_TITLE = "title";
     private static final String VALID_CATEGORY_NAME = "other";

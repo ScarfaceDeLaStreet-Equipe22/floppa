@@ -5,6 +5,7 @@ import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 
 public class ProductRepository implements IRepository<Product> {
+
     private final ArrayList<Product> products;
 
     public ProductRepository() {

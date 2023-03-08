@@ -4,6 +4,7 @@ import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingAmountExcepti
 import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidAmountException;
 
 public class Amount {
+
     private final double amount;
 
     public Amount(String amount) {

@@ -17,7 +17,6 @@ public class ProductValidatorTest {
     private static final String VALID_DESCRIPTION = "Valid Description";
     private static final ProductCategory VALID_CATEGORY = new ProductCategory("Sport");
     private static final Amount VALID_SUGGESTED_PRICE = new Amount("10.50");
-
     private static final Seller SELLER =
             new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
 
