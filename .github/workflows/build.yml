@@ -26,6 +26,7 @@ jobs:
         #if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
         run: |
           curl -sL https://fly.io/install.sh | sudo sh
+          echo "$HOME/.fly/bin" >> $GITHUB_PATH
           flyctl version
 
       - name: Deploy app with fly.staging.toml
