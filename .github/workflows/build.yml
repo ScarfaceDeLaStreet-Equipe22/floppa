@@ -28,6 +28,9 @@ jobs:
         with:
           api-token: ${{ secrets.FLY_API_TOKEN }}
 
+      - name: Check flyctl installation
+        run: flyctl version
+
       - name: Deploy app with fly.staging.toml
 #        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: flyctl deploy --config fly.staging.toml --remote-only
