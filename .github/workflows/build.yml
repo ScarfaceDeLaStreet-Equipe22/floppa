@@ -29,6 +29,7 @@ jobs:
           api-token: ${{ secrets.FLY_API_TOKEN }}
 
       - name: Check flyctl installation
+        uses: superfly/flyctl-actions/setup-flyctl@master
         run: flyctl version
 
       - name: Deploy app with fly.staging.toml
