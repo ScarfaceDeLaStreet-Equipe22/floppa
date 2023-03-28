@@ -10,8 +10,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: clone-project
-      - uses: actions/checkout@v3
-      -  uses: superfly/flyctl-actions/setup-flyctl@master
+        uses: actions/checkout@v3
 
       - name: Setup JDK 11
         uses: actions/setup-java@v3
@@ -23,19 +22,20 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - name: Setup flyctl
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
-        uses: superfly/flyctl-actions/setup-flyctl@master
-        with:
-          api-token: ${{ secrets.FLY_API_TOKEN }}
-
-      - name: Check flyctl installation
-        run: flyctl version
+      - name: Install flyctl
+        #if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+        run: |
+          curl -sL https://fly.io/install.sh | sudo sh
+          flyctl version
 
       - name: Deploy app with fly.staging.toml
-#        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: flyctl deploy --config fly.staging.toml --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
       - name: Deploy app with fly.prod.toml
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: flyctl deploy --config fly.prod.toml --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
