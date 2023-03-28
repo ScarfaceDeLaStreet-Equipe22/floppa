@@ -42,7 +42,7 @@ public class Main {
 
         ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource());
 
-        URI uri = URI.create("http://localhost:8080/");
+        URI uri = URI.create("http://0.0.0.0:8080/");
         resourceConfig
                 .register(seller)
                 .register(produit)
