@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import ulaval.glo2003.api.mappers.SellerMapper;
 import ulaval.glo2003.api.requests.SellerRequest;
 import ulaval.glo2003.api.responses.SellerResponse;
+import ulaval.glo2003.application.repository.SellerMongoRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Seller;
 
@@ -18,10 +19,12 @@ public class SellerRessource {
 
     private final SellerRepository sellerRepository;
     private final SellerMapper sellerMapper;
+    public SellerMongoRepository sellerMongoRepository;
 
-    public SellerRessource(SellerRepository sellerRepository, SellerMapper sellerMapper) {
+    public SellerRessource(SellerRepository sellerRepository, SellerMapper sellerMapper, SellerMongoRepository sellerMongoRepository) {
         this.sellerRepository = sellerRepository;
         this.sellerMapper = sellerMapper;
+        this.sellerMongoRepository = sellerMongoRepository;
     }
 
     @POST
@@ -30,6 +33,7 @@ public class SellerRessource {
         Seller sellerCreated = sellerMapper.mapRequestToEntity(sellerRequest);
 
         sellerRepository.save(sellerCreated);
+        sellerMongoRepository.save(sellerCreated);
 
         URI location = UriBuilder.fromPath("/sellers/{id}").build(sellerCreated.getId());
         return Response.created(location).status(201).build();

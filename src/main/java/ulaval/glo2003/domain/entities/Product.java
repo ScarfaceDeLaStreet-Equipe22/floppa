@@ -2,16 +2,21 @@ package ulaval.glo2003.domain.entities;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.DateTime;
 import ulaval.glo2003.domain.utils.ProductCategory;
 
+@Entity("Products")
 public class Product {
 
     public String title;
     public String description;
     public Amount suggestedPrice;
     public ProductCategory category;
+    @Id
     public String id;
     public DateTime createdAt;
     public Seller seller;

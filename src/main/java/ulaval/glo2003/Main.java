@@ -11,6 +11,7 @@ import ulaval.glo2003.api.mappers.ProductFiltersMapper;
 import ulaval.glo2003.api.mappers.ProductMapper;
 import ulaval.glo2003.api.mappers.SellerMapper;
 import ulaval.glo2003.application.repository.ProductRepository;
+import ulaval.glo2003.application.repository.SellerMongoRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.exceptions.InvalidParamExceptionMapper;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundExceptionMapper;
@@ -23,6 +24,7 @@ public class Main {
         // configuration des repository
         ProductRepository productRepository = new ProductRepository();
         SellerRepository sellerRepository = new SellerRepository();
+        SellerMongoRepository sellerMongoRepository = new SellerMongoRepository();
 
         // configuration des mappers
         ProductMapper productMapper = new ProductMapper();
@@ -31,7 +33,7 @@ public class Main {
         ProductFiltersMapper productFiltersMapper = new ProductFiltersMapper();
 
         // seller and product config
-        SellerRessource seller = new SellerRessource(sellerRepository, sellerMapper);
+        SellerRessource seller = new SellerRessource(sellerRepository, sellerMapper, sellerMongoRepository);
         ProductRessource produit =
                 new ProductRessource(
                         sellerRepository,

@@ -1,10 +1,15 @@
 package ulaval.glo2003.domain.utils;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Entity
 public class DateTime {
 
+    @Id
     public String dateTime;
 
     public DateTime(String dateTime) {
