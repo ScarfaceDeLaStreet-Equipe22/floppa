@@ -13,6 +13,7 @@ import ulaval.glo2003.api.requests.OfferRequest;
 import ulaval.glo2003.api.requests.ProductRequest;
 import ulaval.glo2003.api.responses.ProductListResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
+import ulaval.glo2003.application.repository.ProductMongoRepository;
 import ulaval.glo2003.application.repository.ProductRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Offer;
@@ -27,6 +28,7 @@ public class ProductRessource {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductFiltersMapper productFiltersMapper;
+    public ProductMongoRepository productMongoRepository;
     private final OfferMapper offerMapper;
 
     public ProductRessource(
@@ -34,12 +36,13 @@ public class ProductRessource {
             ProductRepository productRepository,
             ProductMapper productMapper,
             OfferMapper offerMapper,
-            ProductFiltersMapper productFiltersMapper) {
+            ProductFiltersMapper productFiltersMapper, ProductMongoRepository productMongoRepository) {
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.offerMapper = offerMapper;
         this.productFiltersMapper = productFiltersMapper;
+        this.productMongoRepository = productMongoRepository;
     }
 
     @POST
@@ -69,6 +72,7 @@ public class ProductRessource {
 
         seller.addProduct(productCreated);
         productRepository.save(productCreated);
+        productMongoRepository.save(productCreated);
 
         String url = "http://localhost:8080/Products/" + productCreated.getId();
 

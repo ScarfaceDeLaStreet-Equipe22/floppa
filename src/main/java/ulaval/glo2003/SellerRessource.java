@@ -13,6 +13,7 @@ import ulaval.glo2003.api.responses.SellerResponse;
 import ulaval.glo2003.application.repository.SellerMongoRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.wesh;
 
 @Path("/sellers")
 public class SellerRessource {
@@ -33,7 +34,9 @@ public class SellerRessource {
         Seller sellerCreated = sellerMapper.mapRequestToEntity(sellerRequest);
 
         sellerRepository.save(sellerCreated);
+        wesh lol = new wesh("haha");
         sellerMongoRepository.save(sellerCreated);
+        sellerMongoRepository.save(lol);
 
         URI location = UriBuilder.fromPath("/sellers/{id}").build(sellerCreated.getId());
         return Response.created(location).status(201).build();

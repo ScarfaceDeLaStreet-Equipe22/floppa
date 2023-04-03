@@ -49,6 +49,9 @@ public class Product {
     public Amount getSuggestedPrice() {
         return suggestedPrice;
     }
+    public double getSuggestedPriceDouble() {
+        return suggestedPrice.getAmount();
+    }
 
     public String getCategory() {
         return category.getCategory();

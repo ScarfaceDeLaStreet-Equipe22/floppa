@@ -2,6 +2,11 @@ package ulaval.glo2003;
 
 import java.io.IOException;
 import java.net.URI;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -10,6 +15,7 @@ import ulaval.glo2003.api.mappers.OfferMapper;
 import ulaval.glo2003.api.mappers.ProductFiltersMapper;
 import ulaval.glo2003.api.mappers.ProductMapper;
 import ulaval.glo2003.api.mappers.SellerMapper;
+import ulaval.glo2003.application.repository.ProductMongoRepository;
 import ulaval.glo2003.application.repository.ProductRepository;
 import ulaval.glo2003.application.repository.SellerMongoRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
@@ -20,11 +26,18 @@ import ulaval.glo2003.domain.exceptions.NotPermitedExceptionMapper;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        Datastore datastore;
+
+        MongoClient client = MongoClients.create("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority");
+        datastore = Morphia.createDatastore(client, "Processus");
+        datastore.getMapper().mapPackage("ulaval.glo2003");
+        datastore.ensureIndexes();
 
         // configuration des repository
         ProductRepository productRepository = new ProductRepository();
         SellerRepository sellerRepository = new SellerRepository();
-        SellerMongoRepository sellerMongoRepository = new SellerMongoRepository();
+        SellerMongoRepository sellerMongoRepository = new SellerMongoRepository(datastore);
+        ProductMongoRepository productMongoRepository = new ProductMongoRepository(datastore);
 
         // configuration des mappers
         ProductMapper productMapper = new ProductMapper();
@@ -40,7 +53,8 @@ public class Main {
                         productRepository,
                         productMapper,
                         offerMapper,
-                        productFiltersMapper);
+                        productFiltersMapper,
+                        productMongoRepository);
 
         ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource());
 
