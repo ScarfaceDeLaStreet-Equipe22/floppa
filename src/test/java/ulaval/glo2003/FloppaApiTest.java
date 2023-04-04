@@ -5,7 +5,7 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-public class CreationVendeurTests extends JerseyTest
+public abstract class FloppaApiTest extends JerseyTest
 {
 
     // FOR JUNIT 5
@@ -26,6 +26,5 @@ public class CreationVendeurTests extends JerseyTest
     protected Application configure() {
         return new ResourceConfigProvider().provide();
     }
-
 
 }
