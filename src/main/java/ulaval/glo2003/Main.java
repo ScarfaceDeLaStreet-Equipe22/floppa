@@ -20,37 +20,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        // configuration des repository
-        ProductRepository productRepository = new ProductRepository();
-        SellerRepository sellerRepository = new SellerRepository();
-
-        // configuration des mappers
-        ProductMapper productMapper = new ProductMapper();
-        SellerMapper sellerMapper = new SellerMapper();
-        OfferMapper offerMapper = new OfferMapper();
-        ProductFiltersMapper productFiltersMapper = new ProductFiltersMapper();
-
-        // seller and product config
-        SellerRessource seller = new SellerRessource(sellerRepository, sellerMapper);
-        ProductRessource produit =
-                new ProductRessource(
-                        sellerRepository,
-                        productRepository,
-                        productMapper,
-                        offerMapper,
-                        productFiltersMapper);
-
-        ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource());
+        ResourceConfig resourceConfig = new ResourceConfigProvider().provide();
 
         URI uri = URI.create("http://0.0.0.0:8080/");
-        resourceConfig
-                .register(seller)
-                .register(produit)
-                .register(new MissingParamExceptionMapper())
-                .register(new InvalidParamExceptionMapper())
-                .register(new ItemNotFoundExceptionMapper())
-                .register(new NotPermitedExceptionMapper());
-
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
 
         server.start();
