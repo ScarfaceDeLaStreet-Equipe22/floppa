@@ -9,8 +9,8 @@ import java.time.temporal.ChronoUnit;
 public class SellerRequestFixture
 {
 
-    private static String name;
-    private static String bio;
+    private static String name = "Test Seller Name";
+    private static String bio = "Test seller bio";
     private static String birthdate = LocalDate.now().minus(18, ChronoUnit.YEARS).format(DateTimeFormatter.ISO_DATE);
     private static String email = "seller@test.com";
     private static String phoneNumber = "11230001234";
