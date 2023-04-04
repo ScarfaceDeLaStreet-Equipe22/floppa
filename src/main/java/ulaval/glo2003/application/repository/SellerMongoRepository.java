@@ -1,21 +1,12 @@
 package ulaval.glo2003.application.repository;
 
 import java.util.ArrayList;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+
 import dev.morphia.Datastore;
-import dev.morphia.Morphia;
-import dev.morphia.annotations.Id;
 import dev.morphia.query.Query;
-import dev.morphia.query.UpdateOperations;
-import dev.morphia.query.experimental.filters.Filter;
 import dev.morphia.query.experimental.filters.Filters;
-import ulaval.glo2003.domain.entities.Product;
-import ulaval.glo2003.domain.entities.Seller;
-import ulaval.glo2003.domain.entities.SellerMongoModel;
-import ulaval.glo2003.domain.entities.wesh;
+import org.glassfish.jaxb.runtime.v2.schemagen.xmlschema.List;
+import ulaval.glo2003.domain.entities.*;
 
 public class SellerMongoRepository implements IRepository<Seller> {
 
@@ -88,7 +79,7 @@ public class SellerMongoRepository implements IRepository<Seller> {
 
 
     @Override
-    public ArrayList findAll() {
+    public ArrayList<Seller> findAll() {
         return null;
     }
 
@@ -97,7 +88,7 @@ public class SellerMongoRepository implements IRepository<Seller> {
         return 0;
     }
 
-    private ArrayList<Product> getProductsById(ArrayList<String> productsList){
+    public ArrayList<Product> getProductsById(ArrayList<String> productsList){
 
         ArrayList<Product> listOfProducts = new ArrayList<>();
 
@@ -105,6 +96,9 @@ public class SellerMongoRepository implements IRepository<Seller> {
             for (String id : productsList) {
                 Product product = datastore.find(Product.class)
                         .filter(Filters.eq("_id", id)).iterator().next();
+                if(product.getOffers() == null){
+                    product.offers = new ArrayList<Offer>();
+                }
                 listOfProducts.add(product);
             }
         }

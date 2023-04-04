@@ -98,6 +98,10 @@ public class Product {
         this.category = category;
     }
 
+    public SellerMongoModel getSellerMongoModel() {
+        return sellerMongoModel;
+    }
+
     public void setSeller(Seller seller) {
         this.seller = seller;
     }

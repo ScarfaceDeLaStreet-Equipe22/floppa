@@ -95,7 +95,8 @@ public class ProductRessource {
     @Path("{Productid}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getProducts(@PathParam("Productid") String productId) {
-        Product product = productRepository.findById(productId);
+        Product product = productMongoRepository.findById(productId);
+        product.seller = new Seller(product.getSellerMongoModel(), sellerMongoRepository.getProductsById(product.getSellerMongoModel().productsIds));
 
         ProductResponse productResponse = productMapper.mapEntityToResponse(product);
 

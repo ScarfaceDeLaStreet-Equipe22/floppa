@@ -5,10 +5,9 @@ import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.query.experimental.filters.Filters;
+import org.glassfish.jaxb.runtime.v2.schemagen.xmlschema.List;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
-import ulaval.glo2003.domain.entities.ProductMongoModel;
-import ulaval.glo2003.domain.entities.SellerMongoModel;
 
 import java.util.ArrayList;
 

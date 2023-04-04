@@ -52,15 +52,20 @@ public class SellerMapper {
     private OffersInProductsInSellerResponse getOffersReponses(Product product) {
         ArrayList<OfferResponse> offerResponses = new ArrayList<OfferResponse>();
 
-        for (Offer offer : product.getOffers())
-            offerResponses.add(offerMapper.mapEntityToResponse(offer));
-
-        return new OffersInProductsInSellerResponse(
+        OffersInProductsInSellerResponse offersInProductsInSellerResponse = new OffersInProductsInSellerResponse(
                 product.getNumberOfOffers(),
                 product.getAverageAmountOfOffers(),
                 product.getMinimumAmountOfOffers(),
                 product.getMaximumAmountOfOffers(),
                 offerResponses);
+        if (product.getOffers() != null) {
+            for (Offer offer : product.getOffers()){
+                offersInProductsInSellerResponse.items.add(offerMapper.mapEntityToResponse(offer));
+            }
+            return offersInProductsInSellerResponse;
+        } else {
+            return offersInProductsInSellerResponse;
+        }
     }
 
     public Seller mapRequestToEntity(SellerRequest sellerRequest) {
