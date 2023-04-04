@@ -10,9 +10,11 @@ import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidCategoryExcepti
 @Entity
 public class ProductCategory {
 
-    private final String category;
+    public String category;
     @Id
     public String id;
+
+    public ProductCategory(){}
 
     public ProductCategory(String category) {
         this.category = category;

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
+import dev.morphia.annotations.Reference;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.DateTime;
 import ulaval.glo2003.domain.utils.ProductCategory;
@@ -20,21 +21,25 @@ public class Product {
     public String id;
     public DateTime createdAt;
     public Seller seller;
+    public SellerMongoModel sellerMongoModel;
     public ArrayList<Offer> offers;
+
+    public Product(){}
 
     public Product(
             String title,
             String description,
             ProductCategory category,
             Amount suggestedPrice,
-            Seller seller) {
+            SellerMongoModel seller) {
         this.category = category;
         this.suggestedPrice = suggestedPrice;
         this.description = description;
         this.title = title;
         this.createdAt = new DateTime();
         this.id = UUID.randomUUID().toString();
-        this.seller = seller;
+//        this.seller = seller;
+        this.sellerMongoModel = seller;
         this.offers = new ArrayList<>();
     }
 

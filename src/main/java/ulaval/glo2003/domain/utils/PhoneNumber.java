@@ -7,8 +7,9 @@ import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidPhoneNumberExcep
 public class PhoneNumber {
 
     @Id
-    private String numero;
+    public String numero;
 
+    public PhoneNumber(){}
     public PhoneNumber(String numero) {
         assertPhoneNumber(numero);
     }

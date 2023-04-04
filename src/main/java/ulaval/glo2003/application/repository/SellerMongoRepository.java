@@ -8,6 +8,10 @@ import com.mongodb.client.MongoDatabase;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.annotations.Id;
+import dev.morphia.query.Query;
+import dev.morphia.query.UpdateOperations;
+import dev.morphia.query.experimental.filters.Filter;
+import dev.morphia.query.experimental.filters.Filters;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.entities.SellerMongoModel;
@@ -16,6 +20,7 @@ import ulaval.glo2003.domain.entities.wesh;
 public class SellerMongoRepository implements IRepository<Seller> {
 
     private final Datastore datastore;
+    Query<Product> query;
 
 
     public SellerMongoRepository(Datastore datastore) {
@@ -23,7 +28,6 @@ public class SellerMongoRepository implements IRepository<Seller> {
     }
     @Override
     public void save(Seller seller) {
-        ArrayList<String> listOfIds = getIdsOfProducts(seller.getProducts());
         SellerMongoModel sellerToSave = new SellerMongoModel(seller);
 
 
@@ -56,6 +60,33 @@ public class SellerMongoRepository implements IRepository<Seller> {
 
     }
 
+    public Seller getSellerByName(String name){
+        try {
+            SellerMongoModel model = datastore.find(SellerMongoModel.class)
+                    .filter(Filters.eq("name", name)).iterator().next();
+
+            return new Seller(model,getProductsById(model.productsIds));
+        } catch (Exception e) {
+            throw new RuntimeException("could not find Seller because :" + e.getMessage());
+        }
+    }
+
+    public Seller getSellerById(String Id){
+        try {
+            SellerMongoModel model = datastore.find(SellerMongoModel.class)
+                    .filter(Filters.eq("_id", Id)).iterator().next();
+
+            return new Seller(model, getProductsById(model.productsIds));
+        } catch (Exception e) {
+            throw new RuntimeException("could not find Seller because :" + e.getMessage());
+        }
+    }
+    public void addNewProductToSellerMongo(Product product){
+        Seller seller = this.getSellerByName("fred");
+        // ajouter un produit à son array de produits
+    }
+
+
     @Override
     public ArrayList findAll() {
         return null;
@@ -66,13 +97,18 @@ public class SellerMongoRepository implements IRepository<Seller> {
         return 0;
     }
 
-    private ArrayList<String> getIdsOfProducts(ArrayList<Product> productsList){
-        ArrayList<String> listOfIds = new ArrayList<>();
+    private ArrayList<Product> getProductsById(ArrayList<String> productsList){
 
-        productsList.forEach((product -> {
-            listOfIds.add(product.id);
-        }));
-        return listOfIds;
+        ArrayList<Product> listOfProducts = new ArrayList<>();
+
+        if (productsList != null) {
+            for (String id : productsList) {
+                Product product = datastore.find(Product.class)
+                        .filter(Filters.eq("_id", id)).iterator().next();
+                listOfProducts.add(product);
+            }
+        }
+        return listOfProducts;
     }
 
 }

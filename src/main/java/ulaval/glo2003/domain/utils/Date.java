@@ -14,10 +14,11 @@ import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidBirthdateExcepti
 public class Date {
 
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    public final String date;
+    public  String date;
     @Id
-    public final String id;
+    public  String id;
 
+    public Date(){};
     public Date(String date) {
         assertDate(date);
         this.date = date;

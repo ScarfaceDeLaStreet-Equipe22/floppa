@@ -10,10 +10,12 @@ import java.util.UUID;
 @Entity
 public class Amount {
 
-    private final double amount;
+    public double amount;
     @Id
     public String id;
 
+
+    public Amount(){};
     public Amount(String amount) {
         AmountValidation(amount);
         this.amount = Double.parseDouble(amount);

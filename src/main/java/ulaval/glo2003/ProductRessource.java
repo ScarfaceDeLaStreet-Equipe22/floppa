@@ -15,10 +15,12 @@ import ulaval.glo2003.api.responses.ProductListResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
 import ulaval.glo2003.application.repository.ProductMongoRepository;
 import ulaval.glo2003.application.repository.ProductRepository;
+import ulaval.glo2003.application.repository.SellerMongoRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.utils.ProductFilters;
 
 @Path("/products")
@@ -30,13 +32,17 @@ public class ProductRessource {
     private final ProductFiltersMapper productFiltersMapper;
     public ProductMongoRepository productMongoRepository;
     private final OfferMapper offerMapper;
+    private SellerMongoRepository sellerMongoRepository;
 
     public ProductRessource(
             SellerRepository sellerRepository,
             ProductRepository productRepository,
             ProductMapper productMapper,
             OfferMapper offerMapper,
-            ProductFiltersMapper productFiltersMapper, ProductMongoRepository productMongoRepository) {
+            ProductFiltersMapper productFiltersMapper,
+            SellerMongoRepository sellerMongoRepository,
+            ProductMongoRepository productMongoRepository) {
+        this.sellerMongoRepository = sellerMongoRepository;
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.productMapper = productMapper;
@@ -53,11 +59,13 @@ public class ProductRessource {
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-        Product productForOffer = productRepository.findById(productId);
+//        Product productForOffer = productRepository.findById(productId);
+        Product productForOfferMongo = productMongoRepository.findById(productId);
 
-        Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername, productForOffer);
+        Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername, productForOfferMongo);
 
-        productForOffer.offers.add(offer);
+        productForOfferMongo.offers.add(offer);
+        productMongoRepository.save(productForOfferMongo);
 
         return Response.status(201).build();
     }
@@ -66,12 +74,16 @@ public class ProductRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProduct(
             ProductRequest productRequest, @HeaderParam("X-Seller-Id") String sellerId) {
-        Seller seller = sellerRepository.findById(sellerId);
 
-        Product productCreated = productMapper.mapRequestToEntity(productRequest, seller);
+        Seller sellerFromMongo = sellerMongoRepository.getSellerById(sellerId);
 
-        seller.addProduct(productCreated);
+        SellerMongoModel sellerMongoModel = new SellerMongoModel(sellerFromMongo);
+
+        Product productCreated = productMapper.mapRequestToEntity(productRequest, sellerMongoModel);
+
+        sellerFromMongo.addProduct(productCreated);
         productRepository.save(productCreated);
+        sellerMongoRepository.save(sellerFromMongo);
         productMongoRepository.save(productCreated);
 
         String url = "http://localhost:8080/Products/" + productCreated.getId();

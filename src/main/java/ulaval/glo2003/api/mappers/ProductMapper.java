@@ -6,6 +6,7 @@ import ulaval.glo2003.api.responses.ProductResponse;
 import ulaval.glo2003.api.validators.ProductRequestValidator;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.ProductCategory;
 import ulaval.glo2003.domain.validators.ProductValidator;
@@ -33,7 +34,7 @@ public class ProductMapper {
                 offers);
     }
 
-    public Product mapRequestToEntity(ProductRequest productRequest, Seller seller) {
+    public Product mapRequestToEntity(ProductRequest productRequest, SellerMongoModel seller) {
         ProductRequestValidator productRequestValidator =
                 new ProductRequestValidator(productRequest);
         productRequestValidator.validateRequest();

@@ -1,18 +1,24 @@
 package ulaval.glo2003.domain.entities;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.DateTime;
 
 import java.util.UUID;
 
+@Entity
 public class Offer {
 
     public Amount amount;
     public String message;
     public String buyerUsername;
     public DateTime createdAt;
+    @Id
     public String id;
 
+
+    public Offer(){}
     public Offer(Amount amount, String message, String buyerUsername) {
         this.amount = amount;
         this.message = message;

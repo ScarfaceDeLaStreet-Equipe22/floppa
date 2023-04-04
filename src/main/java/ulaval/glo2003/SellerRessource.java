@@ -33,10 +33,9 @@ public class SellerRessource {
     public Response seller(SellerRequest sellerRequest) {
         Seller sellerCreated = sellerMapper.mapRequestToEntity(sellerRequest);
 
+        // how to update a seller
         sellerRepository.save(sellerCreated);
-        wesh lol = new wesh("haha");
         sellerMongoRepository.save(sellerCreated);
-        sellerMongoRepository.save(lol);
 
         URI location = UriBuilder.fromPath("/sellers/{id}").build(sellerCreated.getId());
         return Response.created(location).status(201).build();
@@ -56,7 +55,7 @@ public class SellerRessource {
     @Path("{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
 
-        Seller foundSeller = this.sellerRepository.findById(sellerId);
+        Seller foundSeller = this.sellerMongoRepository.getSellerById(sellerId);
 
         SellerResponse sellerResponse = sellerMapper.mapEntityToResponse(foundSeller);
 

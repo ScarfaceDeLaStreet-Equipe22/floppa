@@ -4,6 +4,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
+import dev.morphia.query.experimental.filters.Filters;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.ProductMongoModel;
@@ -24,18 +25,7 @@ public class ProductMongoRepository implements IRepository<Product>{
 
     @Override
     public void save(Product product) {
-        ArrayList<String> listOfIds = getIdsOfOffers(product.getOffers());
-        ProductMongoModel productToSave = new ProductMongoModel(product.getTitle(),
-                product.getDescription(),
-                product.getSuggestedPriceDouble(),
-                product.getCategory(),
-                product.getId(),
-                product.createdAt,
-                new SellerMongoModel(product.seller),
-                listOfIds);
-
-
-        datastore.save(productToSave);
+        datastore.save(product);
     }
 
     @Override
@@ -69,5 +59,15 @@ public class ProductMongoRepository implements IRepository<Product>{
             idsList.add(offer.id);
         }));
         return idsList;
+    }
+
+    public Product findById(String id) {
+        Product product = datastore.find(Product.class)
+                .filter(Filters.eq("_id", id)).iterator().next();
+        if(product.offers == null){
+            product.offers = new ArrayList<Offer>();
+        }
+
+        return product;
     }
 }
