@@ -2,6 +2,7 @@ package ulaval.glo2003;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -50,12 +51,13 @@ public class Main {
 
 
 
+        List<Product> test = datastore.find(Product.class).iterator().toList();
 
         // configuration des repository
         ProductRepository productRepository = new ProductRepository();
         SellerRepository sellerRepository = new SellerRepository();
         SellerMongoRepository sellerMongoRepository = new SellerMongoRepository(datastore);
-        ProductMongoRepository productMongoRepository = new ProductMongoRepository(datastore);
+        ProductMongoRepository productMongoRepository = new ProductMongoRepository(datastore, sellerMongoRepository);
 
 
 //        Seller seller = sellerMongoRepository.getSellerByName("fred");

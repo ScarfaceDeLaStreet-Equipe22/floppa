@@ -11,7 +11,7 @@ import ulaval.glo2003.domain.entities.*;
 public class SellerMongoRepository implements IRepository<Seller> {
 
     private final Datastore datastore;
-    Query<Product> query;
+
 
 
     public SellerMongoRepository(Datastore datastore) {

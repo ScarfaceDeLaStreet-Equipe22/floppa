@@ -5,16 +5,20 @@ import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.query.experimental.filters.Filters;
-import org.glassfish.jaxb.runtime.v2.schemagen.xmlschema.List;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
+import ulaval.glo2003.domain.entities.Seller;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class ProductMongoRepository implements IRepository<Product>{
-    private final Datastore datastore;
+    private Datastore datastore;
+    SellerMongoRepository sellerMongoRepository;
 
-    public ProductMongoRepository(Datastore datastore) {
+    public ProductMongoRepository(Datastore datastore, SellerMongoRepository sellerMongoRepository) {
+        this.sellerMongoRepository = sellerMongoRepository;
         this.datastore = datastore;
         MongoClient client = MongoClients.create("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority");
         datastore = Morphia.createDatastore(client, "Processus");
@@ -47,18 +51,22 @@ public class ProductMongoRepository implements IRepository<Product>{
         return null;
     }
 
+    public List<Product> getAllProducts(){
+        List<Product> products = datastore.find(Product.class).iterator().toList();
+
+        products.forEach(product -> {
+            if(product.seller == null){
+                product.seller = new Seller(product.getSellerMongoModel(), sellerMongoRepository.getProductsById(product.getSellerMongoModel().productsIds));
+            }
+        });
+        return products;
+    }
+
     @Override
     public int count() {
         return 0;
     }
 
-    private ArrayList<String> getIdsOfOffers(ArrayList<Offer> offersList){
-        ArrayList<String> idsList = new ArrayList<>();
-        offersList.forEach((offer -> {
-            idsList.add(offer.id);
-        }));
-        return idsList;
-    }
 
     public Product findById(String id) {
         Product product = datastore.find(Product.class)

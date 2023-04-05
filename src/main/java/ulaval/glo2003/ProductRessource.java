@@ -114,11 +114,14 @@ public class ProductRessource {
                 productFiltersMapper.mapQueryParamsToRequest(
                         sellerId, title, categoryName, minPrice, maxPrice);
 
+
         List<ProductResponse> filteredProducts =
-                productRepository.findAll().stream()
+                productMongoRepository.getAllProducts().stream()
                         .filter(productFilters::checkProduct)
                         .map(productMapper::mapEntityToResponse)
                         .collect(Collectors.toList());
+
+
 
         return Response.ok(new ProductListResponse(filteredProducts)).build();
     }
