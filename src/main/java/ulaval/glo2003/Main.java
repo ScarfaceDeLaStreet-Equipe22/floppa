@@ -43,15 +43,17 @@ public class Main {
 
 
 
-        MongoClient client = MongoClients.create("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority");
-        datastore = Morphia.createDatastore(client, "Processus");
+
+        String FLOPPA_MONGO_CLUSTER_URL = "mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000";
+        String FLOPPA_MONGO_DATABASE = "Processus";
+
+        MongoClient client = MongoClients.create(FLOPPA_MONGO_CLUSTER_URL);
+        datastore = Morphia.createDatastore(client, FLOPPA_MONGO_DATABASE);
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
 
 
-
-
-        List<Product> test = datastore.find(Product.class).iterator().toList();
+        Object products = datastore.getDatabase().listCollectionNames().first();
 
         // configuration des repository
         ProductRepository productRepository = new ProductRepository();
@@ -80,7 +82,7 @@ public class Main {
                         sellerMongoRepository,
                         productMongoRepository);
 
-        ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource());
+        ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource(datastore, productMongoRepository));
 
         URI uri = URI.create("http://0.0.0.0:8080/");
         resourceConfig
