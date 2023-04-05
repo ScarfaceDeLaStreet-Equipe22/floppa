@@ -8,6 +8,7 @@ import org.junit.jupiter.api.function.Executable;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidAmountException;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidMessageException;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.NotPermittedException;
@@ -25,13 +26,14 @@ public class OfferValidatorTest {
     @BeforeEach
     public void setUp() {
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+        SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
         product =
                 new Product(
                         "product title",
                         "product description",
                         new ProductCategory("Sport"),
                         MEDIUM_AMOUNT,
-                        seller);
+                        sellerMongoModel);
     }
 
     @Test

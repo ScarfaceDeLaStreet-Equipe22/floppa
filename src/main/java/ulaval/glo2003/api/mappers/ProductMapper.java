@@ -34,7 +34,7 @@ public class ProductMapper {
                 offers);
     }
 
-    public Product mapRequestToEntity(ProductRequest productRequest, SellerMongoModel seller) {
+    public Product mapRequestToEntity(ProductRequest productRequest, SellerMongoModel sellerMongoModel) {
         ProductRequestValidator productRequestValidator =
                 new ProductRequestValidator(productRequest);
         productRequestValidator.validateRequest();
@@ -45,7 +45,7 @@ public class ProductMapper {
                         productRequest.getDescription(),
                         new ProductCategory(productRequest.getCategory()),
                         new Amount(productRequest.getSuggestedPrice()),
-                        seller);
+                        sellerMongoModel);
         ProductValidator productValidator = new ProductValidator(product);
         productValidator.validateEntity();
 

@@ -11,7 +11,7 @@ import ulaval.glo2003.domain.utils.Email;
 import ulaval.glo2003.domain.utils.PhoneNumber;
 
 
-@Entity
+@Entity("Sellers")
 public class Seller {
 
     public String name;

@@ -28,9 +28,10 @@ class ProductMapperTest {
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
         SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
 
+
         // act
         Product product = productMapper.mapRequestToEntity(request, sellerMongoModel);
-
+        product.seller = seller;
         // assert
         assertThat(product).isNotNull();
         assertThat(product.getTitle()).isEqualTo(request.getTitle());
@@ -38,21 +39,23 @@ class ProductMapperTest {
         assertThat(product.getCategory()).isEqualTo(request.getCategory());
         assertThat(product.getSuggestedPrice().toDouble())
                 .isEqualTo(new Amount(request.getSuggestedPrice()).toDouble());
-        assertThat(product.getSeller()).isEqualTo(sellerMongoModel);
+        assertThat(product.getSeller()).isEqualTo(seller);
     }
 
     @Test
     public void mapEntityToResponse_withValidProduct_shouldReturnProductResponse() {
         // Given
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+        SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
         Product product =
                 new Product(
                         "title",
                         "description",
                         new ProductCategory("Sport"),
                         new Amount("10"),
-                        seller);
+                        sellerMongoModel);
 
+        product.seller = seller;
         // When
         ProductResponse response = productMapper.mapEntityToResponse(product);
 

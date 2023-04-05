@@ -31,15 +31,15 @@ public class Product {
             String description,
             ProductCategory category,
             Amount suggestedPrice,
-            SellerMongoModel seller) {
+            SellerMongoModel sellerMongo) {
         this.category = category;
         this.suggestedPrice = suggestedPrice;
         this.description = description;
         this.title = title;
         this.createdAt = new DateTime();
         this.id = UUID.randomUUID().toString();
-//        this.seller = seller;
-        this.sellerMongoModel = seller;
+        this.seller = seller;
+        this.sellerMongoModel = sellerMongo;
         this.offers = new ArrayList<>();
     }
 

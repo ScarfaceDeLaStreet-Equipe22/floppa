@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidDescriptionException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidSuggestedPriceException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidTitleException;
@@ -20,6 +21,8 @@ public class ProductValidatorTest {
     private static final Seller SELLER =
             new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
 
+    private static final SellerMongoModel SELLER_MONGO =
+            new SellerMongoModel(SELLER);
     @Test
     public void givenProductWithValidProperties_whenValidatingEntity_thenDoesNotThrowException() {
         // arrange
@@ -29,7 +32,7 @@ public class ProductValidatorTest {
                         VALID_DESCRIPTION,
                         VALID_CATEGORY,
                         VALID_SUGGESTED_PRICE,
-                        SELLER);
+                        SELLER_MONGO);
         ProductValidator validator = new ProductValidator(product);
 
         // act
@@ -43,7 +46,7 @@ public class ProductValidatorTest {
     public void givenProductWithEmptyTitle_whenValidatingEntity_thenThrowsInvalidTitleException() {
         // arrange
         Product product =
-                new Product("", VALID_DESCRIPTION, VALID_CATEGORY, VALID_SUGGESTED_PRICE, SELLER);
+                new Product("", VALID_DESCRIPTION, VALID_CATEGORY, VALID_SUGGESTED_PRICE, SELLER_MONGO);
         ProductValidator validator = new ProductValidator(product);
 
         // act
@@ -58,7 +61,7 @@ public class ProductValidatorTest {
             givenProductWithEmptyDescription_whenValidatingEntity_thenThrowsInvalidDescriptionException() {
         // arrange
         Product product =
-                new Product(VALID_TITLE, "", VALID_CATEGORY, VALID_SUGGESTED_PRICE, SELLER);
+                new Product(VALID_TITLE, "", VALID_CATEGORY, VALID_SUGGESTED_PRICE, SELLER_MONGO);
         ProductValidator validator = new ProductValidator(product);
 
         // act
@@ -79,7 +82,7 @@ public class ProductValidatorTest {
                         VALID_DESCRIPTION,
                         VALID_CATEGORY,
                         invalidSuggestedPrice,
-                        SELLER);
+                        SELLER_MONGO);
         ProductValidator validator = new ProductValidator(product);
 
         // act

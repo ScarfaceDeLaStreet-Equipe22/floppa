@@ -11,6 +11,7 @@ import ulaval.glo2003.api.requests.OfferRequest;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidAmountException;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidMessageException;
 import ulaval.glo2003.domain.utils.Amount;
@@ -31,13 +32,14 @@ class OfferMapperTest {
     public void setUp() {
         offerMapper = new OfferMapper();
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+        SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
         product =
                 new Product(
                         "product title",
                         "product description",
                         new ProductCategory("Sport"),
-                        new Amount("15"),
-                        seller);
+                        new Amount("15"),sellerMongoModel
+                        );
     }
 
     @Test
