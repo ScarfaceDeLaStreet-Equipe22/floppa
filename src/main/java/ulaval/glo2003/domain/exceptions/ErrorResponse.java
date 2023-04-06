@@ -8,4 +8,6 @@ public class ErrorResponse {
         this.code = code;
         this.description = description;
     }
+
+    public ErrorResponse() {}
 }
