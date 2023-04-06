@@ -17,21 +17,21 @@ public class ProductRequestFixture
     private static String category = "other";
     public static ProductRequest valid()
     {
-        return new ProductRequest(title, description, suggestedPrice, category);
+        return new ProductRequest(title, description, category, suggestedPrice);
     }
 
     public static ProductRequest missingField()
     {
-        return new ProductRequest(null, description, suggestedPrice, category);
+        return new ProductRequest(null, description, category, suggestedPrice);
     }
 
     public static ProductRequest emptyField()
     {
-        return new ProductRequest("", description, suggestedPrice, category);
+        return new ProductRequest("", description, category, suggestedPrice);
     }
 
     public static ProductRequest invalidPrice()
     {
         String invalidPrice = "AAAAA";
-        return new ProductRequest(title, description, invalidPrice, category);    }
+        return new ProductRequest(title, description, category, invalidPrice);    }
 }
