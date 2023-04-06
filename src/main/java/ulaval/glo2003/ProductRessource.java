@@ -93,7 +93,7 @@ public class ProductRessource {
 
     @GET
     @Path("{Productid}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getProducts(@PathParam("Productid") String productId) {
         Product product = productMongoRepository.findById(productId);
         product.seller = new Seller(product.getSellerMongoModel(), sellerMongoRepository.getProductsById(product.getSellerMongoModel().productsIds));
@@ -104,6 +104,7 @@ public class ProductRessource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getFilteredProducts(
             @QueryParam("sellerId") String sellerId,
             @QueryParam("title") String title,

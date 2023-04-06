@@ -43,6 +43,7 @@ public class SellerRessource {
 
     // this is not dead code, this is very usefull for testing with postman
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getAllSellers() {
         List<SellerResponse> sellerResponses =
                 this.sellerRepository.findAll().stream()
@@ -52,6 +53,7 @@ public class SellerRessource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("{sellerId}")
     public Response getSeller(@PathParam("sellerId") String sellerId) {
 
