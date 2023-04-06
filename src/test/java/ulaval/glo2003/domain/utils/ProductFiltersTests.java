@@ -24,6 +24,7 @@ public class ProductFiltersTests {
     public void setUp() {
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
         SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
+
         testProduct =
                 new Product(
                         VALID_PRODUCT_TITLE,
@@ -32,6 +33,7 @@ public class ProductFiltersTests {
                         PRODUCT_PRICE,
                         sellerMongoModel);
         sellerId = sellerMongoModel.id;
+        testProduct.seller = seller;
     }
 
     @Test
