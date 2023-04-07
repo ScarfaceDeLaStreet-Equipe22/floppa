@@ -28,15 +28,15 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Datastore datastore;
 
-        String MONGO_CLUSTER_LINK = Optional.ofNullable(System.getenv("MONGO_CLUSTER_LINK")).orElse("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000");
-        String MONGO_NAME = Optional.ofNullable(System.getenv("MONGO_NAME")).orElse("Processus");
+
+        String MONGO_CLUSTER_LINK = Optional.ofNullable(System.getenv("FLOPPA_MONGO_CLUSTER_URL")).orElse("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000");
+        String MONGO_NAME = Optional.ofNullable(System.getenv("FLOPPA_MONGO_DATABASE")).orElse("Processus");
 
         MongoClient client = MongoClients.create(MONGO_CLUSTER_LINK);
         datastore = Morphia.createDatastore(client, MONGO_NAME);
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
 
-        Object products = datastore.getDatabase().listCollectionNames().first();
 
         ProductRepository productRepository = new ProductRepository();
         SellerRepository sellerRepository = new SellerRepository();
