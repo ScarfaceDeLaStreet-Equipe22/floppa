@@ -139,10 +139,6 @@ public class ProductRessource {
             throw new ItemNotFoundException("username has no offer of product");
         }
 
-
-        seller.sellProduct(productToSell);
-        productRepository.remove(productToSell);
-
         return Response.status(200).build();
     }
 }

@@ -62,9 +62,6 @@ public class Seller {
         this.products.add(product);
     }
 
-    public void sellProduct(Product product){
-        this.products.remove(product);
-    }
 
     public DateTime getCreatedAt() {
         return createdAt;
