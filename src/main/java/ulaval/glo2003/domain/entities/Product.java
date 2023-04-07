@@ -18,6 +18,7 @@ public class Product {
     public Seller seller;
     public ArrayList<Offer> offers;
     public SaleStatus saleStatus;
+    public boolean isSold;
 
     public Product(
             String title,
@@ -34,6 +35,7 @@ public class Product {
         this.seller = seller;
         this.offers = new ArrayList<>();
         this.saleStatus = new SaleStatus();
+        this.isSold = false;
     }
 
     public String getTitle() {
@@ -93,6 +95,7 @@ public class Product {
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
+
 
     public double getAverageAmountOfOffers() {
         if (offers.size() != 0) {
