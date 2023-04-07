@@ -34,8 +34,8 @@ public class SellerMapper {
                             product.getId(),
                             product.getCreatedAt(),
                             offers,
-                            product.getSaleStatus());
-
+                            product.getSaleStatus(),
+                            product.getSlectedOffer());
             products.add(productReponse);
         }
 
