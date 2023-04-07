@@ -16,6 +16,8 @@ public class Product {
     public DateTime createdAt;
     public Seller seller;
     public ArrayList<Offer> offers;
+    public boolean isSold;
+
 
     public Product(
             String title,
@@ -31,6 +33,7 @@ public class Product {
         this.id = UUID.randomUUID().toString();
         this.seller = seller;
         this.offers = new ArrayList<>();
+        this.isSold = false;
     }
 
     public String getTitle() {
@@ -88,6 +91,7 @@ public class Product {
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
+
 
     public double getAverageAmountOfOffers() {
         if (offers.size() != 0) {

@@ -56,6 +56,7 @@ public class SellerRepository implements IRepository<Seller> {
         }
     }
 
+
     @Override
     public ArrayList<Seller> findAll() {
         return sellers;
