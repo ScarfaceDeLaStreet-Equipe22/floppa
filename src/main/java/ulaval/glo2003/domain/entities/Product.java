@@ -5,6 +5,7 @@ import java.util.UUID;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.DateTime;
 import ulaval.glo2003.domain.utils.ProductCategory;
+import ulaval.glo2003.domain.utils.SaleStatus;
 
 public class Product {
 
@@ -16,8 +17,8 @@ public class Product {
     public DateTime createdAt;
     public Seller seller;
     public ArrayList<Offer> offers;
+    public SaleStatus saleStatus;
     public boolean isSold;
-
 
     public Product(
             String title,
@@ -33,6 +34,7 @@ public class Product {
         this.id = UUID.randomUUID().toString();
         this.seller = seller;
         this.offers = new ArrayList<>();
+        this.saleStatus = new SaleStatus();
         this.isSold = false;
     }
 
@@ -71,6 +73,8 @@ public class Product {
     public int getNumberOfOffers() {
         return offers.size();
     }
+
+    public String getSaleStatus() { return saleStatus.getStatus(); }
 
     public void setTitle(String title) {
         this.title = title;

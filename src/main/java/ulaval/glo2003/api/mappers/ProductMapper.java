@@ -30,7 +30,8 @@ public class ProductMapper {
                 product.getId(),
                 product.getCreatedAt(),
                 product.getSeller(),
-                offers);
+                offers,
+                product.getSaleStatus());
     }
 
     public Product mapRequestToEntity(ProductRequest productRequest, Seller seller) {
