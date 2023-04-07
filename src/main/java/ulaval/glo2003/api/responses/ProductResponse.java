@@ -59,4 +59,6 @@ public class ProductResponse {
         this.saleStatus = saleStatus;
         this.selectedOffer = selectedOffer;
     }
+
+    public ProductResponse() {}
 }
