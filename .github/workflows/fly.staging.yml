@@ -36,10 +36,10 @@ jobs:
           FLOPPA_MONGO_DATABASE: ${{ secrets.MONGO_NAME_STAGING }}
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
         env:
           FLOPPA_MONGO_CLUSTER_URL: ${{ secrets.MONGO_CLUSTER_LINK_STAGING }}
           FLOPPA_MONGO_DATABASE: ${{ secrets.MONGO_NAME_STAGING }}
+        run: mvn -B package --file pom.xml -DFLOPPA_MONGO_CLUSTER_URL=$FLOPPA_MONGO_CLUSTER_URL -DFLOPPA_MONGO_DATABASE=$FLOPPA_MONGO_DATABASE
 
       - name: Deploy if build succeeds
         uses: superfly/flyctl-actions/setup-flyctl@master
