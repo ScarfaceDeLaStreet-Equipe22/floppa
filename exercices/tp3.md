@@ -6,7 +6,7 @@
 
 Faire les tests manuels n'était pas très long, environ une dizaine de minutes, mais il fallait les faire à presque toutes les PR pour s'assurer que les modifications n'avait brisé le code existant. Au total tous les tests s'additionnait à une heure ou deux par personne aufil de l'itération.
 
-#### Combien de temps passiez-vous à faire ces vérifications après l'implantation du CI?
+### Combien de temps passiez-vous à faire ces vérifications après l'implantation du CI?
 
 Il est évidemment toujours nécessaire de tester notre code pour s'assurer que tout corresponde au demandes, mais nous pouvons concentrer la plupart des tests en une session d'une heure environ à la fin de l'itération.
 
