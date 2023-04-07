@@ -3,12 +3,14 @@ package ulaval.glo2003;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
+
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.exceptions.MissingParamExceptionMapper;
 import ulaval.glo2003.api.mappers.OfferMapper;
@@ -27,8 +29,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Datastore datastore;
-
-
         String MONGO_CLUSTER_LINK = Optional.ofNullable(System.getenv("FLOPPA_MONGO_CLUSTER_URL")).orElse("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000");
         String MONGO_NAME = Optional.ofNullable(System.getenv("FLOPPA_MONGO_DATABASE")).orElse("Processus");
 
@@ -36,7 +36,6 @@ public class Main {
         datastore = Morphia.createDatastore(client, MONGO_NAME);
         datastore.getMapper().mapPackage("ulaval.glo2003");
         datastore.ensureIndexes();
-
 
         ProductRepository productRepository = new ProductRepository();
         SellerRepository sellerRepository = new SellerRepository();
@@ -48,8 +47,8 @@ public class Main {
         OfferMapper offerMapper = new OfferMapper();
         ProductFiltersMapper productFiltersMapper = new ProductFiltersMapper();
 
-        SellerRessource seller = new SellerRessource(sellerRepository, sellerMapper, sellerMongoRepository);
-        ProductRessource produit =
+        SellerRessource sellerRessource = new SellerRessource(sellerRepository, sellerMapper, sellerMongoRepository);
+        ProductRessource productRessource =
                 new ProductRessource(
                         sellerRepository,
                         productRepository,
@@ -59,16 +58,18 @@ public class Main {
                         sellerMongoRepository,
                         productMongoRepository);
 
-        ResourceConfig resourceConfig = new ResourceConfig().register(new HealthResource(datastore, productMongoRepository));
+        ResourceConfig resourceConfig = new ResourceConfig();
 
         URI uri = URI.create("http://0.0.0.0:8080/");
         resourceConfig
-                .register(seller)
-                .register(produit)
+                .register(new HealthResource(datastore, productMongoRepository))
+                .register(sellerRessource)
+                .register(productRessource)
                 .register(new MissingParamExceptionMapper())
                 .register(new InvalidParamExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper())
-                .register(new NotPermitedExceptionMapper());
+                .register(new NotPermitedExceptionMapper())
+                .register(JacksonFeature.class);
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
 
