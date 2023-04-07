@@ -62,6 +62,7 @@ public class Seller {
         this.products.add(product);
     }
 
+
     public DateTime getCreatedAt() {
         return createdAt;
     }
