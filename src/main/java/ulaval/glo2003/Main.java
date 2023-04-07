@@ -29,8 +29,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Datastore datastore;
-        String MONGO_CLUSTER_LINK = Optional.ofNullable(System.getenv("FLOPPA_MONGO_CLUSTER_URL")).orElse("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000");
-        String MONGO_NAME = Optional.ofNullable(System.getenv("FLOPPA_MONGO_DATABASE")).orElse("Processus");
+        String MONGO_CLUSTER_LINK = Optional.ofNullable(System.getenv("MONGO_CLUSTER_LINK_STAGING")).orElse("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000");
+        String MONGO_NAME = Optional.ofNullable(System.getenv("MONGO_NAME_STAGING")).orElse("Processus");
 
         System.out.println("MONGO_CLUSTER_LINK: " + MONGO_CLUSTER_LINK);
         System.out.println("MONGO_NAME: " + MONGO_NAME);
