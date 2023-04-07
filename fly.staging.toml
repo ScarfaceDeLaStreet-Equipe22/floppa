@@ -7,8 +7,6 @@ primary_region = "yul"
 processes = []
 
 [env]
-#  MONGO_NAME_STAGING = "Staging"
-#  MONGO_CLUSTER_LINK_STAGING = "mongodb+srv://admin:admin@staging.wbvhwjt.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000"
 
 [experimental]
   auto_rollback = true
