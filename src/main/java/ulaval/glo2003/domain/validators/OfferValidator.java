@@ -6,6 +6,7 @@ import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidAmountException;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidMessageException;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.NotPermittedException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidTitleException;
+import ulaval.glo2003.domain.exceptions.ProductExceptions.OfferAlreadyExistsException;
 
 public class OfferValidator implements IValidator {
 
@@ -45,7 +46,7 @@ public class OfferValidator implements IValidator {
     private void assertOfferAlreadyMade() {
         for (Offer currentOffer : product.offers) {
             if (currentOffer.getBuyerUsername().equals(offer.getBuyerUsername())) {
-                throw new NotPermittedException();
+                throw new OfferAlreadyExistsException();
             }
         }
     }
