@@ -1,5 +1,11 @@
 # TP3
 
+### URL fly.io staging 
+https://scarface-staging.fly.dev/
+
+### URL fly.io production
+https://scarface-prod.fly.dev/
+
 ## Rétrospective CI
 
 ### Combien de temps passiez-vous à vérifier et tester manuellement le code lors des intégrations et des remises avant l'implantation du pipeline de tests automatisés?
