@@ -126,6 +126,11 @@ public class ProductRessource {
 
         Product productToSell = productRepository.findById(productId);
 
+        Seller seller = productToSell.getSeller();
+        if (!seller.getId().equals(sellerId)){
+            throw new ItemNotFoundException("Seller not found");
+        }
+
         if (productToSell.getSaleStatus() == "sold") {
             throw new ItemIsSoldException();
         }
