@@ -27,19 +27,8 @@ jobs:
           java-version: '11'
           cache: maven
 
-      - name: Print environment variables
-        run: |
-          echo "FLOPPA_MONGO_CLUSTER_URL: ${{ secrets.MONGO_CLUSTER_LINK_STAGING }}"
-          echo "FLOPPA_MONGO_DATABASE: ${{ secrets.MONGO_NAME_STAGING }}"
-        env:
-          FLOPPA_MONGO_CLUSTER_URL: ${{ secrets.MONGO_CLUSTER_LINK_STAGING }}
-          FLOPPA_MONGO_DATABASE: ${{ secrets.MONGO_NAME_STAGING }}
-
       - name: Build with Maven
-        env:
-          FLOPPA_MONGO_CLUSTER_URL: ${{ secrets.MONGO_CLUSTER_LINK_STAGING }}
-          FLOPPA_MONGO_DATABASE: ${{ secrets.MONGO_NAME_STAGING }}
-        run: mvn -B package --file pom.xml -DFLOPPA_MONGO_CLUSTER_URL=$FLOPPA_MONGO_CLUSTER_URL -DFLOPPA_MONGO_DATABASE=$FLOPPA_MONGO_DATABASE
+        run: mvn -B package --file pom.xml
 
       - name: Deploy if build succeeds
         uses: superfly/flyctl-actions/setup-flyctl@master
