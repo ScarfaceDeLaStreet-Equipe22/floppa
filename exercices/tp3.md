@@ -39,6 +39,62 @@ Oui, les tests nous permettent d'avoir confiance que le code fonctionne à tout 
 - Ajouter des tests unitaires pour certains cas qui n'étaient pas pris en compte
 - Améliorer notre structure pour pouvoir écrire de nouveaux tests plus simplement.
 
+# Planification du travail sur Github
+
+## Github Project
+Dans la capture d'écran ci-dessous, on observe l'avancement des tâches selon leur statut.
+
+### Screenshots
+<p align="center">
+  <img src="./img/tp3/it3-project.png">
+</p>
+
+
+## Milestone
+Voici la milestone TP3 ainsi que ses issues liée
+### Screenshots
+<p align="center">
+  <img src="./img/tp3/it3-milestone.png">
+</p>
+
+
+## Issues
+Voici quelques exemples d'issues
+### Screenshots
+<p align="center">
+  <img src="./img/tp3/it3-issue1.png">
+</p>
+<p align="center">
+  <img src="./img/tp3/it3-issue2.png">
+</p>
+<p align="center">
+  <img src="./img/tp3/it3-issue3.png">
+</p>
+
+
+## Pull requests
+Voici quelques exemples de pull request. La première comprend aussi un exemple code-review
+### Screenshots
+<p align="center">
+  <img src="./img/tp3/it3-pr1-1.png">
+</p>
+<p align="center">
+  <img src="./img/tp3/it3-pr1-2.png">
+</p>
+<p align="center">
+  <img src="./img/tp3/it3-pr2.png">
+</p>
+<p align="center">
+  <img src="./img/tp3/it3-pr3.png">
+</p>
+
+## Arbre de commits
+Voici l'historique de notre branche develop.
+### Screenshots
+<p align="center">
+  <img src="./img/tp3/it3-commits.png">
+</p>
+
 ## Stories
 
 ### Story 1: Ajout de documentation API avec Swagger
