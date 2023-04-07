@@ -54,4 +54,6 @@ public class ProductResponse {
         this.offers = offers;
         this.saleStatus = saleStatus;
     }
+
+    public ProductResponse() {}
 }

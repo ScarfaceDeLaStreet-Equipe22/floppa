@@ -24,4 +24,6 @@ public class OffersInProductsInSellerResponse extends OffersInProductsResponse {
 
         this.items = items;
     }
+
+    public OffersInProductsInSellerResponse() {}
 }
