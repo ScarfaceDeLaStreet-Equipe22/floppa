@@ -145,7 +145,8 @@ public class ProductRessource {
             throw new MissingParamBuyerUsername();
         }
 
-        Product productToSell = productRepository.findById(productId);
+        Product productToSell = productMongoRepository.findById(productId);
+        productToSell.seller = new Seller(productToSell.sellerMongoModel, sellerMongoRepository.getProductsById(productToSell.getSellerMongoModel().productsIds));
 
         Seller seller = productToSell.getSeller();
         if (!seller.getId().equals(sellerId)){
@@ -166,6 +167,7 @@ public class ProductRessource {
 
         productToSell.getSold(filteredOffers.get(0).getBuyerUsername(), filteredOffers.get(0).getAmount());
 
+        productMongoRepository.save(productToSell);
         return Response.status(200).build();
     }
 }

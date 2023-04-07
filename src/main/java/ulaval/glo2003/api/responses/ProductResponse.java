@@ -27,7 +27,8 @@ public class ProductResponse {
             DateTime createdAt,
             Seller seller,
             OffersInProductsResponse offers,
-            String saleStatus) {
+            String saleStatus,
+            HashMap<String, String> selectedOffer) {
         this.title = title;
         this.description = description;
         this.category = category;
@@ -37,6 +38,7 @@ public class ProductResponse {
         this.seller = new SellerInProductResponse(seller.getId(), seller.getName());
         this.offers = offers;
         this.saleStatus = saleStatus;
+        this.selectedOffer = selectedOffer;
     }
 
     public ProductResponse(

@@ -19,17 +19,6 @@ public class SellerMongoModel {
     @Id
     public String id;
 
-//    public SellerMongoModel(String name, String bio, Date birthDate, String email, PhoneNumber phoneNumber,ArrayList<String> products,DateTime createdAt, String id) {
-//        this.name = name;
-//        this.bio = bio;
-//        this.birthDate = birthDate;
-//        this.email = email;
-//        this.productsIds = products;
-//        this.phoneNumber = phoneNumber;
-//        this.createdAt = createdAt;
-//        this.id = id;
-//    }
-
     public SellerMongoModel() {
     }
 

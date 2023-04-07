@@ -30,9 +30,9 @@ public class ProductMapper {
                 product.getSuggestedPrice().toDouble(),
                 product.getId(),
                 product.getCreatedAt(),
-                product.getSeller(),
                 offers,
-                product.getSaleStatus());
+                product.getSaleStatus(),
+                product.selectedOffer.formatForJsonResponse());
     }
 
     public Product mapRequestToEntity(ProductRequest productRequest, SellerMongoModel sellerMongoModel) {
