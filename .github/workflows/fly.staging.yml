@@ -28,10 +28,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
-        env:
-          MONGO_CLUSTER_LINK_STAGING: ${{ secrets.MONGO_CLUSTER_LINK_STAGING }}
-          MONGO_NAME_STAGING: ${{ secrets.MONGO_NAME_STAGING }}
+        run: mvn -B package --file pom.xml MONGO_CLUSTER_LINK_STAGING=mongodb+srv://admin:admin@staging.wbvhwjt.mongodb.net/?retryWrites=true&w=majority MONGO_NAME_STAGING=Staging
 
       - name: Deploy if build succeeds
         uses: superfly/flyctl-actions/setup-flyctl@master
