@@ -32,6 +32,9 @@ public class Main {
         String MONGO_CLUSTER_LINK = Optional.ofNullable(System.getenv("FLOPPA_MONGO_CLUSTER_URL")).orElse("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000");
         String MONGO_NAME = Optional.ofNullable(System.getenv("FLOPPA_MONGO_DATABASE")).orElse("Processus");
 
+        System.out.println("MONGO_CLUSTER_LINK: " + MONGO_CLUSTER_LINK);
+        System.out.println("MONGO_NAME: " + MONGO_NAME);
+
         MongoClient client = MongoClients.create(MONGO_CLUSTER_LINK);
         datastore = Morphia.createDatastore(client, MONGO_NAME);
         datastore.getMapper().mapPackage("ulaval.glo2003");
