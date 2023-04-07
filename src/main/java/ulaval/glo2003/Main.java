@@ -28,48 +28,8 @@ import ulaval.glo2003.domain.exceptions.NotPermitedExceptionMapper;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Datastore datastore;
-        String MONGO_CLUSTER_LINK = Optional.ofNullable(System.getenv("FLOPPA_MONGO_CLUSTER_URL")).orElse("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000");
-        String MONGO_NAME = Optional.ofNullable(System.getenv("FLOPPA_MONGO_DATABASE")).orElse("Processus");
-
-        MongoClient client = MongoClients.create(MONGO_CLUSTER_LINK);
-        datastore = Morphia.createDatastore(client, MONGO_NAME);
-        datastore.getMapper().mapPackage("ulaval.glo2003");
-        datastore.ensureIndexes();
-
-        ProductRepository productRepository = new ProductRepository();
-        SellerRepository sellerRepository = new SellerRepository();
-        SellerMongoRepository sellerMongoRepository = new SellerMongoRepository(datastore);
-        ProductMongoRepository productMongoRepository = new ProductMongoRepository(datastore, sellerMongoRepository);
-
-        ProductMapper productMapper = new ProductMapper();
-        SellerMapper sellerMapper = new SellerMapper();
-        OfferMapper offerMapper = new OfferMapper();
-        ProductFiltersMapper productFiltersMapper = new ProductFiltersMapper();
-
-        SellerRessource sellerRessource = new SellerRessource(sellerRepository, sellerMapper, sellerMongoRepository);
-        ProductRessource productRessource =
-                new ProductRessource(
-                        sellerRepository,
-                        productRepository,
-                        productMapper,
-                        offerMapper,
-                        productFiltersMapper,
-                        sellerMongoRepository,
-                        productMongoRepository);
-
-        ResourceConfig resourceConfig = new ResourceConfig();
-
+         ResourceConfig resourceConfig = new ResourceConfigProvider().provide();
         URI uri = URI.create("http://0.0.0.0:8080/");
-        resourceConfig
-                .register(new HealthResource(datastore, productMongoRepository))
-                .register(sellerRessource)
-                .register(productRessource)
-                .register(new MissingParamExceptionMapper())
-                .register(new InvalidParamExceptionMapper())
-                .register(new ItemNotFoundExceptionMapper())
-                .register(new NotPermitedExceptionMapper())
-                .register(JacksonFeature.class);
 
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, resourceConfig);
 
