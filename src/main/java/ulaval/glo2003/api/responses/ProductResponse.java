@@ -13,6 +13,7 @@ public class ProductResponse {
     public String createdAt;
     public SellerInProductResponse seller;
     public OffersInProductsResponse offers;
+    public String saleStatus;
 
     public ProductResponse(
             String title,
@@ -22,7 +23,8 @@ public class ProductResponse {
             String id,
             DateTime createdAt,
             Seller seller,
-            OffersInProductsResponse offers) {
+            OffersInProductsResponse offers,
+            String saleStatus) {
         this.title = title;
         this.description = description;
         this.category = category;
@@ -31,6 +33,7 @@ public class ProductResponse {
         this.createdAt = createdAt.getDateTime();
         this.seller = new SellerInProductResponse(seller.getId(), seller.getName());
         this.offers = offers;
+        this.saleStatus = saleStatus;
     }
 
     public ProductResponse(
@@ -40,7 +43,8 @@ public class ProductResponse {
             double suggestedPrice,
             String id,
             DateTime createdAt,
-            OffersInProductsResponse offers) {
+            OffersInProductsResponse offers,
+            String saleStatus) {
         this.title = title;
         this.description = description;
         this.category = category;
@@ -48,5 +52,6 @@ public class ProductResponse {
         this.id = id;
         this.createdAt = createdAt.getDateTime();
         this.offers = offers;
+        this.saleStatus = saleStatus;
     }
 }
