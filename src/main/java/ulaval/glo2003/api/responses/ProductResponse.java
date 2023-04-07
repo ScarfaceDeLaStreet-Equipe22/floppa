@@ -3,6 +3,8 @@ package ulaval.glo2003.api.responses;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.utils.DateTime;
 
+import java.util.HashMap;
+
 public class ProductResponse {
 
     public String title;
@@ -14,6 +16,7 @@ public class ProductResponse {
     public SellerInProductResponse seller;
     public OffersInProductsResponse offers;
     public String saleStatus;
+    public HashMap<String, String> selectedOffer;
 
     public ProductResponse(
             String title,
@@ -44,7 +47,8 @@ public class ProductResponse {
             String id,
             DateTime createdAt,
             OffersInProductsResponse offers,
-            String saleStatus) {
+            String saleStatus,
+            HashMap<String, String> selectedOffer) {
         this.title = title;
         this.description = description;
         this.category = category;
@@ -53,5 +57,6 @@ public class ProductResponse {
         this.createdAt = createdAt.getDateTime();
         this.offers = offers;
         this.saleStatus = saleStatus;
+        this.selectedOffer = selectedOffer;
     }
 }

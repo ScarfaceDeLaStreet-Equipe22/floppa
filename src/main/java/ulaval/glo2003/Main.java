@@ -5,16 +5,6 @@ import java.net.URI;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import ulaval.glo2003.api.exceptions.MissingParamExceptionMapper;
-import ulaval.glo2003.api.mappers.OfferMapper;
-import ulaval.glo2003.api.mappers.ProductFiltersMapper;
-import ulaval.glo2003.api.mappers.ProductMapper;
-import ulaval.glo2003.api.mappers.SellerMapper;
-import ulaval.glo2003.application.repository.ProductRepository;
-import ulaval.glo2003.application.repository.SellerRepository;
-import ulaval.glo2003.domain.exceptions.InvalidParamExceptionMapper;
-import ulaval.glo2003.domain.exceptions.ItemNotFoundExceptionMapper;
-import ulaval.glo2003.domain.exceptions.NotPermitedExceptionMapper;
 
 public class Main {
 

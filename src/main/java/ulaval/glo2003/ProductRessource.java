@@ -124,10 +124,9 @@ public class ProductRessource {
             throw new MissingParamBuyerUsername();
         }
 
-        Seller seller = sellerRepository.findById(sellerId);
         Product productToSell = productRepository.findById(productId);
 
-        if (productToSell.isSold) {
+        if (productToSell.getSaleStatus() == "sold") {
             throw new ItemIsSoldException();
         }
 
@@ -138,6 +137,8 @@ public class ProductRessource {
         if (filteredOffers.size() == 0) {
             throw new ItemNotFoundException("username has no offer of product");
         }
+
+        productToSell.getSold(filteredOffers.get(0).getBuyerUsername(), filteredOffers.get(0).getAmount());
 
         return Response.status(200).build();
     }
