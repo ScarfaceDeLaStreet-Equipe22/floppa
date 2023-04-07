@@ -2,15 +2,10 @@ package ulaval.glo2003.domain.entities;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
-import dev.morphia.annotations.Entity;
-import dev.morphia.annotations.Id;
-import dev.morphia.annotations.Reference;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.DateTime;
 import ulaval.glo2003.domain.utils.ProductCategory;
 
-@Entity("Products")
 public class Product {
 
     public String title;
@@ -23,6 +18,8 @@ public class Product {
     public Seller seller;
     public SellerMongoModel sellerMongoModel;
     public ArrayList<Offer> offers;
+    public SaleStatus saleStatus;
+    public SelectedOffer selectedOffer;
 
     public Product(){}
 
@@ -41,6 +38,8 @@ public class Product {
         this.seller = seller;
         this.sellerMongoModel = sellerMongo;
         this.offers = new ArrayList<>();
+        this.saleStatus = new SaleStatus();
+        this.selectedOffer = new SelectedOffer();
     }
 
     public String getTitle() {
@@ -82,6 +81,9 @@ public class Product {
         return offers.size();
     }
 
+    public String getSaleStatus() { return saleStatus.getStatus(); }
+
+    public HashMap<String, String> getSlectedOffer(){return selectedOffer.formatForJsonResponse();}
     public void setTitle(String title) {
         this.title = title;
     }
@@ -144,5 +146,10 @@ public class Product {
         } else {
             return 0;
         }
+    }
+
+    public void getSold(String buyerUsername, Double amount){
+        this.saleStatus.setSaleStatus("sold");
+        this.selectedOffer.acceptedOffer(buyerUsername, amount);
     }
 }

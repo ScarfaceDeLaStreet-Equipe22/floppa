@@ -31,7 +31,8 @@ public class ProductMapper {
                 product.getId(),
                 product.getCreatedAt(),
                 product.getSeller(),
-                offers);
+                offers,
+                product.getSaleStatus());
     }
 
     public Product mapRequestToEntity(ProductRequest productRequest, SellerMongoModel sellerMongoModel) {

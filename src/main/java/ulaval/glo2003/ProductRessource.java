@@ -6,11 +6,15 @@ import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import ulaval.glo2003.api.exceptions.MissingParamException;
+import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingParamBuyerUsername;
 import ulaval.glo2003.api.mappers.OfferMapper;
 import ulaval.glo2003.api.mappers.ProductFiltersMapper;
 import ulaval.glo2003.api.mappers.ProductMapper;
 import ulaval.glo2003.api.requests.OfferRequest;
 import ulaval.glo2003.api.requests.ProductRequest;
+import ulaval.glo2003.api.requests.SellProductRequest;
 import ulaval.glo2003.api.responses.ProductListResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
 import ulaval.glo2003.application.repository.ProductMongoRepository;
@@ -21,6 +25,8 @@ import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.entities.SellerMongoModel;
+import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
+import ulaval.glo2003.domain.exceptions.ProductExceptions.ItemIsSoldException;
 import ulaval.glo2003.domain.utils.ProductFilters;
 
 @Path("/products")
@@ -86,7 +92,7 @@ public class ProductRessource {
         sellerMongoRepository.save(sellerFromMongo);
         productMongoRepository.save(productCreated);
 
-        String url = "http://localhost:8080/Products/" + productCreated.getId();
+        String url = "http://localhost:8080/products/" + productCreated.getId();
 
         return Response.created(URI.create(url)).build();
     }
@@ -125,5 +131,41 @@ public class ProductRessource {
 
 
         return Response.ok(new ProductListResponse(filteredProducts)).build();
+    }
+
+    @POST
+    @Path("{Productid}/sell")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response sellProduct(
+            SellProductRequest sellProductRequest,
+            @PathParam("Productid") String productId,
+            @HeaderParam("X-Seller-Id") String sellerId) {
+
+        if (sellProductRequest.username == null) {
+            throw new MissingParamBuyerUsername();
+        }
+
+        Product productToSell = productRepository.findById(productId);
+
+        Seller seller = productToSell.getSeller();
+        if (!seller.getId().equals(sellerId)){
+            throw new ItemNotFoundException("Seller not found");
+        }
+
+        if (productToSell.getSaleStatus() == "sold") {
+            throw new ItemIsSoldException();
+        }
+
+        List<Offer> filteredOffers = productToSell.offers.stream()
+                .filter(offer -> offer.buyerUsername.equals(sellProductRequest.username))
+                .collect(Collectors.toList());
+
+        if (filteredOffers.size() == 0) {
+            throw new ItemNotFoundException("username has no offer of product");
+        }
+
+        productToSell.getSold(filteredOffers.get(0).getBuyerUsername(), filteredOffers.get(0).getAmount());
+
+        return Response.status(200).build();
     }
 }

@@ -32,4 +32,6 @@ public class SellerResponse {
         this.products = products;
         this.createdAt = createdAt.getDateTime();
     }
+
+    public SellerResponse() {}
 }
