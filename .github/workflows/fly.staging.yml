@@ -33,6 +33,11 @@ jobs:
           FLOPPA_MONGO_CLUSTER_URL: ${{ secrets.MONGO_CLUSTER_LINK_STAGING }}
           FLOPPA_MONGO_DATABASE: ${{ secrets.MONGO_NAME_STAGING }}
 
+      - name: Print environment variables
+        run: |
+          echo "FLOPPA_MONGO_CLUSTER_URL: ${{ env.FLOPPA_MONGO_CLUSTER_URL }}"
+          echo "FLOPPA_MONGO_DATABASE: ${{ env.FLOPPA_MONGO_DATABASE }}"
+
       - name: Deploy if build succeeds
         uses: superfly/flyctl-actions/setup-flyctl@master
 
