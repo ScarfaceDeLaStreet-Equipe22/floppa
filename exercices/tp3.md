@@ -38,3 +38,47 @@ Oui, les tests nous permettent d'avoir confiance que le code fonctionne à tout 
 - Ajouter des tests d'intégrations et End-To-End
 - Ajouter des tests unitaires pour certains cas qui n'étaient pas pris en compte
 - Améliorer notre structure pour pouvoir écrire de nouveaux tests plus simplement.
+
+## Stories
+
+### Story 1: Ajout de documentation API avec Swagger
+
+#### Description: 
+En tant que développeur, je veux avoir accès à une documentation claire et interactive de l'API Floppa, afin de faciliter l'intégration et l'utilisation de l'API dans mes projets.
+
+#### Critères de succès:
+- Intégrer Swagger pour générer automatiquement la documentation de l'API.
+- La documentation doit être accessible via une URL dédiée (par exemple, /api-docs).
+- La documentation doit couvrir toutes les routes existantes et fournir des exemples de requêtes et de réponses.
+- Les développeurs doivent être en mesure de tester les routes directement à partir de la documentation Swagger.
+
+### Story 2: Système de recommandation de produits
+
+#### Description:
+En tant qu'utilisateur, je veux recevoir des recommandations de produits basées sur mes préférences et mes achats précédents, afin de découvrir de nouveaux produits qui pourraient m'intéresser.
+
+#### Critères de succès:
+
+- Afficher les recommandations sur la page d'accueil de l'utilisateur. 
+- Prendre en compte les préférences de l'utilisateur et les achats précédents pour générer les recommandations. 
+- Mettre à jour les recommandations lorsqu'un achat est effectué.
+
+### Story 3: Système de notation et d'évaluation des vendeurs
+
+#### Description:
+En tant qu'acheteur, je veux pouvoir noter et évaluer les vendeurs après un achat, afin de partager mon expérience et d'aider les futurs acheteurs à choisir un vendeur de confiance.
+
+#### Critères de succès:
+- Permettre aux acheteurs de noter et de laisser un commentaire sur un vendeur après un achat. 
+- Afficher les notes et les commentaires sur la page de profil du vendeur. 
+- Calculer la note moyenne du vendeur en fonction des notes reçues.
+
+### Story 4: Système de suivi de l'expédition des produits
+
+#### Description:
+En tant qu'acheteur, je veux pouvoir suivre l'expédition de mon produit acheté, afin de connaître l'état de ma commande et la date estimée de livraison.
+
+#### Critères de succès:
+- Afficher les informations de suivi (statut, transporteur, numéro de suivi, etc.) sur la page de commande.
+- Mettre à jour régulièrement les informations de suivi en fonction des informations fournies par le transporteur.  
+- Envoyer des notifications par e-mail ou par SMS à l'acheteur lorsqu'il y a des mises à jour importantes concernant l'expédition.
