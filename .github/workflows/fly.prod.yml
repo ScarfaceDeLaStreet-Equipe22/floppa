@@ -27,9 +27,6 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-        env:
-          FLOPPA_MONGO_CLUSTER_URL: ${{ secrets.MONGO_CLUSTER_LINK_PROD }}
-          FLOPPA_MONGO_DATABASE: ${{ secrets.MONGO_CLUSTER_LINK_PROD }}
 
       - name: Deploy if build succeeds
         uses: superfly/flyctl-actions/setup-flyctl@master
