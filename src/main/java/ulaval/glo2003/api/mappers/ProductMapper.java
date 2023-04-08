@@ -6,6 +6,7 @@ import ulaval.glo2003.api.responses.ProductResponse;
 import ulaval.glo2003.api.validators.ProductRequestValidator;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.ProductCategory;
 import ulaval.glo2003.domain.validators.ProductValidator;
@@ -29,12 +30,12 @@ public class ProductMapper {
                 product.getSuggestedPrice().toDouble(),
                 product.getId(),
                 product.getCreatedAt(),
-                product.getSeller(),
                 offers,
-                product.getSaleStatus());
+                product.getSaleStatus(),
+                product.selectedOffer.formatForJsonResponse());
     }
 
-    public Product mapRequestToEntity(ProductRequest productRequest, Seller seller) {
+    public Product mapRequestToEntity(ProductRequest productRequest, SellerMongoModel sellerMongoModel) {
         ProductRequestValidator productRequestValidator =
                 new ProductRequestValidator(productRequest);
         productRequestValidator.validateRequest();
@@ -45,7 +46,7 @@ public class ProductMapper {
                         productRequest.getDescription(),
                         new ProductCategory(productRequest.getCategory()),
                         new Amount(productRequest.getSuggestedPrice()),
-                        seller);
+                        sellerMongoModel);
         ProductValidator productValidator = new ProductValidator(product);
         productValidator.validateEntity();
 

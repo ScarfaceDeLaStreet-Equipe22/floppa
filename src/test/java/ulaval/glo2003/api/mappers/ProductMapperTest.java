@@ -8,6 +8,7 @@ import ulaval.glo2003.api.requests.ProductRequest;
 import ulaval.glo2003.api.responses.ProductResponse;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.ProductCategory;
 
@@ -25,10 +26,12 @@ class ProductMapperTest {
         // arrange
         ProductRequest request = new ProductRequest("title", "description", "Sport", "10.0");
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+        SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
+
 
         // act
-        Product product = productMapper.mapRequestToEntity(request, seller);
-
+        Product product = productMapper.mapRequestToEntity(request, sellerMongoModel);
+        product.seller = seller;
         // assert
         assertThat(product).isNotNull();
         assertThat(product.getTitle()).isEqualTo(request.getTitle());
@@ -43,14 +46,16 @@ class ProductMapperTest {
     public void mapEntityToResponse_withValidProduct_shouldReturnProductResponse() {
         // Given
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+        SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
         Product product =
                 new Product(
                         "title",
                         "description",
                         new ProductCategory("Sport"),
                         new Amount("10"),
-                        seller);
+                        sellerMongoModel);
 
+        product.seller = seller;
         // When
         ProductResponse response = productMapper.mapEntityToResponse(product);
 

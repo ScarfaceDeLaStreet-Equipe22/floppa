@@ -1,51 +1,72 @@
 package ulaval.glo2003;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.exceptions.MissingParamExceptionMapper;
 import ulaval.glo2003.api.mappers.OfferMapper;
 import ulaval.glo2003.api.mappers.ProductFiltersMapper;
 import ulaval.glo2003.api.mappers.ProductMapper;
 import ulaval.glo2003.api.mappers.SellerMapper;
+import ulaval.glo2003.application.repository.ProductMongoRepository;
 import ulaval.glo2003.application.repository.ProductRepository;
+import ulaval.glo2003.application.repository.SellerMongoRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.exceptions.InvalidParamExceptionMapper;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.domain.exceptions.NotPermitedExceptionMapper;
+
+import java.net.URI;
+import java.util.Optional;
 
 public class ResourceConfigProvider
 {
 
     public ResourceConfig provide()
     {
-        // configuration des repository
+        Datastore datastore;
+        String MONGO_CLUSTER_LINK = Optional.ofNullable(System.getenv("FLOPPA_MONGO_CLUSTER_URL")).orElse("mongodb+srv://admin:admin@processus.5gawlpu.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=10000");
+        String MONGO_NAME = Optional.ofNullable(System.getenv("FLOPPA_MONGO_DATABASE")).orElse("Processus");
+
+        MongoClient client = MongoClients.create(MONGO_CLUSTER_LINK);
+        datastore = Morphia.createDatastore(client, MONGO_NAME);
+        datastore.getMapper().mapPackage("ulaval.glo2003");
+        datastore.ensureIndexes();
+
         ProductRepository productRepository = new ProductRepository();
         SellerRepository sellerRepository = new SellerRepository();
+        SellerMongoRepository sellerMongoRepository = new SellerMongoRepository(datastore);
+        ProductMongoRepository productMongoRepository = new ProductMongoRepository(datastore, sellerMongoRepository);
 
-        // configuration des mappers
         ProductMapper productMapper = new ProductMapper();
         SellerMapper sellerMapper = new SellerMapper();
         OfferMapper offerMapper = new OfferMapper();
         ProductFiltersMapper productFiltersMapper = new ProductFiltersMapper();
 
-        // seller and product config
-        HealthResource healthResource = new HealthResource();
-        SellerRessource sellerResource = new SellerRessource(sellerRepository, sellerMapper);
-        ProductRessource produitResource =
+        SellerRessource sellerRessource = new SellerRessource(sellerRepository, sellerMapper, sellerMongoRepository);
+        ProductRessource productRessource =
                 new ProductRessource(
                         sellerRepository,
                         productRepository,
                         productMapper,
                         offerMapper,
-                        productFiltersMapper);
+                        productFiltersMapper,
+                        sellerMongoRepository,
+                        productMongoRepository);
 
         return new ResourceConfig()
-                .register(healthResource)
-                .register(sellerResource)
-                .register(produitResource)
+                .register(new HealthResource(datastore, productMongoRepository))
+                .register(sellerRessource)
+                .register(productRessource)
                 .register(new MissingParamExceptionMapper())
                 .register(new InvalidParamExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper())
-                .register(new NotPermitedExceptionMapper());
-    }
+                .register(new NotPermitedExceptionMapper())
+                .register(JacksonJaxbJsonProvider.class);
 
+    }
 }

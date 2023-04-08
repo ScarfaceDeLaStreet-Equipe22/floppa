@@ -4,27 +4,34 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 import ulaval.glo2003.domain.utils.*;
 
+@Entity("Products")
 public class Product {
 
     public String title;
     public String description;
     public Amount suggestedPrice;
     public ProductCategory category;
+    @Id
     public String id;
     public DateTime createdAt;
     public Seller seller;
+    public SellerMongoModel sellerMongoModel;
     public ArrayList<Offer> offers;
     public SaleStatus saleStatus;
     public SelectedOffer selectedOffer;
+
+    public Product(){}
 
     public Product(
             String title,
             String description,
             ProductCategory category,
             Amount suggestedPrice,
-            Seller seller) {
+            SellerMongoModel sellerMongo) {
         this.category = category;
         this.suggestedPrice = suggestedPrice;
         this.description = description;
@@ -32,6 +39,7 @@ public class Product {
         this.createdAt = new DateTime();
         this.id = UUID.randomUUID().toString();
         this.seller = seller;
+        this.sellerMongoModel = sellerMongo;
         this.offers = new ArrayList<>();
         this.saleStatus = new SaleStatus();
         this.selectedOffer = new SelectedOffer();
@@ -47,6 +55,9 @@ public class Product {
 
     public Amount getSuggestedPrice() {
         return suggestedPrice;
+    }
+    public double getSuggestedPriceDouble() {
+        return suggestedPrice.getAmount();
     }
 
     public String getCategory() {
@@ -90,6 +101,10 @@ public class Product {
 
     public void setCategory(ProductCategory category) {
         this.category = category;
+    }
+
+    public SellerMongoModel getSellerMongoModel() {
+        return sellerMongoModel;
     }
 
     public void setSeller(Seller seller) {

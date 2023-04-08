@@ -2,14 +2,23 @@ package ulaval.glo2003.domain.utils;
 
 import java.util.Arrays;
 import java.util.List;
-import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidCategoryException;
+import java.util.UUID;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
+import ulaval.glo2003.domain.exceptions.ProductExceptions.InvalidCategoryException;
+@Entity
 public class ProductCategory {
 
-    private final String category;
+    public String category;
+    @Id
+    public String id;
+
+    public ProductCategory(){}
 
     public ProductCategory(String category) {
         this.category = category;
+        this.id = UUID.randomUUID().toString();
         assertProductCategory();
     }
 

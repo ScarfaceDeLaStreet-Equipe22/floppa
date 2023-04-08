@@ -1,11 +1,15 @@
 package ulaval.glo2003.domain.utils;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidPhoneNumberException;
-
+@Entity
 public class PhoneNumber {
 
-    private String numero;
+    @Id
+    public String numero;
 
+    public PhoneNumber(){}
     public PhoneNumber(String numero) {
         assertPhoneNumber(numero);
     }
