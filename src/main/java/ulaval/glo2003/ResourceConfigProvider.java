@@ -5,6 +5,7 @@ import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.exceptions.MissingParamExceptionMapper;
 import ulaval.glo2003.api.mappers.OfferMapper;
@@ -57,8 +58,6 @@ public class ResourceConfigProvider
                         sellerMongoRepository,
                         productMongoRepository);
 
-
-
         return new ResourceConfig()
                 .register(new HealthResource(datastore, productMongoRepository))
                 .register(sellerRessource)
@@ -67,7 +66,7 @@ public class ResourceConfigProvider
                 .register(new InvalidParamExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper())
                 .register(new NotPermitedExceptionMapper())
-                .register(JacksonFeature.class);
+                .register(JacksonJaxbJsonProvider.class);
 
     }
 }
