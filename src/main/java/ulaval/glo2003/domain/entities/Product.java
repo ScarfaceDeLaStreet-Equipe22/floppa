@@ -1,30 +1,37 @@
 package ulaval.glo2003.domain.entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
-import ulaval.glo2003.domain.utils.Amount;
-import ulaval.glo2003.domain.utils.DateTime;
-import ulaval.glo2003.domain.utils.ProductCategory;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
+import ulaval.glo2003.domain.utils.*;
+
+@Entity("Products")
 public class Product {
 
     public String title;
     public String description;
     public Amount suggestedPrice;
     public ProductCategory category;
+    @Id
     public String id;
     public DateTime createdAt;
     public Seller seller;
+    public SellerMongoModel sellerMongoModel;
     public ArrayList<Offer> offers;
-    public boolean isSold;
+    public SaleStatus saleStatus;
+    public SelectedOffer selectedOffer;
 
+    public Product(){}
 
     public Product(
             String title,
             String description,
             ProductCategory category,
             Amount suggestedPrice,
-            Seller seller) {
+            SellerMongoModel sellerMongo) {
         this.category = category;
         this.suggestedPrice = suggestedPrice;
         this.description = description;
@@ -32,8 +39,10 @@ public class Product {
         this.createdAt = new DateTime();
         this.id = UUID.randomUUID().toString();
         this.seller = seller;
+        this.sellerMongoModel = sellerMongo;
         this.offers = new ArrayList<>();
-        this.isSold = false;
+        this.saleStatus = new SaleStatus();
+        this.selectedOffer = new SelectedOffer();
     }
 
     public String getTitle() {
@@ -46,6 +55,9 @@ public class Product {
 
     public Amount getSuggestedPrice() {
         return suggestedPrice;
+    }
+    public double getSuggestedPriceDouble() {
+        return suggestedPrice.getAmount();
     }
 
     public String getCategory() {
@@ -72,6 +84,9 @@ public class Product {
         return offers.size();
     }
 
+    public String getSaleStatus() { return saleStatus.getStatus(); }
+
+    public HashMap<String, String> getSlectedOffer(){return selectedOffer.formatForJsonResponse();}
     public void setTitle(String title) {
         this.title = title;
     }
@@ -88,10 +103,13 @@ public class Product {
         this.category = category;
     }
 
+    public SellerMongoModel getSellerMongoModel() {
+        return sellerMongoModel;
+    }
+
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
-
 
     public double getAverageAmountOfOffers() {
         if (offers.size() != 0) {
@@ -131,5 +149,10 @@ public class Product {
         } else {
             return 0;
         }
+    }
+
+    public void getSold(String buyerUsername, Double amount){
+        this.saleStatus.setSaleStatus("sold");
+        this.selectedOffer.acceptedOffer(buyerUsername, amount);
     }
 }

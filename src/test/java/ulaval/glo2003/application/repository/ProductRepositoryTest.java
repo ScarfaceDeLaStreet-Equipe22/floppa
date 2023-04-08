@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 import ulaval.glo2003.domain.utils.*;
 
@@ -17,6 +18,8 @@ class ProductRepositoryTest {
     ProductRepository productRepository;
     private static final Seller SELLER =
             new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+    private static final SellerMongoModel SELLER_MONGO =
+            new SellerMongoModel(SELLER);
 
     @BeforeEach
     public void setUp() {
@@ -32,7 +35,7 @@ class ProductRepositoryTest {
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
         List<Product> singleProduct = List.of(product);
 
         // act
@@ -59,7 +62,7 @@ class ProductRepositoryTest {
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
         String productId = product.getId();
         productRepository.save(product);
 
@@ -96,21 +99,21 @@ class ProductRepositoryTest {
                         "firstdescription",
                         new ProductCategory("Sport"),
                         new Amount("2"),
-                        SELLER);
+                        SELLER_MONGO);
         Product product =
                 new Product(
                         "Valid Title",
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
         Product lastProduct =
                 new Product(
                         "LastProduct",
                         "lastdescription",
                         new ProductCategory("Sport"),
                         new Amount("4"),
-                        SELLER);
+                        SELLER_MONGO);
 
         String firstProductId = firstProduct.getId();
         String lastProductId = lastProduct.getId();
@@ -152,7 +155,7 @@ class ProductRepositoryTest {
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
 
         // act
         Executable executable = () -> productRepository.update(product);
@@ -170,7 +173,7 @@ class ProductRepositoryTest {
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
         productRepository.save(product);
 
         // act
@@ -190,7 +193,7 @@ class ProductRepositoryTest {
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
 
         // act
         Executable executable = () -> productRepository.remove(product);
@@ -208,21 +211,21 @@ class ProductRepositoryTest {
                         "firstdescription",
                         new ProductCategory("Sport"),
                         new Amount("2"),
-                        SELLER);
+                        SELLER_MONGO);
         Product product =
                 new Product(
                         "Valid Title",
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
         Product lastProduct =
                 new Product(
                         "LastProduct",
                         "lastdescription",
                         new ProductCategory("Sport"),
                         new Amount("4"),
-                        SELLER);
+                        SELLER_MONGO);
         productRepository.save(firstProduct);
         productRepository.save(product);
         productRepository.save(lastProduct);
@@ -244,21 +247,21 @@ class ProductRepositoryTest {
                         "firstdescription",
                         new ProductCategory("Sport"),
                         new Amount("2"),
-                        SELLER);
+                        SELLER_MONGO);
         Product product =
                 new Product(
                         "Valid Title",
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
         Product lastProduct =
                 new Product(
                         "LastProduct",
                         "lastdescription",
                         new ProductCategory("Sport"),
                         new Amount("4"),
-                        SELLER);
+                        SELLER_MONGO);
         productRepository.save(firstProduct);
         productRepository.save(product);
         productRepository.save(lastProduct);
@@ -279,7 +282,7 @@ class ProductRepositoryTest {
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
         productRepository.save(product);
 
         // act
@@ -298,7 +301,7 @@ class ProductRepositoryTest {
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
 
         // act
         Executable executable = () -> productRepository.findById(product.getId());
@@ -316,21 +319,21 @@ class ProductRepositoryTest {
                         "firstdescription",
                         new ProductCategory("Sport"),
                         new Amount("2"),
-                        SELLER);
+                        SELLER_MONGO);
         Product product =
                 new Product(
                         "Valid Title",
                         "Valid Description",
                         new ProductCategory("Sport"),
                         new Amount("10.50"),
-                        SELLER);
+                        SELLER_MONGO);
         Product lastProduct =
                 new Product(
                         "LastProduct",
                         "lastdescription",
                         new ProductCategory("Sport"),
                         new Amount("4"),
-                        SELLER);
+                        SELLER_MONGO);
         productRepository.save(firstProduct);
         productRepository.save(product);
         productRepository.save(lastProduct);

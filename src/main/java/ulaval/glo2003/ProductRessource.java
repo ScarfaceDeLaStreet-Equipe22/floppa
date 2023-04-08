@@ -17,11 +17,14 @@ import ulaval.glo2003.api.requests.ProductRequest;
 import ulaval.glo2003.api.requests.SellProductRequest;
 import ulaval.glo2003.api.responses.ProductListResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
+import ulaval.glo2003.application.repository.ProductMongoRepository;
 import ulaval.glo2003.application.repository.ProductRepository;
+import ulaval.glo2003.application.repository.SellerMongoRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.ItemIsSoldException;
 import ulaval.glo2003.domain.utils.ProductFilters;
@@ -33,19 +36,25 @@ public class ProductRessource {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductFiltersMapper productFiltersMapper;
+    public ProductMongoRepository productMongoRepository;
     private final OfferMapper offerMapper;
+    private SellerMongoRepository sellerMongoRepository;
 
     public ProductRessource(
             SellerRepository sellerRepository,
             ProductRepository productRepository,
             ProductMapper productMapper,
             OfferMapper offerMapper,
-            ProductFiltersMapper productFiltersMapper) {
+            ProductFiltersMapper productFiltersMapper,
+            SellerMongoRepository sellerMongoRepository,
+            ProductMongoRepository productMongoRepository) {
+        this.sellerMongoRepository = sellerMongoRepository;
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.offerMapper = offerMapper;
         this.productFiltersMapper = productFiltersMapper;
+        this.productMongoRepository = productMongoRepository;
     }
 
     @POST
@@ -56,11 +65,13 @@ public class ProductRessource {
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-        Product productForOffer = productRepository.findById(productId);
+//        Product productForOffer = productRepository.findById(productId);
+        Product productForOfferMongo = productMongoRepository.findById(productId);
 
-        Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername, productForOffer);
+        Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername, productForOfferMongo);
 
-        productForOffer.offers.add(offer);
+        productForOfferMongo.offers.add(offer);
+        productMongoRepository.save(productForOfferMongo);
 
         return Response.status(201).build();
     }
@@ -69,23 +80,29 @@ public class ProductRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProduct(
             ProductRequest productRequest, @HeaderParam("X-Seller-Id") String sellerId) {
-        Seller seller = sellerRepository.findById(sellerId);
 
-        Product productCreated = productMapper.mapRequestToEntity(productRequest, seller);
+        Seller sellerFromMongo = sellerMongoRepository.getSellerById(sellerId);
 
-        seller.addProduct(productCreated);
+        SellerMongoModel sellerMongoModel = new SellerMongoModel(sellerFromMongo);
+
+        Product productCreated = productMapper.mapRequestToEntity(productRequest, sellerMongoModel);
+
+        sellerFromMongo.addProduct(productCreated);
         productRepository.save(productCreated);
+        sellerMongoRepository.save(sellerFromMongo);
+        productMongoRepository.save(productCreated);
 
-        String url = "http://localhost:8080/Products/" + productCreated.getId();
+        String url = "http://localhost:8080/products/" + productCreated.getId();
 
         return Response.created(URI.create(url)).build();
     }
 
     @GET
     @Path("{Productid}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getProducts(@PathParam("Productid") String productId) {
-        Product product = productRepository.findById(productId);
+        Product product = productMongoRepository.findById(productId);
+        product.seller = new Seller(product.getSellerMongoModel(), sellerMongoRepository.getProductsById(product.getSellerMongoModel().productsIds));
 
         ProductResponse productResponse = productMapper.mapEntityToResponse(product);
 
@@ -93,6 +110,7 @@ public class ProductRessource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getFilteredProducts(
             @QueryParam("sellerId") String sellerId,
             @QueryParam("title") String title,
@@ -103,11 +121,14 @@ public class ProductRessource {
                 productFiltersMapper.mapQueryParamsToRequest(
                         sellerId, title, categoryName, minPrice, maxPrice);
 
+
         List<ProductResponse> filteredProducts =
-                productRepository.findAll().stream()
+                productMongoRepository.getAllProducts().stream()
                         .filter(productFilters::checkProduct)
                         .map(productMapper::mapEntityToResponse)
                         .collect(Collectors.toList());
+
+
 
         return Response.ok(new ProductListResponse(filteredProducts)).build();
     }
@@ -124,10 +145,15 @@ public class ProductRessource {
             throw new MissingParamBuyerUsername();
         }
 
-        Seller seller = sellerRepository.findById(sellerId);
-        Product productToSell = productRepository.findById(productId);
+        Product productToSell = productMongoRepository.findById(productId);
+        productToSell.seller = new Seller(productToSell.sellerMongoModel, sellerMongoRepository.getProductsById(productToSell.getSellerMongoModel().productsIds));
 
-        if (productToSell.isSold) {
+        Seller seller = productToSell.getSeller();
+        if (!seller.getId().equals(sellerId)){
+            throw new ItemNotFoundException("Seller not found");
+        }
+
+        if (productToSell.getSaleStatus() == "sold") {
             throw new ItemIsSoldException();
         }
 
@@ -139,6 +165,9 @@ public class ProductRessource {
             throw new ItemNotFoundException("username has no offer of product");
         }
 
+        productToSell.getSold(filteredOffers.get(0).getBuyerUsername(), filteredOffers.get(0).getAmount());
+
+        productMongoRepository.save(productToSell);
         return Response.status(200).build();
     }
 }

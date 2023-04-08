@@ -12,4 +12,6 @@ public class OffersInProductsResponse {
 
         if (count > 0) avgAmount = Optional.of(average);
     }
+
+    public OffersInProductsResponse() {}
 }

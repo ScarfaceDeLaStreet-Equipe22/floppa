@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 
 public class ProductFiltersTests {
 
@@ -22,14 +23,17 @@ public class ProductFiltersTests {
     @BeforeEach
     public void setUp() {
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
+        SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
+
         testProduct =
                 new Product(
                         VALID_PRODUCT_TITLE,
                         PRODUCT_DESCRIPTION,
                         VALID_PRODUCT_CATEGORY,
                         PRODUCT_PRICE,
-                        seller);
-        sellerId = seller.getId();
+                        sellerMongoModel);
+        sellerId = sellerMongoModel.id;
+        testProduct.seller = seller;
     }
 
     @Test

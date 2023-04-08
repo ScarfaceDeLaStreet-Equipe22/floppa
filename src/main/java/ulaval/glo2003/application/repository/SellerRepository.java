@@ -1,6 +1,8 @@
 package ulaval.glo2003.application.repository;
 
 import java.util.ArrayList;
+
+import org.glassfish.jaxb.runtime.v2.schemagen.xmlschema.List;
 import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 

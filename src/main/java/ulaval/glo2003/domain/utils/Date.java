@@ -4,16 +4,25 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.UUID;
+
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidBirthdateException;
 
+@Entity
 public class Date {
 
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    public final String date;
+    public  String date;
+    @Id
+    public  String id;
 
+    public Date(){};
     public Date(String date) {
         assertDate(date);
         this.date = date;
+        this.id = UUID.randomUUID().toString();
     }
 
     private void assertDate(String date) {
