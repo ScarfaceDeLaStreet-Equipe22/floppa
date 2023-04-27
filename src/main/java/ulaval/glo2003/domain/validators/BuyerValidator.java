@@ -42,4 +42,5 @@ public class BuyerValidator implements IValidator {
             throw new InvalidBirthdateException();
         }
     }
+
 }

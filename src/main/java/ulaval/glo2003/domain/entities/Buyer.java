@@ -2,12 +2,10 @@ package ulaval.glo2003.domain.entities;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
-import ulaval.glo2003.domain.utils.Date;
-import ulaval.glo2003.domain.utils.DateTime;
-import ulaval.glo2003.domain.utils.Email;
-import ulaval.glo2003.domain.utils.PhoneNumber;
+import ulaval.glo2003.domain.utils.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -19,18 +17,20 @@ public class Buyer {
     public Email email;
     public PhoneNumber phoneNumber;
     public DateTime createdAt;
+    public List<ProductCategory> preferences;
 
     @Id
     public String id;
 
     public Buyer(){}
 
-    public Buyer(String name, String birthDate, String email, String phoneNumber) {
+    public Buyer(String name, String birthDate, String email, String phoneNumber, List<ProductCategory> preferences) {
         this.name = name;
         this.birthDate = new Date(birthDate);
         this.email = new Email(email);
         this.phoneNumber = new PhoneNumber(phoneNumber);
         this.createdAt = new DateTime();
+        this.preferences = preferences;
 
         this.id = UUID.randomUUID().toString();
     }
@@ -41,6 +41,7 @@ public class Buyer {
         this.email = new Email(buyerMongoModel.email);
         this.phoneNumber = buyerMongoModel.phoneNumber;
         this.createdAt = buyerMongoModel.createdAt;
+        this.preferences = buyerMongoModel.preferences;
 
         this.id = buyerMongoModel.id;
     }

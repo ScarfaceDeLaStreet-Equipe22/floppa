@@ -19,9 +19,32 @@ public class BuyerCreationTest extends FloppaApiTest
         BuyerRequest request = BuyerRequestFixture.valid();
 
         Response response = sendBuyerSeller(request);
+        ErrorResponse errorResponse = response.readEntity(ErrorResponse.class);
 
         assertThat(response.getStatus()).isEqualTo(201);
         assertThat(response.getHeaderString("Location")).contains("/buyers/");
+    }
+
+    @Test
+    void givenRequestWithoutPreferences_whenCreatingBuyer_thenReturns200WithRedirect()
+    {
+        BuyerRequest request = BuyerRequestFixture.withoutPreferences();
+
+        Response response = sendBuyerSeller(request);
+
+        assertThat(response.getStatus()).isEqualTo(201);
+        assertThat(response.getHeaderString("Location")).contains("/buyers/");
+    }
+
+    @Test
+    void givenRequestWithInvalidPreferences_whenCreatingBuyer_thenReturns400WithError()
+    {
+        BuyerRequest request = BuyerRequestFixture.invalidPreferences();
+
+        Response response = sendBuyerSeller(request);
+
+        assertThat(response.getStatus()).isEqualTo(400);
+        assertThat(response.readEntity(ErrorResponse.class)).isInstanceOf(ErrorResponse.class);
     }
 
     @Test

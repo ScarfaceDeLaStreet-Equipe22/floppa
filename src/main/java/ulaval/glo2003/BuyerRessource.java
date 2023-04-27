@@ -45,7 +45,7 @@ public class BuyerRessource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{buyerId}")
-    public Response getSeller(@PathParam("buyerId") String buyerId) {
+    public Response getBuyer(@PathParam("buyerId") String buyerId) {
         Buyer foundBuyer = this.buyerMongoRepository.getBuyerById(buyerId);
 
         BuyerResponse buyerResponse = buyerMapper.mapEntityToResponse(foundBuyer);

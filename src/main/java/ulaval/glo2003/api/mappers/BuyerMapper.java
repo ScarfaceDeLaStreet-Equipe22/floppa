@@ -9,10 +9,13 @@ import ulaval.glo2003.domain.entities.Buyer;
 import ulaval.glo2003.domain.entities.Offer;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.utils.ProductCategory;
 import ulaval.glo2003.domain.validators.BuyerValidator;
 import ulaval.glo2003.domain.validators.SellerValidator;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BuyerMapper {
 
@@ -26,19 +29,25 @@ public class BuyerMapper {
                 buyer.getBirthdate().getDate(),
                 buyer.getEmail(),
                 buyer.getPhoneNumber(),
-                buyer.getCreatedAt());
+                buyer.getCreatedAt(),
+                buyer.preferences.stream().map(cat -> cat.category).collect(Collectors.toList()));
     }
 
     public Buyer mapRequestToEntity(BuyerRequest buyerRequest) {
         BuyerRequestValidator buyerRequestValidator = new BuyerRequestValidator(buyerRequest);
         buyerRequestValidator.validateRequest();
 
+        List<ProductCategory> preferences = buyerRequest.preferences == null
+                ? new ArrayList<>()
+                : buyerRequest.preferences.stream().map(ProductCategory::new).collect(Collectors.toList());
+
         Buyer buyer =
                 new Buyer(
                         buyerRequest.getName(),
                         buyerRequest.getBirthdate(),
                         buyerRequest.getEmail(),
-                        buyerRequest.getPhoneNumber());
+                        buyerRequest.getPhoneNumber(),
+                        preferences);
 
         BuyerValidator buyerValidator = new BuyerValidator(buyer);
         buyerValidator.validateEntity();
