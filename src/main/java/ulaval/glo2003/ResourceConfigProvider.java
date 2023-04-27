@@ -12,10 +12,7 @@ import ulaval.glo2003.api.mappers.OfferMapper;
 import ulaval.glo2003.api.mappers.ProductFiltersMapper;
 import ulaval.glo2003.api.mappers.ProductMapper;
 import ulaval.glo2003.api.mappers.SellerMapper;
-import ulaval.glo2003.application.repository.ProductMongoRepository;
-import ulaval.glo2003.application.repository.ProductRepository;
-import ulaval.glo2003.application.repository.SellerMongoRepository;
-import ulaval.glo2003.application.repository.SellerRepository;
+import ulaval.glo2003.application.repository.*;
 import ulaval.glo2003.domain.exceptions.InvalidParamExceptionMapper;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.domain.exceptions.NotPermitedExceptionMapper;
@@ -41,6 +38,7 @@ public class ResourceConfigProvider
         SellerRepository sellerRepository = new SellerRepository();
         SellerMongoRepository sellerMongoRepository = new SellerMongoRepository(datastore);
         ProductMongoRepository productMongoRepository = new ProductMongoRepository(datastore, sellerMongoRepository);
+        BuyerMongoRepository buyerMongoRepository = new BuyerMongoRepository(datastore);
 
         ProductMapper productMapper = new ProductMapper();
         SellerMapper sellerMapper = new SellerMapper();
