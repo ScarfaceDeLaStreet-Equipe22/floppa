@@ -21,13 +21,13 @@ public class BuyerMongoModel {
     public BuyerMongoModel() {
     }
 
-    public BuyerMongoModel(Seller seller) {
-        this.name = seller.name;
-        this.birthDate = seller.birthDate;
-        this.email = seller.getEmail();
-        this.phoneNumber = seller.phoneNumber;
-        this.createdAt = seller.getCreatedAt();
-        this.id = seller.getId();
+    public BuyerMongoModel(Buyer buyer) {
+        this.name = buyer.name;
+        this.birthDate = buyer.birthDate;
+        this.email = buyer.getEmail();
+        this.phoneNumber = buyer.phoneNumber;
+        this.createdAt = buyer.getCreatedAt();
+        this.id = buyer.getId();
     }
 
     public void setName(String name) {
