@@ -1,0 +1,38 @@
+package ulaval.glo2003;
+
+import ulaval.glo2003.api.requests.BuyerRequest;
+import ulaval.glo2003.api.requests.SellerRequest;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
+public class BuyerRequestFixture
+{
+
+    private static String name = "Test Buyer Name";
+    private static String birthdate = LocalDate.now().minus(18, ChronoUnit.YEARS).format(DateTimeFormatter.ISO_DATE);
+    private static String email = "buyer@test.com";
+    private static String phoneNumber = "11230001234";
+
+    public static BuyerRequest valid()
+    {
+        return new BuyerRequest(name, birthdate, email, phoneNumber);
+    }
+
+    public static BuyerRequest missingField()
+    {
+        return new BuyerRequest(null, birthdate, email, phoneNumber);
+    }
+
+    public static BuyerRequest emptyField()
+    {
+        return new BuyerRequest("", birthdate, email, phoneNumber);
+    }
+
+    public static BuyerRequest tooYoung()
+    {
+        String tooYoungBirthdate = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
+        return new BuyerRequest(name, tooYoungBirthdate, email, phoneNumber);
+    }
+}

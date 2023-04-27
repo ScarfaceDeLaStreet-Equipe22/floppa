@@ -59,7 +59,7 @@ public class ResourceConfigProvider
                 .register(new HealthResource(datastore, productMongoRepository))
                 .register(sellerRessource)
                 .register(productRessource)
-                .register(buyerMapper)
+                .register(buyerRessource)
                 .register(new MissingParamExceptionMapper())
                 .register(new InvalidParamExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper())
