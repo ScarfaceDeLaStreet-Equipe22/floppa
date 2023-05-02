@@ -53,7 +53,8 @@ public class ResourceConfigProvider
                         offerMapper,
                         productFiltersMapper,
                         sellerMongoRepository,
-                        productMongoRepository);
+                        productMongoRepository,
+                        buyerMongoRepository);
 
         return new ResourceConfig()
                 .register(new HealthResource(datastore, productMongoRepository))
