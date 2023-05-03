@@ -20,35 +20,28 @@ public class SellerValidatorTest {
 
     @Test
     public void givenSellerWithEmptyName_whenValidatingEntity_thenThrowsInvalidNameException() {
-        // arrange
         Seller sellerWithEmptyName =
                 new Seller("", VALID_DATE, VALID_EMAIL, VALID_PHONENUMBER, VALID_BIO);
         SellerValidator sellerValidator = new SellerValidator(sellerWithEmptyName);
 
-        // act
         Executable executable = sellerValidator::validateEntity;
 
-        // assert
         assertThrows(InvalidNameException.class, executable);
     }
 
     @Test
     public void givenSellerWithEmptyBio_whenValidatingEntity_thenThrowsInvalidBioException() {
-        // arrange
         Seller sellerWithEmptyBio =
                 new Seller(VALID_NAME, VALID_DATE, VALID_EMAIL, VALID_PHONENUMBER, "");
         SellerValidator sellerValidator = new SellerValidator(sellerWithEmptyBio);
 
-        // act
         Executable executable = sellerValidator::validateEntity;
 
-        // assert
         assertThrows(InvalidBioException.class, executable);
     }
 
     @Test
     public void givenSellerWithBirthdateLessThan18YearsOld_whenValidating() {
-        // arrange
         Seller sellerWithLessThan18YearBirthdate =
                 new Seller(
                         VALID_NAME,
@@ -58,10 +51,8 @@ public class SellerValidatorTest {
                         VALID_BIO);
         SellerValidator sellerValidator = new SellerValidator(sellerWithLessThan18YearBirthdate);
 
-        // act
         Executable executable = sellerValidator::validateEntity;
 
-        // assert
         assertThrows(InvalidBirthdateException.class, executable);
     }
 }
