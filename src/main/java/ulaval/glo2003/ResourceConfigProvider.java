@@ -8,14 +8,8 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.exceptions.MissingParamExceptionMapper;
-import ulaval.glo2003.api.mappers.OfferMapper;
-import ulaval.glo2003.api.mappers.ProductFiltersMapper;
-import ulaval.glo2003.api.mappers.ProductMapper;
-import ulaval.glo2003.api.mappers.SellerMapper;
-import ulaval.glo2003.application.repository.ProductMongoRepository;
-import ulaval.glo2003.application.repository.ProductRepository;
-import ulaval.glo2003.application.repository.SellerMongoRepository;
-import ulaval.glo2003.application.repository.SellerRepository;
+import ulaval.glo2003.api.mappers.*;
+import ulaval.glo2003.application.repository.*;
 import ulaval.glo2003.domain.exceptions.InvalidParamExceptionMapper;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.domain.exceptions.NotPermitedExceptionMapper;
@@ -41,13 +35,16 @@ public class ResourceConfigProvider
         SellerRepository sellerRepository = new SellerRepository();
         SellerMongoRepository sellerMongoRepository = new SellerMongoRepository(datastore);
         ProductMongoRepository productMongoRepository = new ProductMongoRepository(datastore, sellerMongoRepository);
+        BuyerMongoRepository buyerMongoRepository = new BuyerMongoRepository(datastore);
 
         ProductMapper productMapper = new ProductMapper();
         SellerMapper sellerMapper = new SellerMapper();
         OfferMapper offerMapper = new OfferMapper();
         ProductFiltersMapper productFiltersMapper = new ProductFiltersMapper();
+        BuyerMapper buyerMapper = new BuyerMapper();
 
         SellerRessource sellerRessource = new SellerRessource(sellerRepository, sellerMapper, sellerMongoRepository);
+        BuyerRessource buyerRessource = new BuyerRessource(buyerMongoRepository, buyerMapper);
         ProductRessource productRessource =
                 new ProductRessource(
                         sellerRepository,
@@ -62,6 +59,7 @@ public class ResourceConfigProvider
                 .register(new HealthResource(datastore, productMongoRepository))
                 .register(sellerRessource)
                 .register(productRessource)
+                .register(buyerRessource)
                 .register(new MissingParamExceptionMapper())
                 .register(new InvalidParamExceptionMapper())
                 .register(new ItemNotFoundExceptionMapper())
