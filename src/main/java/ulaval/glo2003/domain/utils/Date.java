@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 import java.util.UUID;
 
 import dev.morphia.annotations.Entity;
@@ -46,5 +47,18 @@ public class Date {
     public static String getFormattedCurrentDate() {
         java.util.Date currentDate = new java.util.Date();
         return dateFormat.format(currentDate);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Date date1 = (Date) o;
+        return Objects.equals(date, date1.date) && Objects.equals(id, date1.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, id);
     }
 }

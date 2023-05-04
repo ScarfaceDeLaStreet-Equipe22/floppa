@@ -5,6 +5,7 @@ import dev.morphia.annotations.Id;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Entity
 public class DateTime {
@@ -28,5 +29,18 @@ public class DateTime {
 
     public String getDateTime() {
         return dateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DateTime dateTime1 = (DateTime) o;
+        return Objects.equals(dateTime, dateTime1.dateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateTime);
     }
 }
