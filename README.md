@@ -35,8 +35,9 @@ docker run --rm -it  -p 18080:8080 floppa
 
 ### Pipelines
 [![Actions Status](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/workflows/build/badge.svg)](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/actions)
-[![Actions Status](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/workflows/fly.prod.yml/badge.svg)](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/actions)
-[![Actions Status](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/workflows/ly.staging.yml/badge.svg)](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/actions)
+[![Actions Status prod](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/workflows/fly.prod/badge.svg)](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/actions)
+[![Actions Status staging](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/workflows/ly.staging/badge.svg)](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/actions)
+
 
 ## Authors
 
