@@ -30,7 +30,8 @@ public class BuyerMapper {
                 buyer.getEmail(),
                 buyer.getPhoneNumber(),
                 buyer.getCreatedAt(),
-                buyer.preferences.stream().map(cat -> cat.category).collect(Collectors.toList()));
+                buyer.preferences.stream().map(cat -> cat.category).collect(Collectors.toList()),
+                buyer.purchases.stream().map(cat -> cat.category).collect(Collectors.toList()));
     }
 
     public Buyer mapRequestToEntity(BuyerRequest buyerRequest) {
@@ -41,13 +42,17 @@ public class BuyerMapper {
                 ? new ArrayList<>()
                 : buyerRequest.preferences.stream().map(ProductCategory::new).collect(Collectors.toList());
 
+        List<ProductCategory> purchases = buyerRequest.purchases == null
+                ? new ArrayList<>()
+                : buyerRequest.purchases.stream().map(ProductCategory::new).collect(Collectors.toList());
         Buyer buyer =
                 new Buyer(
                         buyerRequest.getName(),
                         buyerRequest.getBirthdate(),
                         buyerRequest.getEmail(),
                         buyerRequest.getPhoneNumber(),
-                        preferences);
+                        preferences,
+                        purchases);
 
         BuyerValidator buyerValidator = new BuyerValidator(buyer);
         buyerValidator.validateEntity();

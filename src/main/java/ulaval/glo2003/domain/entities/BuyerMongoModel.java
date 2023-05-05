@@ -18,6 +18,7 @@ public class BuyerMongoModel {
     public PhoneNumber phoneNumber;
     public DateTime createdAt;
     public List<ProductCategory> preferences;
+    public List<ProductCategory> purchases;
     @Id
     public String id;
 
@@ -31,6 +32,7 @@ public class BuyerMongoModel {
         this.phoneNumber = buyer.phoneNumber;
         this.createdAt = buyer.getCreatedAt();
         this.preferences = buyer.preferences;
+        this.purchases = buyer.purchases;
         this.id = buyer.getId();
     }
 

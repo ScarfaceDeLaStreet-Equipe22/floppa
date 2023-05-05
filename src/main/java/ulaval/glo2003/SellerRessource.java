@@ -32,7 +32,6 @@ public class SellerRessource {
     public Response seller(SellerRequest sellerRequest) {
         Seller sellerCreated = sellerMapper.mapRequestToEntity(sellerRequest);
 
-        // update a seller
         sellerRepository.save(sellerCreated);
         sellerMongoRepository.save(sellerCreated);
 
