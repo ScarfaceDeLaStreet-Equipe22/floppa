@@ -1,4 +1,4 @@
-1 - Nommez 3 avantages à contribuer à des projets open source en tant qu'entreprise et justifiez en quoi cela peut être bénéfique pour tous.
+###  Nommez 3 avantages à contribuer à des projets open source en tant qu'entreprise et justifiez en quoi cela peut être bénéfique pour tous.
 
 - La contribution à l'open source permet de bâtir une réputation favorable pour une compagnie de se faire connaître par plus de gens.
 - Aussi, ça peut lui permettre d'obtenir la contribution d'une large communauté pour entretenir le code et d'identifier les bugs.  
@@ -20,3 +20,11 @@ Nous avons été surpris par la quantité de projets de grande qualité qui sont
 incluant plusieurs librairies et outils que nous avons utilisés depuis le début de notre baccalauréat comme
 Matplotlib, Flask, PyTorch, React, NodeJS, VueJS, MongoDB dont certains ont été publiés par des comapagnies
 de grande envergure comme Facebook ou Google.
+
+### Licence, pourquoi avoir choisi la MIT
+- les guidelines souples de la licence de MIT encourage la contribution entre les développeurs
+- la licence de MIT est facilement compatible avec beaucoup d'autres licences opensource et permet la combinaison de plusieurs
+projets et permet à notre projet d'être utilisé comme dépendance dans d'autres aussi.
+- La licence MIT ne donne aucune garantie et permet de protéger les développeurs contre les poursuites légales 
+s'il y a des failles dans le logiciel. Compte tenu que ce projet est un projet de passion pour nous et non notre 
+occupation à temps plein, cela nous enlève une pression et va diminuer notre besoin d'avoir une équipe légale. 
