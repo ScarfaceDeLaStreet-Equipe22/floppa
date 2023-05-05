@@ -6,6 +6,7 @@ import dev.morphia.annotations.Reference;
 import ulaval.glo2003.domain.utils.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Entity("Sellers")
 public class SellerMongoModel {
@@ -35,6 +36,19 @@ public class SellerMongoModel {
         this.phoneNumber = seller.phoneNumber;
         this.createdAt = seller.getCreatedAt();
         this.id = seller.getId();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SellerMongoModel that = (SellerMongoModel) o;
+        return Objects.equals(name, that.name) && Objects.equals(bio, that.bio) && Objects.equals(birthDate, that.birthDate) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(createdAt, that.createdAt) && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, bio, birthDate, email, phoneNumber, productsIds, createdAt, id);
     }
 
     public void setName(String name) {

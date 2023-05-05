@@ -5,6 +5,7 @@ import dev.morphia.annotations.Id;
 import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingAmountException;
 import ulaval.glo2003.domain.exceptions.OfferExceptions.InvalidAmountException;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -20,6 +21,19 @@ public class Amount {
         AmountValidation(amount);
         this.amount = Double.parseDouble(amount);
         this.id = UUID.randomUUID().toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Amount amount1 = (Amount) o;
+        return Double.compare(amount1.amount, amount) == 0 && Objects.equals(id, amount1.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, id);
     }
 
     public double getAmount(){
