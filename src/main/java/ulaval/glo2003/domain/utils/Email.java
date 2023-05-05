@@ -1,13 +1,11 @@
 package ulaval.glo2003.domain.utils;
 
-import java.util.Objects;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import ulaval.glo2003.domain.exceptions.InvalidParamException;
+
+import java.util.Objects;
+import java.util.UUID;
 @Entity
 public class Email {
 

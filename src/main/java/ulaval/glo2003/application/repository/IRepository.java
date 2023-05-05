@@ -1,7 +1,5 @@
 package ulaval.glo2003.application.repository;
 
-import org.glassfish.jaxb.runtime.v2.schemagen.xmlschema.List;
-
 import java.util.ArrayList;
 
 public interface IRepository<T> {

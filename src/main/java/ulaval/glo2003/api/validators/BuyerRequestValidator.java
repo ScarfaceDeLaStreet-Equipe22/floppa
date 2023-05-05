@@ -1,8 +1,10 @@
 package ulaval.glo2003.api.validators;
 
-import ulaval.glo2003.api.exceptions.SellerRequestExceptions.*;
+import ulaval.glo2003.api.exceptions.SellerRequestExceptions.MissingBirthDateException;
+import ulaval.glo2003.api.exceptions.SellerRequestExceptions.MissingEmailException;
+import ulaval.glo2003.api.exceptions.SellerRequestExceptions.MissingNameException;
+import ulaval.glo2003.api.exceptions.SellerRequestExceptions.MissingPhoneNumberException;
 import ulaval.glo2003.api.requests.BuyerRequest;
-import ulaval.glo2003.api.requests.SellerRequest;
 
 public class BuyerRequestValidator implements IValidatorRequest {
 
