@@ -2,7 +2,6 @@ package ulaval.glo2003.domain.entities;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
-import dev.morphia.annotations.Reference;
 import ulaval.glo2003.domain.utils.*;
 
 import java.util.ArrayList;
@@ -40,12 +39,6 @@ public class SellerMongoModel {
     public void setName(String name) {
         this.name = name;
     }
-
-//        Object ops = datastore
-//                .createUpdateOperations(SellerMongoModel.class)
-//                .push("productsIds", idOfProduct);
-//        datastore.update(query, ops);
-
         private ArrayList<String> getIdsOfProducts(ArrayList<Product> productsList){
         ArrayList<String> listOfIds = new ArrayList<>();
 

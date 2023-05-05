@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity("Buyers")
 public class BuyerMongoModel {
-    public String name; //buyerusername?
+    public String name;
     public Date birthDate;
     public String email;
     public PhoneNumber phoneNumber;
