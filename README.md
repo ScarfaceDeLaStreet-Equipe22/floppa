@@ -25,6 +25,18 @@ mvn clean install
 mvn exec:java
 ```
 
+
+### Execute
+
+```
+docker build . -t floppa
+docker run --rm -it  -p 18080:8080 floppa
+```
+
+### Pipelines
+[![Actions Status](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/workflows/build/badge.svg)](https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/actions)
+
+
 ## Authors
 
 - Nabil Ouchaou
