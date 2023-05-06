@@ -38,87 +38,69 @@ public class OfferValidatorTest {
 
     @Test
     public void givenEmptyOfferAmount_whenValidatingEntity_thenThrowsInvalidAmountException() {
-        // arrange
         Offer offerWithInvalidAmount = new Offer(new Amount("0"), message, "buyerUsername");
         OfferValidator offerValidator = new OfferValidator(offerWithInvalidAmount, product);
 
-        // act
         Executable executable = offerValidator::validateEntity;
 
-        // assert
         assertThrows(InvalidAmountException.class, executable, "Invalid parameter 'Amount'.");
     }
 
     @Test
     public void
             givenOfferMessageLengthLessThan100_whenValidatingEntity_thenThrowsInvalidDescriptionException() {
-        // arrange
         Offer offerWithInvalidMessage =
                 new Offer(HIGH_AMOUNT, "message less than 100 char", "buyerUsername");
         OfferValidator offerValidator = new OfferValidator(offerWithInvalidMessage, product);
 
-        // act
         Executable executable = offerValidator::validateEntity;
 
-        // assert
         assertThrows(InvalidMessageException.class, executable, "Invalid parameter 'message'.");
     }
 
     @Test
     public void
             givenOfferAmountLessThanSuggestedPrice_whenValidatingEntity_thenThrowsInvalidAmountException() {
-        // arrange
         Offer offerWithInvalidMessage = new Offer(LOW_AMOUNT, message, "buyerUsername");
         OfferValidator offerValidator = new OfferValidator(offerWithInvalidMessage, product);
 
-        // act
         Executable executable = offerValidator::validateEntity;
 
-        // assert
         assertThrows(InvalidAmountException.class, executable, "Invalid parameter 'Amount'.");
     }
 
     @Test
     public void
             givenBuyerUsernameAlreadyMadeOffer_whenValidatingEntity_thenThrowsNotPermittedException() {
-        // arrange
         Offer validOffer = new Offer(HIGH_AMOUNT, message, "buyerUsername");
         product.offers.add(validOffer);
         Offer sameBuyerOffer = new Offer(HIGH_AMOUNT, message, "buyerUsername");
         OfferValidator offerValidator = new OfferValidator(sameBuyerOffer, product);
 
-        // act
         Executable executable = offerValidator::validateEntity;
 
-        // assert
         assertThrows(
                 NotPermittedException.class, executable, "An offer on this product already exist");
     }
 
     @Test
     public void givenValidOfferAndProduct_whenValidatingEntity_thenDoesNotThrowException() {
-        // arrange
         Offer validOffer = new Offer(HIGH_AMOUNT, message, "buyerUsername");
         OfferValidator offerValidator = new OfferValidator(validOffer, product);
 
-        // act
         Executable executable = offerValidator::validateEntity;
 
-        // assert
         assertDoesNotThrow(executable);
     }
 
     @Test
     public void
             givenValidOfferAndProductWithSameAmount_whenValidatingEntity_thenDoesNotThrowException() {
-        // arrange
         Offer validOffer = new Offer(MEDIUM_AMOUNT, message, "buyerUsername");
         OfferValidator offerValidator = new OfferValidator(validOffer, product);
 
-        // act
         Executable executable = offerValidator::validateEntity;
 
-        // assert
         assertDoesNotThrow(executable);
     }
 }

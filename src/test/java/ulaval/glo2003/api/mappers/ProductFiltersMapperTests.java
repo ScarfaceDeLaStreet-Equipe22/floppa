@@ -22,7 +22,6 @@ public class ProductFiltersMapperTests {
 
     @Test
     public void givenAllValidFilters_whenMapping_thenDoesNotThrow() {
-        // act
         Executable executable =
                 () ->
                         productFiltersMapper.mapQueryParamsToRequest(
@@ -32,26 +31,21 @@ public class ProductFiltersMapperTests {
                                 VALID_PRICE,
                                 VALID_PRICE);
 
-        // assert
         assertDoesNotThrow(executable);
     }
 
     @Test
     public void givenAllNullFilters_whenMapping_thenDoesNotThrow() {
-        // act
         Executable executable =
                 () -> productFiltersMapper.mapQueryParamsToRequest(null, null, null, null, null);
 
-        // assert
         assertDoesNotThrow(executable);
     }
 
     @Test
     public void givenInvalidCategory_whenMapping_thenThrowInvalidParamException() {
-        // arrange
         String invalidCategoryName = "invalid-category";
 
-        // assert
         Executable executable =
                 () ->
                         productFiltersMapper.mapQueryParamsToRequest(
@@ -61,16 +55,13 @@ public class ProductFiltersMapperTests {
                                 VALID_PRICE,
                                 VALID_PRICE);
 
-        // assert
         assertThrows(InvalidParamException.class, executable);
     }
 
     @Test
     public void givenInvalidMinPrice_whenMapping_thenThrowInvalidParamException() {
-        // arrange
         String invalidPrice = "aaaa";
 
-        // assert
         Executable executable =
                 () ->
                         productFiltersMapper.mapQueryParamsToRequest(
@@ -80,16 +71,13 @@ public class ProductFiltersMapperTests {
                                 invalidPrice,
                                 VALID_PRICE);
 
-        // assert
         assertThrows(InvalidParamException.class, executable);
     }
 
     @Test
     public void givenInvalidMaxPrice_whenMapping_thenThrowInvalidParamException() {
-        // arrange
         String invalidPrice = "aaaa";
 
-        // assert
         Executable executable =
                 () ->
                         productFiltersMapper.mapQueryParamsToRequest(
@@ -99,7 +87,6 @@ public class ProductFiltersMapperTests {
                                 VALID_PRICE,
                                 invalidPrice);
 
-        // assert
         assertThrows(InvalidParamException.class, executable);
     }
 }
