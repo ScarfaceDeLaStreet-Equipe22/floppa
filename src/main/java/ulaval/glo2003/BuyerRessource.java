@@ -9,11 +9,11 @@ import ulaval.glo2003.api.requests.BuyerRequest;
 import ulaval.glo2003.api.responses.BuyerResponse;
 import ulaval.glo2003.application.repository.BuyerMongoRepository;
 import ulaval.glo2003.application.repository.BuyerRepository;
-import ulaval.glo2003.application.repository.SellerMongoRepository;
-import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Buyer;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/buyers")
 public class BuyerRessource {
