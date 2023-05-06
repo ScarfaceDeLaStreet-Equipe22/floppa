@@ -33,6 +33,90 @@ Le meilleur conseil qu'on pourrait donner et de prendre le maximum de temps pour
 1. Nous avons beaucoup appris sur le Test Driven Developpement. Du côté technique, nous avons beaucoup appris sur les différents framework de tests et du côté processus nous avons beaucoup appris sur l'utilité des tests et du temps que ça peut nous sauver.
 2. Nous avons aussi appris à correctement organiser les tâches. Nous avions tendance à créer une tâche par fonctionnalité, mais après quelques itérations nous avons appris qu'il était beaucoup plus simple et efficace de séparé les fonctionnalités en plus petite tâche, exécutable bien plus rapidement.
 
+## Github Project
+Dans la capture d'écran ci-dessous, on observe l'avancement des tâches selon leur statut.
+
+### Screenshots
+<p align="center">
+  <img src="./img/tp4/it4-project.png">
+</p>
+
+
+## Milestone
+Voici la milestone tp4 ainsi que ses issues liée
+### Screenshots
+<p align="center">
+  <img src="./img/tp4/it4-milestone.png">
+</p>
+
+
+## Issues
+Voici quelques exemples d'issues
+### Screenshots
+<p align="center">
+  <img src="./img/tp4/it4-issue1.png">
+</p>
+<p align="center">
+  <img src="./img/tp4/it4-issue2.png">
+</p>
+<p align="center">
+  <img src="./img/tp4/it4-issue3.png">
+</p>
+
+
+## Pull requests
+Voici quelques exemples de pull request. La première comprend aussi un exemple code-review
+### Screenshots
+<p align="center">
+  <img src="./img/tp4/it4-pr1-1.png">
+</p>
+<p align="center">
+  <img src="./img/tp4/it4-pr1-2.png">
+</p>
+<p align="center">
+  <img src="./img/tp4/it4-pr2.png">
+</p>
+<p align="center">
+  <img src="./img/tp4/it4-pr3.png">
+</p>
+
+## Arbre de commits
+Voici l'historique de notre branche develop.
+### Screenshots
+<p align="center">
+  <img src="./img/tp4/it4-commits.png">
+</p>
+
+## Outils d'analyse
+
+### Analyse de sécurité
+<p align="center">
+  <img src="./img/tp4/securite-1.png">
+</p>
+
+<p align="center">
+  <img src="./img/tp4/securite-2.png">
+</p>
+
+### Analyse de qualité
+<p align="center">
+  <img src="./img/tp4/quality-1.png">
+</p>
+
+<p align="center">
+  <img src="./img/tp4/quality-2.png">
+</p>
+
+### Analyse de test coverage
+<p align="center">
+  <img src="./img/tp4/tests-1.png">
+</p>
+
+<p align="center">
+  <img src="./img/tp4/tests-2.png">
+</p>
+
+## Open-source
 
 ###  Nommez 3 avantages à contribuer à des projets open source en tant qu'entreprise et justifiez en quoi cela peut être bénéfique pour tous.
 
