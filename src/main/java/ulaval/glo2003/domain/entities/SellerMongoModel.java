@@ -2,8 +2,9 @@ package ulaval.glo2003.domain.entities;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
-import dev.morphia.annotations.Reference;
-import ulaval.glo2003.domain.utils.*;
+import ulaval.glo2003.domain.utils.Date;
+import ulaval.glo2003.domain.utils.DateTime;
+import ulaval.glo2003.domain.utils.PhoneNumber;
 
 import java.util.ArrayList;
 import java.util.Objects;

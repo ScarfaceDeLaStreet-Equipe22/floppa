@@ -13,7 +13,6 @@ import ulaval.glo2003.api.responses.SellerResponse;
 import ulaval.glo2003.application.repository.SellerMongoRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Seller;
-import ulaval.glo2003.domain.entities.wesh;
 
 @Path("/sellers")
 public class SellerRessource {
