@@ -20,53 +20,41 @@ public class OfferRequestValidatorTest {
 
     @Test
     public void givenNullAmount_whenValidatingRequest_thenThrowsMissingAmountException() {
-        // arrange
         offerRequest = new OfferRequest(NULL_STRING, MESSAGE);
         offerRequestValidator = new OfferRequestValidator(offerRequest, BUYERUSERNAME);
 
-        // act
         Executable executable = offerRequestValidator::validateRequest;
 
-        // assert
         assertThrows(MissingAmountException.class, executable);
     }
 
     @Test
     public void givenNullMessage_whenValidatingRequest_thenThrowsMissingMessageException() {
-        // arrange
         offerRequest = new OfferRequest(AMOUNT, NULL_STRING);
         offerRequestValidator = new OfferRequestValidator(offerRequest, BUYERUSERNAME);
 
-        // act
         Executable executable = offerRequestValidator::validateRequest;
 
-        // assert
         assertThrows(MissingMessageException.class, executable);
     }
 
     @Test
     public void givenNullBuyerUsername_whenValidatingRequest_thenThrowsMissingParamBuyerUsername() {
-        // arrange
         offerRequest = new OfferRequest(AMOUNT, MESSAGE);
         offerRequestValidator = new OfferRequestValidator(offerRequest, NULL_STRING);
 
-        // act
         Executable executable = offerRequestValidator::validateRequest;
 
-        // assert
         assertThrows(MissingParamBuyerUsername.class, executable);
     }
 
     @Test
     public void givenValidRequest_whenValidatingRequest_thenDoesNotThrowException() {
-        // arrange
         offerRequest = new OfferRequest(AMOUNT, MESSAGE);
         offerRequestValidator = new OfferRequestValidator(offerRequest, BUYERUSERNAME);
 
-        // act
         Executable executable = offerRequestValidator::validateRequest;
 
-        // assert
         assertDoesNotThrow(executable);
     }
 }

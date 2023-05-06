@@ -25,7 +25,6 @@ public class ProductValidatorTest {
             new SellerMongoModel(SELLER);
     @Test
     public void givenProductWithValidProperties_whenValidatingEntity_thenDoesNotThrowException() {
-        // arrange
         Product product =
                 new Product(
                         VALID_TITLE,
@@ -35,46 +34,37 @@ public class ProductValidatorTest {
                         SELLER_MONGO);
         ProductValidator validator = new ProductValidator(product);
 
-        // act
         Executable executable = validator::validateEntity;
 
-        // assert
         assertDoesNotThrow(executable);
     }
 
     @Test
     public void givenProductWithEmptyTitle_whenValidatingEntity_thenThrowsInvalidTitleException() {
-        // arrange
         Product product =
                 new Product("", VALID_DESCRIPTION, VALID_CATEGORY, VALID_SUGGESTED_PRICE, SELLER_MONGO);
         ProductValidator validator = new ProductValidator(product);
 
-        // act
         Executable executable = validator::validateEntity;
 
-        // assert
         assertThrows(InvalidTitleException.class, executable);
     }
 
     @Test
     public void
             givenProductWithEmptyDescription_whenValidatingEntity_thenThrowsInvalidDescriptionException() {
-        // arrange
         Product product =
                 new Product(VALID_TITLE, "", VALID_CATEGORY, VALID_SUGGESTED_PRICE, SELLER_MONGO);
         ProductValidator validator = new ProductValidator(product);
 
-        // act
         Executable executable = validator::validateEntity;
 
-        // assert
         assertThrows(InvalidDescriptionException.class, executable);
     }
 
     @Test
     public void
             givenProductWithInvalidSuggestedPrice_whenValidatingEntity_thenThrowsInvalidSuggestedPriceException() {
-        // arrange
         Amount invalidSuggestedPrice = new Amount("0");
         Product product =
                 new Product(
@@ -85,10 +75,8 @@ public class ProductValidatorTest {
                         SELLER_MONGO);
         ProductValidator validator = new ProductValidator(product);
 
-        // act
         Executable executable = validator::validateEntity;
 
-        // assert
         assertThrows(InvalidSuggestedPriceException.class, executable);
     }
 }

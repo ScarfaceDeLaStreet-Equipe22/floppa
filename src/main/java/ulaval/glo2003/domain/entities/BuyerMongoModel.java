@@ -7,7 +7,6 @@ import ulaval.glo2003.domain.utils.DateTime;
 import ulaval.glo2003.domain.utils.PhoneNumber;
 import ulaval.glo2003.domain.utils.ProductCategory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity("Buyers")
