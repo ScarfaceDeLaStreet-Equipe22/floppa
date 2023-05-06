@@ -86,3 +86,32 @@ Voici l'historique de notre branche develop.
 <p align="center">
   <img src="./img/tp4/it4-commits.png">
 </p>
+
+## Outils d'analyse
+
+### Analyse de sécurité
+<p align="center">
+  <img src="./img/tp4/securite-1.png">
+</p>
+
+<p align="center">
+  <img src="./img/tp4/securite-2.png">
+</p>
+
+### Analyse de qualité
+<p align="center">
+  <img src="./img/tp4/quality-1.png">
+</p>
+
+<p align="center">
+  <img src="./img/tp4/quality-2.png">
+</p>
+
+### Analyse de test coverage
+<p align="center">
+  <img src="./img/tp4/tests-1.png">
+</p>
+
+<p align="center">
+  <img src="./img/tp4/tests-2.png">
+</p>
