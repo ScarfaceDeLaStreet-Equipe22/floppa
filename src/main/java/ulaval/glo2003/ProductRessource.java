@@ -12,14 +12,8 @@ import ulaval.glo2003.api.requests.ProductRequest;
 import ulaval.glo2003.api.requests.SellProductRequest;
 import ulaval.glo2003.api.responses.ProductListResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
-import ulaval.glo2003.application.repository.ProductMongoRepository;
-import ulaval.glo2003.application.repository.ProductRepository;
-import ulaval.glo2003.application.repository.SellerMongoRepository;
-import ulaval.glo2003.application.repository.SellerRepository;
-import ulaval.glo2003.domain.entities.Offer;
-import ulaval.glo2003.domain.entities.Product;
-import ulaval.glo2003.domain.entities.Seller;
-import ulaval.glo2003.domain.entities.SellerMongoModel;
+import ulaval.glo2003.application.repository.*;
+import ulaval.glo2003.domain.entities.*;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.ItemIsSoldException;
 import ulaval.glo2003.domain.utils.ProductFilters;
@@ -32,6 +26,8 @@ import java.util.stream.Collectors;
 public class ProductRessource {
 
     private final SellerRepository sellerRepository;
+
+    private final BuyerMongoRepository buyerMongoRepository;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductFiltersMapper productFiltersMapper;
@@ -46,7 +42,8 @@ public class ProductRessource {
             OfferMapper offerMapper,
             ProductFiltersMapper productFiltersMapper,
             SellerMongoRepository sellerMongoRepository,
-            ProductMongoRepository productMongoRepository) {
+            ProductMongoRepository productMongoRepository,
+            BuyerMongoRepository buyerMongoRepository) {
         this.sellerMongoRepository = sellerMongoRepository;
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
@@ -54,6 +51,7 @@ public class ProductRessource {
         this.offerMapper = offerMapper;
         this.productFiltersMapper = productFiltersMapper;
         this.productMongoRepository = productMongoRepository;
+        this.buyerMongoRepository = buyerMongoRepository;
     }
 
     @POST
@@ -64,13 +62,18 @@ public class ProductRessource {
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-//        Product productForOffer = productRepository.findById(productId);
         Product productForOfferMongo = productMongoRepository.findById(productId);
 
         Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername, productForOfferMongo);
 
         productForOfferMongo.offers.add(offer);
         productMongoRepository.save(productForOfferMongo);
+
+        Buyer buyer = buyerMongoRepository.getBuyerByName(buyerUsername);
+        buyer.addProduct(productForOfferMongo);
+        buyer.addPreference(productForOfferMongo.category);
+        System.out.println(buyer.products);
+        System.out.println(buyer.preferences);
 
         return Response.status(201).build();
     }

@@ -55,12 +55,6 @@ public class SellerMongoModel {
     public void setName(String name) {
         this.name = name;
     }
-
-//        Object ops = datastore
-//                .createUpdateOperations(SellerMongoModel.class)
-//                .push("productsIds", idOfProduct);
-//        datastore.update(query, ops);
-
         private ArrayList<String> getIdsOfProducts(ArrayList<Product> productsList){
         ArrayList<String> listOfIds = new ArrayList<>();
 

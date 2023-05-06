@@ -7,6 +7,7 @@ import ulaval.glo2003.domain.utils.DateTime;
 import ulaval.glo2003.domain.utils.PhoneNumber;
 import ulaval.glo2003.domain.utils.ProductCategory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity("Buyers")
@@ -17,6 +18,7 @@ public class BuyerMongoModel {
     public PhoneNumber phoneNumber;
     public DateTime createdAt;
     public List<ProductCategory> preferences;
+    public ArrayList<Product> products;
     @Id
     public String id;
 
@@ -30,6 +32,7 @@ public class BuyerMongoModel {
         this.phoneNumber = buyer.phoneNumber;
         this.createdAt = buyer.getCreatedAt();
         this.preferences = buyer.preferences;
+        this.products = new ArrayList<>();
         this.id = buyer.getId();
     }
 
