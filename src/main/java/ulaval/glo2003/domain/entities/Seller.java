@@ -1,6 +1,7 @@
 package ulaval.glo2003.domain.entities;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 import dev.morphia.annotations.Entity;
@@ -106,5 +107,18 @@ public class Seller {
 
     public void setPhoneNumber(PhoneNumber phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seller seller = (Seller) o;
+        return Objects.equals(name, seller.name) && Objects.equals(bio, seller.bio) && Objects.equals(birthDate, seller.birthDate) && Objects.equals(email, seller.email) && Objects.equals(phoneNumber, seller.phoneNumber) && Objects.equals(products, seller.products) && Objects.equals(createdAt, seller.createdAt) && Objects.equals(id, seller.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, bio, birthDate, email, phoneNumber, products, createdAt, id);
     }
 }

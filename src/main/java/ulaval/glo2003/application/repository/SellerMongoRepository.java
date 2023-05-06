@@ -1,16 +1,16 @@
 package ulaval.glo2003.application.repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dev.morphia.Datastore;
-import dev.morphia.query.Query;
 import dev.morphia.query.experimental.filters.Filters;
-import org.glassfish.jaxb.runtime.v2.schemagen.xmlschema.List;
 import ulaval.glo2003.domain.entities.*;
+import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 
 public class SellerMongoRepository implements IRepository<Seller> {
 
-    private final Datastore datastore;
+    public final Datastore datastore;
 
 
 
@@ -20,17 +20,8 @@ public class SellerMongoRepository implements IRepository<Seller> {
     @Override
     public void save(Seller seller) {
         SellerMongoModel sellerToSave = new SellerMongoModel(seller);
-
-
         try {
             datastore.save(sellerToSave);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-    public void save(wesh lol) {
-        try {
-            datastore.save(lol);
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -38,17 +29,30 @@ public class SellerMongoRepository implements IRepository<Seller> {
 
     @Override
     public void remove(Seller entity) {
-
+        try {
+            SellerMongoModel model = datastore.find(SellerMongoModel.class)
+                    .filter(Filters.eq("_id", entity.getId())).iterator().next();
+            datastore.delete(model);
+        } catch (Exception e) {
+            throw new ItemNotFoundException("could not find Seller because :" + e.getMessage());
+        }
     }
 
     @Override
     public void deleteAll() {
-
+        datastore.getDatabase().getCollection("Sellers").drop();
     }
 
     @Override
     public void update(Seller entity) {
-
+        try {
+            SellerMongoModel model = datastore.find(SellerMongoModel.class)
+                    .filter(Filters.eq("_id", entity.getId())).iterator().next();
+            SellerMongoModel sellerToSave = new SellerMongoModel(entity);
+            datastore.save(sellerToSave);
+        } catch (Exception e) {
+            throw new ItemNotFoundException("could not find Seller because :" + e.getMessage());
+        }
     }
 
     public Seller getSellerByName(String name){
@@ -61,6 +65,13 @@ public class SellerMongoRepository implements IRepository<Seller> {
             throw new RuntimeException("could not find Seller because :" + e.getMessage());
         }
     }
+    public int getCount(){
+        int count ;
+        List<SellerMongoModel> model = datastore.find(SellerMongoModel.class)
+                .iterator().toList();
+
+        return model.size();
+    }
 
     public Seller getSellerById(String Id){
         try {
@@ -69,18 +80,21 @@ public class SellerMongoRepository implements IRepository<Seller> {
 
             return new Seller(model, getProductsById(model.productsIds));
         } catch (Exception e) {
-            throw new RuntimeException("could not find Seller because :" + e.getMessage());
+            throw new ItemNotFoundException("could not find Seller because :" + e.getMessage());
         }
-    }
-    public void addNewProductToSellerMongo(Product product){
-        Seller seller = this.getSellerByName("fred");
-        // ajouter un produit à son array de produits
     }
 
 
     @Override
     public ArrayList<Seller> findAll() {
-        return null;
+        List<SellerMongoModel> model = datastore.find(SellerMongoModel.class)
+                .iterator().toList();
+
+        ArrayList<Seller> listeOfAllSellers = new ArrayList<>();
+        for (int i = 0; i < model.size() ; i++){
+            listeOfAllSellers.add(new Seller(model.get(i), getProductsById(model.get(i).productsIds)));
+        }
+        return listeOfAllSellers;
     }
 
     @Override

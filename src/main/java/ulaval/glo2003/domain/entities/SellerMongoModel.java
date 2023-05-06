@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 @Entity("Sellers")
 public class SellerMongoModel {
+
     public String name;
     public String bio;
     public Date birthDate;
@@ -40,11 +41,6 @@ public class SellerMongoModel {
     public void setName(String name) {
         this.name = name;
     }
-
-//        Object ops = datastore
-//                .createUpdateOperations(SellerMongoModel.class)
-//                .push("productsIds", idOfProduct);
-//        datastore.update(query, ops);
 
         private ArrayList<String> getIdsOfProducts(ArrayList<Product> productsList){
         ArrayList<String> listOfIds = new ArrayList<>();

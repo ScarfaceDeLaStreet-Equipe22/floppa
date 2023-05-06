@@ -65,7 +65,6 @@ public class ProductRessource {
             @PathParam("Productid") String productId,
             @HeaderParam("X-Buyer-Username") String buyerUsername) {
 
-//        Product productForOffer = productRepository.findById(productId);
         Product productForOfferMongo = productMongoRepository.findById(productId);
 
         Offer offer = offerMapper.mapRequestToEntity(offerRequest, buyerUsername, productForOfferMongo);

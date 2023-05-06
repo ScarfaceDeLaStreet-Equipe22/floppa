@@ -13,7 +13,6 @@ import ulaval.glo2003.api.responses.SellerResponse;
 import ulaval.glo2003.application.repository.SellerMongoRepository;
 import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Seller;
-import ulaval.glo2003.domain.entities.wesh;
 
 @Path("/sellers")
 public class SellerRessource {
@@ -33,7 +32,6 @@ public class SellerRessource {
     public Response seller(SellerRequest sellerRequest) {
         Seller sellerCreated = sellerMapper.mapRequestToEntity(sellerRequest);
 
-        // how to update a seller
         sellerRepository.save(sellerCreated);
         sellerMongoRepository.save(sellerCreated);
 
@@ -41,7 +39,6 @@ public class SellerRessource {
         return Response.created(location).status(201).build();
     }
 
-    // this is not dead code, this is very usefull for testing with postman
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllSellers() {
