@@ -32,7 +32,6 @@ public class SellerRessource {
     public Response seller(SellerRequest sellerRequest) {
         Seller sellerCreated = sellerMapper.mapRequestToEntity(sellerRequest);
 
-        // how to update a seller
         sellerRepository.save(sellerCreated);
         sellerMongoRepository.save(sellerCreated);
 
@@ -40,7 +39,6 @@ public class SellerRessource {
         return Response.created(location).status(201).build();
     }
 
-    // this is not dead code, this is very usefull for testing with postman
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllSellers() {

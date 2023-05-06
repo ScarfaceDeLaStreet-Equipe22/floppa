@@ -19,6 +19,8 @@ public class BuyerMongoModel {
     public DateTime createdAt;
     public List<ProductCategory> preferences;
     public ArrayList<Product> products;
+    public List<ProductCategory> purchases;
+    
     @Id
     public String id;
 
@@ -33,6 +35,7 @@ public class BuyerMongoModel {
         this.createdAt = buyer.getCreatedAt();
         this.preferences = buyer.preferences;
         this.products = new ArrayList<>();
+        this.purchases = buyer.purchases;
         this.id = buyer.getId();
     }
 

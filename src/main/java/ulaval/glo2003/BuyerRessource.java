@@ -8,6 +8,9 @@ import ulaval.glo2003.api.mappers.BuyerMapper;
 import ulaval.glo2003.api.requests.BuyerRequest;
 import ulaval.glo2003.api.responses.BuyerResponse;
 import ulaval.glo2003.application.repository.BuyerMongoRepository;
+import ulaval.glo2003.application.repository.BuyerRepository;
+import ulaval.glo2003.application.repository.SellerMongoRepository;
+import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Buyer;
 
 import java.net.URI;
@@ -16,6 +19,7 @@ import java.net.URI;
 public class BuyerRessource {
 
     private final BuyerMapper buyerMapper;
+    public BuyerRepository buyerRepository;
     public BuyerMongoRepository buyerMongoRepository;
 
     public BuyerRessource(BuyerMongoRepository buyerMongoRepository, BuyerMapper buyerMapper) {
@@ -43,5 +47,16 @@ public class BuyerRessource {
         BuyerResponse buyerResponse = buyerMapper.mapEntityToResponse(foundBuyer);
 
         return Response.ok(buyerResponse).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/recommendation/{buyerId}")
+    public Response getRecommendation(@PathParam("buyerId") String buyerId){
+        List<BuyerResponse> buyerResponses =
+                this.buyerRepository.findAll().stream()
+                        .map(buyerMapper::mapEntityToResponse)
+                        .collect(Collectors.toList());
+        return Response.ok(buyerResponses).build();
     }
 }

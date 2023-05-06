@@ -19,13 +19,19 @@ public class Buyer {
     public DateTime createdAt;
     public List<ProductCategory> preferences;
     public List<Product> products;
+    public List<ProductCategory> purchases;
 
     @Id
     public String id;
 
     public Buyer(){}
 
-    public Buyer(String name, String birthDate, String email, String phoneNumber, List<ProductCategory> preferences) {
+    public Buyer(String name,
+                 String birthDate,
+                 String email,
+                 String phoneNumber,
+                 List<ProductCategory> preferences,
+                 List<ProductCategory> purchases ) {
         this.name = name;
         this.birthDate = new Date(birthDate);
         this.email = new Email(email);
@@ -33,6 +39,8 @@ public class Buyer {
         this.createdAt = new DateTime();
         this.preferences = preferences;
         this.products = new ArrayList<>();
+        this.purchases = purchases;
+
         this.id = UUID.randomUUID().toString();
     }
 

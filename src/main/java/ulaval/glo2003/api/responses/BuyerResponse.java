@@ -13,6 +13,7 @@ public class BuyerResponse {
     public String createdAt;
     public String id;
     public List<String> preferences;
+    public List<String> purchases;
 
     public BuyerResponse(
             String id,
@@ -21,7 +22,8 @@ public class BuyerResponse {
             String email,
             String phoneNumber,
             DateTime createdAt,
-            List<String> preferences) {
+            List<String> preferences,
+            List<String> purchases) {
         this.id = id;
         this.name = name;
         this.birthdate = birthDate;
@@ -29,6 +31,7 @@ public class BuyerResponse {
         this.phoneNumber = phoneNumber;
         this.createdAt = createdAt.getDateTime();
         this.preferences = preferences;
+        this.purchases = purchases;
     }
 
     public BuyerResponse() {}

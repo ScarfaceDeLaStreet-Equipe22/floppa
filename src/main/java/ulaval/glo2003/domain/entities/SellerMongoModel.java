@@ -11,6 +11,7 @@ import java.util.Objects;
 
 @Entity("Sellers")
 public class SellerMongoModel {
+
     public String name;
     public String bio;
     public Date birthDate;
@@ -55,7 +56,8 @@ public class SellerMongoModel {
     public void setName(String name) {
         this.name = name;
     }
-        private ArrayList<String> getIdsOfProducts(ArrayList<Product> productsList){
+    
+    private ArrayList<String> getIdsOfProducts(ArrayList<Product> productsList) {
         ArrayList<String> listOfIds = new ArrayList<>();
 
         for(Product product : productsList) {
