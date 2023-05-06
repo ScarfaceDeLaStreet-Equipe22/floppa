@@ -24,34 +24,28 @@ public class SellerRepositoryTests {
 
     @Test
     public void givenSeller_whenSaving_thenSellerIsSaved() {
-        // arrange
         Seller seller =
                 new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
         List<Seller> singleSeller = List.of(seller);
 
-        // act
         sellerRepository.save(seller);
         ArrayList<Seller> repositorySellers = sellerRepository.findAll();
 
-        // assert
         assertIterableEquals(singleSeller, repositorySellers);
     }
 
     @Test
     public void givenExistingSeller_whenUpdating_thenSellerIsUpdated() {
-        // arrange
         String updatedName = "new name";
         Date updatedBirthDate = new Date("1980-02-02");
         Email updatedEmail = new Email("newSeller@test.com");
         PhoneNumber updatedPhoneNumber = new PhoneNumber("15140109877");
         String updatedBio = "NEW BIO";
-
         Seller seller =
                 new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
         String sellerId = seller.getId();
         sellerRepository.save(seller);
 
-        // act
         seller.setName(updatedName);
         seller.setBirthDate(updatedBirthDate);
         seller.setEmail(updatedEmail);
@@ -60,7 +54,6 @@ public class SellerRepositoryTests {
         sellerRepository.update(seller);
         Seller foundSeller = sellerRepository.findById(sellerId);
 
-        // assert
         assertEquals(foundSeller.getName(), updatedName);
         assertEquals(foundSeller.getBirthdate(), updatedBirthDate);
         assertEquals(foundSeller.getEmail(), updatedEmail.getEmail());
@@ -70,13 +63,11 @@ public class SellerRepositoryTests {
 
     @Test
     public void givenExistingSeller_whenUpdating_thenOtherSellersAreNotUpdated() {
-        // arrange
         String updatedName = "new name";
         Date updatedBirthDate = new Date("1980-02-02");
         Email updatedEmail = new Email("newSeller@test.com");
         PhoneNumber updatedPhoneNumber = new PhoneNumber("15140109877");
         String updatedBio = "NEW BIO";
-
         Seller firstSeller =
                 new Seller(
                         "First Seller Name",
@@ -100,7 +91,7 @@ public class SellerRepositoryTests {
         sellerRepository.save(seller);
         sellerRepository.save(lastSeller);
 
-        // act
+
         seller.setName(updatedName);
         seller.setBirthDate(updatedBirthDate);
         seller.setEmail(updatedEmail);
@@ -111,7 +102,7 @@ public class SellerRepositoryTests {
         Seller foundFirstSeller = sellerRepository.findById(firstSellerId);
         Seller foundLastSeller = sellerRepository.findById(lastSellerId);
 
-        // assert
+
         assertNotEquals(foundFirstSeller.getName(), updatedName, "First Seller name changed");
         assertNotEquals(
                 foundFirstSeller.getBirthdate(),

@@ -1,9 +1,7 @@
 package ulaval.glo2003.domain.entities;
 
 import dev.morphia.annotations.Id;
-import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.DateTime;
-import ulaval.glo2003.domain.utils.ProductCategory;
 
 import java.util.ArrayList;
 

@@ -9,11 +9,11 @@ import jakarta.ws.rs.core.Response;
 import ulaval.glo2003.application.repository.ProductMongoRepository;
 
 @Path("/health")
-public class HealthResource {
+public class HealthRessource {
 
 
     public HealthResponse response ;
-    public HealthResource(Datastore datastore, ProductMongoRepository productMongoRepository) {
+    public HealthRessource(Datastore datastore) {
         Object sellers = datastore.getDatabase().listCollectionNames().first();
 
         if (sellers == null){

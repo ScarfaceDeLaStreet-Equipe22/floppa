@@ -1,10 +1,9 @@
 package ulaval.glo2003.application.repository;
 
-import java.util.ArrayList;
-
-import org.glassfish.jaxb.runtime.v2.schemagen.xmlschema.List;
 import ulaval.glo2003.domain.entities.Product;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
+
+import java.util.ArrayList;
 
 public class ProductRepository implements IRepository<Product> {
 

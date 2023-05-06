@@ -2,7 +2,6 @@ package ulaval.glo2003.api.responses;
 
 import ulaval.glo2003.domain.utils.DateTime;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuyerResponse {

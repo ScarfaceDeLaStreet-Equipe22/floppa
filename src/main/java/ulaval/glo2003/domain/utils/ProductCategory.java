@@ -2,6 +2,7 @@ package ulaval.glo2003.domain.utils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import dev.morphia.annotations.Entity;
@@ -20,6 +21,19 @@ public class ProductCategory {
         this.category = category;
         this.id = UUID.randomUUID().toString();
         assertProductCategory();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductCategory that = (ProductCategory) o;
+        return Objects.equals(category, that.category) && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(category, id);
     }
 
     public String getCategory() {

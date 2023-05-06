@@ -18,6 +18,7 @@ public class Buyer {
     public PhoneNumber phoneNumber;
     public DateTime createdAt;
     public List<ProductCategory> preferences;
+    public List<Product> products;
     public List<ProductCategory> purchases;
 
     @Id
@@ -37,6 +38,7 @@ public class Buyer {
         this.phoneNumber = new PhoneNumber(phoneNumber);
         this.createdAt = new DateTime();
         this.preferences = preferences;
+        this.products = new ArrayList<>();
         this.purchases = purchases;
 
         this.id = UUID.randomUUID().toString();
@@ -49,7 +51,7 @@ public class Buyer {
         this.phoneNumber = buyerMongoModel.phoneNumber;
         this.createdAt = buyerMongoModel.createdAt;
         this.preferences = buyerMongoModel.preferences;
-
+        this.products = new ArrayList<>();
         this.id = buyerMongoModel.id;
     }
 
@@ -91,5 +93,12 @@ public class Buyer {
 
     public void setPhoneNumber(PhoneNumber phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public void addPreference(ProductCategory productCategory){
+        preferences.add(productCategory);
+    }
+    public void addProduct(Product product){
+        products.add(product);
     }
 }

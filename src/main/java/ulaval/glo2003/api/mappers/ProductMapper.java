@@ -5,7 +5,6 @@ import ulaval.glo2003.api.responses.OffersInProductsResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
 import ulaval.glo2003.api.validators.ProductRequestValidator;
 import ulaval.glo2003.domain.entities.Product;
-import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.utils.Amount;
 import ulaval.glo2003.domain.utils.ProductCategory;

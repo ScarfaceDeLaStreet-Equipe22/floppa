@@ -38,7 +38,6 @@ public class ProductFiltersTests {
 
     @Test
     public void givenExacltyMatchingFilter_whenChecking_thenReturnsTrue() {
-        // arrange
         ProductFilters productFilters =
                 new ProductFilters(
                         sellerId,
@@ -47,59 +46,47 @@ public class ProductFiltersTests {
                         PRODUCT_PRICE,
                         PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertTrue(result);
     }
 
     @Test
     public void givenAllNullFilter_whenChecking_thenReturnsTrue() {
-        // arrange
         ProductFilters productFilters = new ProductFilters(null, null, null, null, null);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertTrue(result);
     }
 
     @Test
     public void givenFilterWithLowercaseTitle_whenChecking_thenReturnsTrue() {
-        // arrange
         String title = VALID_PRODUCT_TITLE.toLowerCase();
         ProductFilters productFilters =
                 new ProductFilters(
                         sellerId, title, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertTrue(result);
     }
 
     @Test
     public void givenFilterWithPartTitle_whenChecking_thenReturnsTrue() {
-        // arrange
         int titleLength = VALID_PRODUCT_TITLE.length();
         String title = VALID_PRODUCT_TITLE.substring(2, titleLength - 2);
         ProductFilters productFilters =
                 new ProductFilters(
                         sellerId, title, VALID_PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertTrue(result);
     }
 
     @Test
     public void givenFilterWithInvalidTitle_whenChecking_thenReturnsFalse() {
-        // arrange
         ProductFilters productFilters =
                 new ProductFilters(
                         sellerId,
@@ -108,16 +95,13 @@ public class ProductFiltersTests {
                         PRODUCT_PRICE,
                         PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertFalse(result);
     }
 
     @Test
     public void givenFilterWithInvalidCategory_whenChecking_thenReturnsFalse() {
-        // arrange
         ProductFilters productFilters =
                 new ProductFilters(
                         sellerId,
@@ -126,16 +110,13 @@ public class ProductFiltersTests {
                         PRODUCT_PRICE,
                         PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertFalse(result);
     }
 
     @Test
     public void givenFilterWithInvalidSellerId_whenChecking_thenReturnsFalse() {
-        // arrange
         ProductFilters productFilters =
                 new ProductFilters(
                         INVALID_SELLER_ID,
@@ -144,10 +125,8 @@ public class ProductFiltersTests {
                         PRODUCT_PRICE,
                         PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertFalse(result);
     }
 
@@ -156,7 +135,6 @@ public class ProductFiltersTests {
         double minPrice = PRODUCT_PRICE.toDouble() - 1;
         Amount minPriceAmount = new Amount(Double.toString(minPrice));
 
-        // arrange
         ProductFilters productFilters =
                 new ProductFilters(
                         sellerId,
@@ -165,10 +143,8 @@ public class ProductFiltersTests {
                         minPriceAmount,
                         PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertTrue(result);
     }
 
@@ -177,7 +153,6 @@ public class ProductFiltersTests {
         double minPrice = PRODUCT_PRICE.toDouble() + 1;
         Amount minPriceAmount = new Amount(Double.toString(minPrice));
 
-        // arrange
         ProductFilters productFilters =
                 new ProductFilters(
                         sellerId,
@@ -186,10 +161,8 @@ public class ProductFiltersTests {
                         minPriceAmount,
                         PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertFalse(result);
     }
 
@@ -198,7 +171,6 @@ public class ProductFiltersTests {
         double maxPrice = PRODUCT_PRICE.toDouble() - 1;
         Amount maxPriceAmount = new Amount(Double.toString(maxPrice));
 
-        // arrange
         ProductFilters productFilters =
                 new ProductFilters(
                         sellerId,
@@ -207,10 +179,8 @@ public class ProductFiltersTests {
                         maxPriceAmount,
                         PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertTrue(result);
     }
 
@@ -219,7 +189,6 @@ public class ProductFiltersTests {
         double maxPrice = PRODUCT_PRICE.toDouble() + 1;
         Amount maxPriceAmount = new Amount(Double.toString(maxPrice));
 
-        // arrange
         ProductFilters productFilters =
                 new ProductFilters(
                         sellerId,
@@ -228,10 +197,8 @@ public class ProductFiltersTests {
                         maxPriceAmount,
                         PRODUCT_PRICE);
 
-        // act
         boolean result = productFilters.checkProduct(testProduct);
 
-        // assert
         assertFalse(result);
     }
 }

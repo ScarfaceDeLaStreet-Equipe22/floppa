@@ -5,17 +5,11 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import ulaval.glo2003.api.mappers.BuyerMapper;
-import ulaval.glo2003.api.mappers.SellerMapper;
 import ulaval.glo2003.api.requests.BuyerRequest;
-import ulaval.glo2003.api.requests.SellerRequest;
 import ulaval.glo2003.api.responses.BuyerResponse;
-import ulaval.glo2003.api.responses.SellerResponse;
 import ulaval.glo2003.application.repository.BuyerMongoRepository;
 import ulaval.glo2003.application.repository.BuyerRepository;
-import ulaval.glo2003.application.repository.SellerMongoRepository;
-import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Buyer;
-import ulaval.glo2003.domain.entities.Seller;
 
 import java.net.URI;
 import java.util.List;

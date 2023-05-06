@@ -19,14 +19,11 @@ class SellerMapperTest {
 
     @Test
     public void mapRequestToEntity_withValidRequest_shouldReturnSeller() {
-        // arrange
         SellerRequest request =
                 new SellerRequest("name", "allo", "1965-01-01", "test123@gmail.com", "18191234567");
 
-        // act
         Seller seller = sellerMapper.mapRequestToEntity(request);
 
-        // assert
         assertThat(seller).isNotNull();
         assertThat(seller.getName()).isEqualTo(request.getName());
         assertThat(seller.getBio()).isEqualTo(request.getBio());
@@ -36,13 +33,10 @@ class SellerMapperTest {
     }
 
     public void mapEntityToResponse_withValidSeller_shouldReturnSellerResponse() {
-        // Given
         Seller seller = new Seller("name", "1965-01-01", "test@test.com", "18191234567", "bio");
 
-        // When
         SellerResponse response = sellerMapper.mapEntityToResponse(seller);
 
-        // assert
         assertThat(seller).isNotNull();
         assertThat(seller.getName()).isEqualTo(response.name);
         assertThat(seller.getBio()).isEqualTo(response.bio);

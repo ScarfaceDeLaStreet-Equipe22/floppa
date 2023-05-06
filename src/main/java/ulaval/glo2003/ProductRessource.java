@@ -3,11 +3,6 @@ package ulaval.glo2003;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.net.URI;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import ulaval.glo2003.api.exceptions.MissingParamException;
 import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingParamBuyerUsername;
 import ulaval.glo2003.api.mappers.OfferMapper;
 import ulaval.glo2003.api.mappers.ProductFiltersMapper;
@@ -17,22 +12,22 @@ import ulaval.glo2003.api.requests.ProductRequest;
 import ulaval.glo2003.api.requests.SellProductRequest;
 import ulaval.glo2003.api.responses.ProductListResponse;
 import ulaval.glo2003.api.responses.ProductResponse;
-import ulaval.glo2003.application.repository.ProductMongoRepository;
-import ulaval.glo2003.application.repository.ProductRepository;
-import ulaval.glo2003.application.repository.SellerMongoRepository;
-import ulaval.glo2003.application.repository.SellerRepository;
-import ulaval.glo2003.domain.entities.Offer;
-import ulaval.glo2003.domain.entities.Product;
-import ulaval.glo2003.domain.entities.Seller;
-import ulaval.glo2003.domain.entities.SellerMongoModel;
+import ulaval.glo2003.application.repository.*;
+import ulaval.glo2003.domain.entities.*;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.ItemIsSoldException;
 import ulaval.glo2003.domain.utils.ProductFilters;
+
+import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/products")
 public class ProductRessource {
 
     private final SellerRepository sellerRepository;
+
+    private final BuyerMongoRepository buyerMongoRepository;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductFiltersMapper productFiltersMapper;
@@ -47,7 +42,8 @@ public class ProductRessource {
             OfferMapper offerMapper,
             ProductFiltersMapper productFiltersMapper,
             SellerMongoRepository sellerMongoRepository,
-            ProductMongoRepository productMongoRepository) {
+            ProductMongoRepository productMongoRepository,
+            BuyerMongoRepository buyerMongoRepository) {
         this.sellerMongoRepository = sellerMongoRepository;
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
@@ -55,6 +51,7 @@ public class ProductRessource {
         this.offerMapper = offerMapper;
         this.productFiltersMapper = productFiltersMapper;
         this.productMongoRepository = productMongoRepository;
+        this.buyerMongoRepository = buyerMongoRepository;
     }
 
     @POST
@@ -71,6 +68,12 @@ public class ProductRessource {
 
         productForOfferMongo.offers.add(offer);
         productMongoRepository.save(productForOfferMongo);
+
+        Buyer buyer = buyerMongoRepository.getBuyerByName(buyerUsername);
+        buyer.addProduct(productForOfferMongo);
+        buyer.addPreference(productForOfferMongo.category);
+        System.out.println(buyer.products);
+        System.out.println(buyer.preferences);
 
         return Response.status(201).build();
     }
