@@ -49,6 +49,15 @@ docker run --rm -it  -p 18080:8080 floppa
 - Alexandre Dicaire
 
 
+## Documentation
+Please also read our code of conduct
+https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/blob/05cb65d154e4efb7e4b678a12a1ab165010988e1/CODE_OF_CONDUCT 
+
+and our guide to contributing
+https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/blob/05cb65d154e4efb7e4b678a12a1ab165010988e1/CONTRIBUTING.md 
+
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
+https://github.com/ScarfaceDeLaStreet-Equipe22/floppa/blob/05cb65d154e4efb7e4b678a12a1ab165010988e1/LICENSE 

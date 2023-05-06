@@ -1,5 +1,4 @@
 # Contriting to Floppa
-
 Hi! Welcome and thank you to participating to Floppa. 
 here are the guidelines to help you getting started.
 
@@ -11,12 +10,10 @@ To report any vulnerabilities or bug, please open an Issue.
 We receive a lot a contribution so don't hesitate to ping someone if you think we have not seen your Issue. 
 
 ## Issues
-
 Issues should be used to report any problems, request a feature, or to open a discussion on potential changes. 
 You can add infos to an Issue that already addresses the problem you're having. If so, please add your own reproduction information to the existing issue.
 
 ## Pull Requests
-
 PRs to our project are always welcome!
 
 Only fix/add one functionality that has an Issue. Please create an Isssue if you want to do a PR. 
@@ -40,3 +37,4 @@ We use Camel case for naming
 Please write code in English only
 Follow conventions for whitespace
 Please add unit testing with JUnit if appropriate to your code.
+Commit name start with a f:{commit name} if you add or modify a feature and c:{commit name} for clean code commit.
