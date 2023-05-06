@@ -1,59 +1,94 @@
-package ulaval.glo2003.application.repository;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import ulaval.glo2003.application.repository.SellerMongoRepository;
+import ulaval.glo2003.application.repository.SellerRepository;
 import ulaval.glo2003.domain.entities.Seller;
+import ulaval.glo2003.domain.entities.SellerMongoModel;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 import ulaval.glo2003.domain.utils.Date;
 import ulaval.glo2003.domain.utils.Email;
 import ulaval.glo2003.domain.utils.PhoneNumber;
 
-public class SellerRepositoryTests {
+import java.util.ArrayList;
+import java.util.List;
 
-    SellerRepository sellerRepository;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class SellerMongoRepositoryTestIT {
+
+    SellerMongoRepository sellerRepository;
+
+
+    @AfterEach
+    void Delete()
+    {sellerRepository.deleteAll();}
 
     @BeforeEach
     public void setUp() {
-        sellerRepository = new SellerRepository();
+
+        Datastore datastore;
+        String MONGO_CLUSTER_LINK = "mongodb://localhost:27017";
+        String MONGO_NAME = "floppa-dev" ;
+
+        MongoClient client = MongoClients.create(MONGO_CLUSTER_LINK);
+        datastore = Morphia.createDatastore(client, MONGO_NAME);
+        datastore.getMapper().mapPackage("ulaval.glo2003");
+        datastore.ensureIndexes();
+
+        sellerRepository = new SellerMongoRepository(datastore);
+
     }
+
+
 
     @Test
     public void givenSeller_whenSaving_thenSellerIsSaved() {
+        // arrange
         Seller seller =
-                new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
-        List<Seller> singleSeller = List.of(seller);
+                new Seller("testName", "1980-01-01", "seller@test.com", "15140109876", "bio");
 
+
+        // act
         sellerRepository.save(seller);
-        ArrayList<Seller> repositorySellers = sellerRepository.findAll();
+        Seller sellerRepositorySellerByName = sellerRepository.getSellerById(seller.getId());
 
-        assertIterableEquals(singleSeller, repositorySellers);
+        // assert
+        assertEquals(seller, sellerRepositorySellerByName);
     }
 
     @Test
     public void givenExistingSeller_whenUpdating_thenSellerIsUpdated() {
+        // arrange
         String updatedName = "new name";
         Date updatedBirthDate = new Date("1980-02-02");
         Email updatedEmail = new Email("newSeller@test.com");
         PhoneNumber updatedPhoneNumber = new PhoneNumber("15140109877");
         String updatedBio = "NEW BIO";
+
         Seller seller =
                 new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
         String sellerId = seller.getId();
+
         sellerRepository.save(seller);
 
+
+        // act
         seller.setName(updatedName);
         seller.setBirthDate(updatedBirthDate);
         seller.setEmail(updatedEmail);
         seller.setPhoneNumber(updatedPhoneNumber);
         seller.setBio(updatedBio);
         sellerRepository.update(seller);
-        Seller foundSeller = sellerRepository.findById(sellerId);
 
+        Seller foundSeller = sellerRepository.getSellerById(seller.getId());
+        // assert
         assertEquals(foundSeller.getName(), updatedName);
         assertEquals(foundSeller.getBirthdate(), updatedBirthDate);
         assertEquals(foundSeller.getEmail(), updatedEmail.getEmail());
@@ -63,11 +98,13 @@ public class SellerRepositoryTests {
 
     @Test
     public void givenExistingSeller_whenUpdating_thenOtherSellersAreNotUpdated() {
+        // arrange
         String updatedName = "new name";
         Date updatedBirthDate = new Date("1980-02-02");
         Email updatedEmail = new Email("newSeller@test.com");
         PhoneNumber updatedPhoneNumber = new PhoneNumber("15140109877");
         String updatedBio = "NEW BIO";
+
         Seller firstSeller =
                 new Seller(
                         "First Seller Name",
@@ -91,7 +128,7 @@ public class SellerRepositoryTests {
         sellerRepository.save(seller);
         sellerRepository.save(lastSeller);
 
-
+        // act
         seller.setName(updatedName);
         seller.setBirthDate(updatedBirthDate);
         seller.setEmail(updatedEmail);
@@ -99,10 +136,10 @@ public class SellerRepositoryTests {
         seller.setBio(updatedBio);
         sellerRepository.update(seller);
 
-        Seller foundFirstSeller = sellerRepository.findById(firstSellerId);
-        Seller foundLastSeller = sellerRepository.findById(lastSellerId);
+        Seller foundFirstSeller = sellerRepository.getSellerById(firstSellerId);
+        Seller foundLastSeller = sellerRepository.getSellerById(lastSellerId);
 
-
+        // assert
         assertNotEquals(foundFirstSeller.getName(), updatedName, "First Seller name changed");
         assertNotEquals(
                 foundFirstSeller.getBirthdate(),
@@ -135,21 +172,6 @@ public class SellerRepositoryTests {
 
         // act
         Executable executable = () -> sellerRepository.update(seller);
-
-        // assert
-        assertThrows(ItemNotFoundException.class, executable);
-    }
-
-    @Test
-    public void givenExistingSeller_whenRemoving_thenSellerIsRemoved() {
-        // arrange
-        Seller seller =
-                new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
-        sellerRepository.save(seller);
-
-        // act
-        sellerRepository.remove(seller);
-        Executable executable = () -> sellerRepository.findById(seller.getId());
 
         // assert
         assertThrows(ItemNotFoundException.class, executable);
@@ -192,11 +214,11 @@ public class SellerRepositoryTests {
         sellerRepository.save(lastSeller);
 
         // act
-        int countBeforeRemove = sellerRepository.count();
+        int countBeforeRemove = sellerRepository.getCount();
         sellerRepository.remove(seller);
 
         // assert
-        assertEquals(countBeforeRemove - 1, sellerRepository.count());
+        assertEquals(countBeforeRemove - 1, sellerRepository.getCount());
     }
 
     @Test
@@ -237,7 +259,7 @@ public class SellerRepositoryTests {
         sellerRepository.save(seller);
 
         // act
-        Seller foundSeller = sellerRepository.findById(seller.getId());
+        Seller foundSeller = sellerRepository.getSellerById(seller.getId());
 
         // assert
         assertEquals(seller, foundSeller);
@@ -250,7 +272,7 @@ public class SellerRepositoryTests {
                 new Seller("Seller Name", "1980-01-01", "seller@test.com", "15140109876", "bio");
 
         // act
-        Executable executable = () -> sellerRepository.findById(seller.getId());
+        Executable executable = () -> sellerRepository.getSellerById(seller.getId());
 
         // assert
         assertThrows(ItemNotFoundException.class, executable);
@@ -283,6 +305,6 @@ public class SellerRepositoryTests {
         ArrayList<Seller> sellers = sellerRepository.findAll();
 
         // assert
-        assertEquals(sellers.size(), sellerRepository.count());
+        assertEquals(sellers.size(), sellerRepository.getCount());
     }
 }

@@ -23,16 +23,13 @@ class ProductMapperTest {
 
     @Test
     public void mapRequestToEntity_withValidRequest_shouldReturnProduct() {
-        // arrange
         ProductRequest request = new ProductRequest("title", "description", "Sport", "10.0");
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
         SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
 
-
-        // act
         Product product = productMapper.mapRequestToEntity(request, sellerMongoModel);
         product.seller = seller;
-        // assert
+
         assertThat(product).isNotNull();
         assertThat(product.getTitle()).isEqualTo(request.getTitle());
         assertThat(product.getDescription()).isEqualTo(request.getDescription());
@@ -44,7 +41,7 @@ class ProductMapperTest {
 
     @Test
     public void mapEntityToResponse_withValidProduct_shouldReturnProductResponse() {
-        // Given
+
         Seller seller = new Seller("name", "01-01-1995", "test@test.com", "18191234567", "bio");
         SellerMongoModel sellerMongoModel = new SellerMongoModel(seller);
         Product product =
@@ -54,12 +51,10 @@ class ProductMapperTest {
                         new ProductCategory("Sport"),
                         new Amount("10"),
                         sellerMongoModel);
-
         product.seller = seller;
-        // When
+
         ProductResponse response = productMapper.mapEntityToResponse(product);
 
-        // assert
         assertThat(product).isNotNull();
         assertThat(product.getTitle()).isEqualTo(response.title);
         assertThat(product.getDescription()).isEqualTo(response.description);

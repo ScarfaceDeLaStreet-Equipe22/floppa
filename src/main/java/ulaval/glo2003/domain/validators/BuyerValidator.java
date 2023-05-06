@@ -1,9 +1,7 @@
 package ulaval.glo2003.domain.validators;
 
 import ulaval.glo2003.domain.entities.Buyer;
-import ulaval.glo2003.domain.entities.Seller;
 import ulaval.glo2003.domain.exceptions.InvalidNameException;
-import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidBioException;
 import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidBirthdateException;
 import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidEmailException;
 import ulaval.glo2003.domain.exceptions.SellerExceptions.InvalidPhoneNumberException;

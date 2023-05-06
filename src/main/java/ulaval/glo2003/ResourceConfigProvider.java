@@ -4,7 +4,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
-import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import ulaval.glo2003.api.exceptions.MissingParamExceptionMapper;
@@ -14,7 +13,6 @@ import ulaval.glo2003.domain.exceptions.InvalidParamExceptionMapper;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundExceptionMapper;
 import ulaval.glo2003.domain.exceptions.NotPermitedExceptionMapper;
 
-import java.net.URI;
 import java.util.Optional;
 
 public class ResourceConfigProvider
@@ -57,7 +55,7 @@ public class ResourceConfigProvider
                         buyerMongoRepository);
 
         return new ResourceConfig()
-                .register(new HealthResource(datastore, productMongoRepository))
+                .register(new HealthRessource(datastore))
                 .register(sellerRessource)
                 .register(productRessource)
                 .register(buyerRessource)

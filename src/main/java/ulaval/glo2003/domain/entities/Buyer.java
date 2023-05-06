@@ -4,7 +4,6 @@ import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import ulaval.glo2003.domain.utils.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

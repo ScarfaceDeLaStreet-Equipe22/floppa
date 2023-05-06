@@ -3,11 +3,6 @@ package ulaval.glo2003;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.net.URI;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import ulaval.glo2003.api.exceptions.MissingParamException;
 import ulaval.glo2003.api.exceptions.OfferRequestExceptions.MissingParamBuyerUsername;
 import ulaval.glo2003.api.mappers.OfferMapper;
 import ulaval.glo2003.api.mappers.ProductFiltersMapper;
@@ -22,6 +17,10 @@ import ulaval.glo2003.domain.entities.*;
 import ulaval.glo2003.domain.exceptions.ItemNotFoundException;
 import ulaval.glo2003.domain.exceptions.ProductExceptions.ItemIsSoldException;
 import ulaval.glo2003.domain.utils.ProductFilters;
+
+import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/products")
 public class ProductRessource {

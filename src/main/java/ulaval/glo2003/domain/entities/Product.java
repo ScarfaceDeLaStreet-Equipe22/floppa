@@ -2,6 +2,7 @@ package ulaval.glo2003.domain.entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 import dev.morphia.annotations.Entity;
@@ -149,6 +150,19 @@ public class Product {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(title, product.title) && Objects.equals(description, product.description) && Objects.equals(suggestedPrice, product.suggestedPrice) && Objects.equals(category, product.category) && Objects.equals(id, product.id) && Objects.equals(createdAt, product.createdAt) && Objects.equals(seller, product.seller) && Objects.equals(sellerMongoModel, product.sellerMongoModel) && Objects.equals(offers, product.offers) && Objects.equals(saleStatus, product.saleStatus) && Objects.equals(selectedOffer, product.selectedOffer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, suggestedPrice, category, id, createdAt, seller, sellerMongoModel, offers, saleStatus, selectedOffer);
     }
 
     public void getSold(String buyerUsername, Double amount){
